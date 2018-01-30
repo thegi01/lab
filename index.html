@@ -5,11 +5,57 @@
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
-    <title>lab</title>
+    <title>Layout demo</title>
+    <link rel="stylesheet" type="text/css" href="reset.css"> 
+    <link rel="stylesheet" type="text/css" href="style.css"> 
 </head>
 <body>
+    
+<div class="root">
+    <header>
+        <h1>Brand</h1>
+        <div class="div-menu">menu</div>
+    </header>
+    <div class="main">
+        <div class="div-wrap div-1" data-active="true">
+            <h2>title-1 <span>></span></h2>
+            <div class="content">
+                <p>content</p>
+            </div>
+        </div>
+        <div class="div-wrap div-2" data-active="false">
+            <h2>title-2 <span>></span></h2>
+            <div class="content">
+                <p>content</p>
+            </div>
+        </div>
+        <div class="div-wrap div-3" data-active="false">
+            <h2>title-3 <span>></span></h2>
+            <div class="content">
+                <p>content</p>
+            </div>
+        </div>
+        <div class="div-wrap div-4" data-active="false">
+            <h2>title-4 <span>></span></h2>
+            <div class="content">
+                <p>content</p>
+            </div>
+        </div>
+        <div class="div-wrap div-5" data-active="false">
+            <h2>title-5 <span>></span></h2>
+            <div class="content">
+                <p>content</p>
+            </div>
+        </div>
+    </div>
+    <!-- <footer>
+        footer
+    </footer> -->
 
-<div>lab</div>
-
+    <div id="tabBar" class="tabBar" aria-hidden="false">
+        tabBar
+    </div>
+</div>
+<script src="layout.js"></script>
 </body>
 </html>

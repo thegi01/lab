@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+/* layout */
+html, body {
+    height: 100%;
+}
+.root {
+    height: 100%;
+}
+header {
+    position: fixed; z-index: 10;
+    width: 100%; height: 50px;
+    box-sizing: border-box;
+    font-size: 14px; color: #aaa; text-align: center;
+    line-height: 50px;
+    }
+    .div-menu {
+        position: absolute; top: 3%; right: 5%;
+        font-size: 1rem; 
+    }
+
+.main {
+    height: 100%;
+}
+.div-wrap {
+    position: relative;
+    padding-top: 50px;
+    min-height: 93%;
+    box-sizing: border-box;
+    }
+    .div-wrap:last-child {
+        min-height: 100%;
+    }
+
+.div-1,
+.div-3,
+.div-5 {
+    background-color: #eaeaea;
+}
+
+h2 {
+    position: relative; 
+    transition: top 0.5s;
+    padding: 8px;
+    }
+    .div-wrap[data-active=false] h2 {
+        top: -50px;
+    }
+    .div-wrap[data-active=true] h2 {
+        top: 0;
+    }
+
+.content {
+    position: absolute; top: 35%; left: 10%;
+    width: 80%; height: 200px;
+    box-sizing: border-box;
+    padding: 8px;
+    background-color: #aaa;
+    color: #fff;
+}
+
+.tabBar {
+    position: fixed; bottom: 0; z-index: 100;
+    width: 100%; height: 50px;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #ddd;
+    background-color: blue;
+    color: #fff;
+}
+.tabBar[aria-hidden="true"]{
+    display: none;
+}
