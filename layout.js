@@ -2,7 +2,7 @@
 
 let deviceHeight = window.innerHeight;
 let panelHeight = deviceHeight * 0.93;
-let half = deviceHeight/2;
+let half = deviceHeight*0.2;
 
 var scrollChange = function(){
     for(var i=0 ; i<5 ; i++){

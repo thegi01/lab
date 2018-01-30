@@ -40,7 +40,7 @@ header {
 
 h2 {
     position: relative; 
-    transition: top 0.5s;
+    transition: top 1s;
     padding: 8px;
     }
     .div-wrap[data-active=false] h2 {
