@@ -15,11 +15,10 @@ var scrollChange = function(){
     }
 }
 window.addEventListener('scroll',  scrollChange );
-
+/*
 let scrolledY = 0,
 tabBar = document.getElementById('tabBar');
 window.addEventListener('scroll', function(){
-    // console.log(window.scrollY);
     let scrollY = window.scrollY;
     
     if( (scrolledY - scrollY)<0 ){
@@ -28,6 +27,6 @@ window.addEventListener('scroll', function(){
         tabBar.setAttribute('aria-hidden', false)
     }
     scrolledY = scrollY;
-});
+});*/
 
 
