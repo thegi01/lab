@@ -51,11 +51,9 @@ h2 {
     }
 
 .content {
-    position: absolute; top: 35%; left: 10%;
-    width: 80%; height: 200px;
+    position: absolute; top: 20%; left: 10%;
+    width: 80%; height: 400px;
     box-sizing: border-box;
-    padding: 8px;
-    background-color: #aaa;
     color: #fff;
 }
 
@@ -70,4 +68,15 @@ h2 {
 }
 .tabBar[aria-hidden="true"]{
     display: none;
+}
+
+.swiper-container{
+    border-radius: 20px;
+}
+.swiper-slide{
+    /*transition: all 0.5s ease-out;*/
+    /*transform: scale(0.9); */
+}
+.swiper-slide-active{
+    /*transform: scale(1); */
 }
