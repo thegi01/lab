@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Swiper</title>
+    <link rel="stylesheet" type="text/css" href="reset.css"> 
+    <style>
+        #swipeZone{
+            width: 100%; height: 100vh;
+            background: green;
+            font-size: 30px; color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="root">
+   <div id="swipeZone">
+       
+   </div>
+</div>
+
+<script>
+    var swipeDetect = function(el, callback){
+
+    };
+
+    var el = document.getElementById('swipeZone');
+    swipeDetect(el, function( swipedir ){
+        // swipedir contains either "none", "left", "right", "top", or "down"
+        el.innerHTML = 'Swiped <span style="color:yellow">' + swipedir +'</span>';
+    });
+</script>
+
+</body>
+</html>
