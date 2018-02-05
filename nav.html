@@ -38,40 +38,45 @@
             color: #666;
             line-height: 30px;
         }
-        .nav{
+
+
+        .nav{}
+        .nav-list{
+            overflow: hidden;
             padding: 5px 8px 0;
             background-color: #f0e6fb;
-            opacity: 1;
-            }
-            .nav[data-fixed=true]{
-                position: fixed; top: 50px; left: 0; right: 0;
-                }
-                .nav[data-fixed=true] + .nav-after {
-                    height: 45px;
-                }
-            .nav[data-animation=true]{
-                transition: opacity 0.7s;
-            }
-            .nav[data-animation=true][data-hidden=true]{
-                opacity: 0;
-            }
-        .nav-list{
-            overflow: hidden;;
         }
         .nav-item {
             float: left;
             width: 33.333333%;
+            }
+            .nav-item a {
+                display: block;
+                height: 40px;
+                font-size: 16px; color:#494949; text-align:center;
+                line-height: 40px;
+            }
+            .nav-item[data-selected=true] a {
+                background-color: #fff;
+                font-weight: bold; color: #9e67e0;
+            }
+        .nav[data-fixed=true] .nav-list{
+            position: fixed; top: 50px; left: 0; right: 0;
+            }
+            .nav[data-fixed=true]:after{
+                content: '';
+                display: block;
+                height: 45px;
+            }
+        .nav[data-hidden=true] .nav-list{
+            opacity: 0;
         }
-        .nav-item a {
-            display: block;
-            height: 40px;
-            font-size: 16px; color:#494949; text-align:center;
-            line-height: 40px;
+        .nav[data-animation=true] .nav-list{
+            transition: opacity 0.7s;
         }
-        .nav-item[data-selected=true] a {
-            background-color: #fff;
-            font-weight: bold; color: #9e67e0;
-        }
+
+
+
         .tabBar{
             position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
             height: 50px;
@@ -102,16 +107,13 @@
                 <li class="nav-item" data-selected="false"><a href="#href">nav2</a></li>
                 <li class="nav-item" data-selected="false"><a href="#href">nav3</a></li>
             </ul>
-            <div class="nav-after"></div>
         </nav>
 
-        <div class="test">
+        <div class="a">
             <style> 
-                .test {
+                .a {
                     height: 1000px; 
                     padding: 8px 16px;
-                    /*border: 1px solid gray; */
-                    /*background-color: #f8f8f8; */
                     line-height: 100px;
                 }
             </style>
@@ -140,9 +142,9 @@
     </nav>
 </div>
 <script>
-    var naviNode = document.getElementById('navigation');
+    var navNode = document.getElementById('navigation');
     var breadcrumbH = document.getElementById('breadcrumb').offsetHeight,
-        breadNavH = breadcrumbH + naviNode.offsetHeight, // breadcrumb + srNav height
+        breadNavH = breadcrumbH + navNode.offsetHeight, // breadcrumb + srNav height
         scrolledY = 0;
 
     var isFixed = false,
@@ -151,35 +153,35 @@
         
     window.addEventListener('scroll', function(){
         var scrollY = window.scrollY,
-            distance = scrollY - scrolledY;
+            isScrollDown = (scrollY - scrolledY) > 0 ? true : false;
 
         // isFixed
-        if(distance > 0 && scrollY > breadNavH){
+        if( isScrollDown && scrollY > breadNavH ){          // scroll down
             isFixed = true;
         } 
-        if(distance < 0 && scrollY < breadcrumbH){ // scroll up
+        if( !isScrollDown && scrollY < breadcrumbH ){       // scroll up
             isFixed = false;
         }
 
         // isHidden
-        if(distance > 0 && scrollY > breadNavH){
+        if( isScrollDown && scrollY > breadNavH ){          // scroll down
             isHidden = true;
         }
-        if( distance < 0 && scrollY > breadcrumbH){     // scroll up
+        if( !isScrollDown && scrollY > breadcrumbH ){       // scroll up
             isHidden = false;
         }
 
         // isAnimation
-        if(distance > 0 && scrollY > breadNavH + 50){
+        if( isScrollDown && scrollY > breadNavH + 50 ){     // scroll down
             isAnimation = true;
         }
-        if( distance < 0 && scrollY < breadcrumbH){     // scroll up
+        if( !isScrollDown && scrollY < breadcrumbH ){       // scroll up
             isAnimation = false;
         }
 
-        naviNode.dataset.hidden = isHidden;
-        naviNode.dataset.fixed = isFixed;
-        naviNode.dataset.animation = isAnimation;
+        navNode.dataset.hidden = isHidden;
+        navNode.dataset.fixed = isFixed;
+        navNode.dataset.animation = isAnimation;
 
         scrolledY = scrollY;
     });
