@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Navgation</title>
+    <link rel="stylesheet" type="text/css" href="reset.css"> 
+    <style>
+        html, body {
+            height: 100%;
+        }
+        .wrap {
+            height: 100%;
+        }
+        .header {
+            position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+            height : 50px;
+            box-sizing: border-box;
+            background-color: gray;
+            text-align: center; color: #999;
+            line-height: 50px;
+        }
+        .contents{
+            min-height: 100%;
+            box-sizing: border-box;
+            margin-bottom: -50px;
+            padding-top: 50px; padding-bottom: 50px;
+        }
+        .breadcrumb{
+            overflow: hidden;
+            position: relative; 
+            height: 30px;
+            box-sizing: border-box;
+            padding: 0 8px;
+            background-color: #c8b8db;
+            color: #666;
+            line-height: 30px;
+        }
+        .nav{
+            padding: 5px 8px 0;
+            background-color: #f0e6fb;
+            opacity: 1;
+            }
+            .nav[data-fixed=true]{
+                position: fixed; top: 50px; left: 0; right: 0;
+                }
+                .nav[data-fixed=true] + .nav-after {
+                    height: 45px;
+                }
+            .nav[data-animation=true]{
+                transition: opacity 0.7s;
+            }
+            .nav[data-animation=true][data-hidden=true]{
+                opacity: 0;
+            }
+        .nav-list{
+            overflow: hidden;;
+        }
+        .nav-item {
+            float: left;
+            width: 33.333333%;
+        }
+        .nav-item a {
+            display: block;
+            height: 40px;
+            font-size: 16px; color:#494949; text-align:center;
+            line-height: 40px;
+        }
+        .nav-item[data-selected=true] a {
+            background-color: #fff;
+            font-weight: bold; color: #9e67e0;
+        }
+        .tabBar{
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+            height: 50px;
+            box-sizing: border-box;
+            border-top: 1px solid #e8e8e8;
+            background-color: #e8e8e8;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <header class="header">
+        <h1>Header</h1>
+    </header>
+
+    <div class="contents">
+
+        <div id="breadcrumb" class="breadcrumb">
+            <p>breadcrumb</p>
+        </div>
+
+        <nav id="navigation" class="nav" data-fixed="false" data-hidden="false">
+            <ul class="nav-list">
+                <li class="nav-item" data-selected="true"><a href="#href">nav1</a></li>
+                <li class="nav-item" data-selected="false"><a href="#href">nav2</a></li>
+                <li class="nav-item" data-selected="false"><a href="#href">nav3</a></li>
+            </ul>
+            <div class="nav-after"></div>
+        </nav>
+
+        <div class="test">
+            <style> 
+                .test {
+                    height: 1000px; 
+                    padding: 8px 16px;
+                    /*border: 1px solid gray; */
+                    /*background-color: #f8f8f8; */
+                    line-height: 100px;
+                }
+            </style>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+            contents <br>
+        </div>
+    </div>
+
+    <nav class="tabBar">
+        Tab Bar
+    </nav>
+</div>
+<script>
+    var naviNode = document.getElementById('navigation');
+    var breadcrumbH = document.getElementById('breadcrumb').offsetHeight,
+        breadNavH = breadcrumbH + naviNode.offsetHeight, // breadcrumb + srNav height
+        scrolledY = 0;
+
+    var isFixed = false,
+        isHidden = false,
+        isAnimation = false;
+        
+    window.addEventListener('scroll', function(){
+        var scrollY = window.scrollY,
+            distance = scrollY - scrolledY;
+
+        // isFixed
+        if(distance > 0 && scrollY > breadNavH){
+            isFixed = true;
+        } 
+        if(distance < 0 && scrollY < breadcrumbH){ // scroll up
+            isFixed = false;
+        }
+
+        // isHidden
+        if(distance > 0 && scrollY > breadNavH){
+            isHidden = true;
+        }
+        if( distance < 0 && scrollY > breadcrumbH){     // scroll up
+            isHidden = false;
+        }
+
+        // isAnimation
+        if(distance > 0 && scrollY > breadNavH + 50){
+            isAnimation = true;
+        }
+        if( distance < 0 && scrollY < breadcrumbH){     // scroll up
+            isAnimation = false;
+        }
+
+        naviNode.dataset.hidden = isHidden;
+        naviNode.dataset.fixed = isFixed;
+        naviNode.dataset.animation = isAnimation;
+
+        scrolledY = scrollY;
+    });
+</script>
+</body>
+</html>
