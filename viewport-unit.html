@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>vieweport unit</title>
+    <link rel="stylesheet" type="text/css" href="reset.css"> 
+    <style>
+        /* Full height */
+        body{
+            height: 100vh;
+        }
+        /* Grid layout */
+        body{
+            display: grid;
+            grid-template-areas: 'header header' 'nav main' 'footer footer';
+            grid-template-columns: minmax(auto, 12em) 5fr;
+            grid-template-rows: auto 1fr auto;
+        }
+        h1 {
+          grid-area: header;
+        }
+        footer {
+          grid-area: footer;
+        }
+
+        nav {
+          grid-area: nav;
+        }
+        article {
+          grid-area: main;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        h1, footer {
+          background: lightgray;
+        }
+
+        nav {
+          border-right: 1px solid lightgray;
+        }
+
+        nav, article {
+          overflow-y: auto;
+        }
+
+        h1, nav, article, footer {
+          padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>MY <strong>Application</strong></h1>
+
+    <nav>
+        <h2>My Projects</h2>
+        <ul>
+            <li><a href="#href">Project 1</a></li>
+            <li><a href="#href">Project 2</a></li>
+            <li><a href="#href">Project 3</a></li>
+            <li><a href="#href">Project 4</a></li>
+            <li><a href="#href">Project 5</a></li>
+            <li><a href="#href">Project 6</a></li>
+        </ul>
+    </nav>
+
+    <article>
+      <h2>Project Title</h2>
+      <p>
+        All the main content lives in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem eius cumque, nihil nesciunt qui ea vero consequatur, dignissimos maxime ratione itaque amet, ab aliquid recusandae illo quibusdam debitis? Deserunt, saepe.
+      </p>
+    </article>
+    
+    <footer>
+      Footer
+    </footer>
+
+<script>
+  
+</script>
+
+</body>
+</html>
