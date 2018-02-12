@@ -17,20 +17,34 @@
         .obj {
             width: 100%; height: 100px;
             margin: 0 auto;
-            border: 1px solid #ddd;
             /* background-image: -webkit-linear-gradient(-45deg, #fefefe, #e8e8e8);
             background-image: -o-linear-gradient(-45deg, #fefefe, #e8e8e8);
             background-image: linear-gradient(-45deg, #fefefe, #e8e8e8);
             background-repeat: repeat-x;
             background-color: #e8e8e8; */
         }
+        input[type="color"]{
+        }
+        input[type="number"]{
+            width: 50px;
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
 <div class="wrap">
     <form name="formColor">
-        <input type="color" name="colorStart">
-        <input type="color" name="colorEnd" value="#ffffff">
+        <input type="color" name="color1">
+        <input type="color" name="color2" value="#ffffff">
+        <input type="number" name="angle" value="-45">
+       <!--  <select name="directon1">
+            <option value="left" selected>left</option>
+            <option value="right">right</option>
+        </select>
+        <select name="directon2">
+            <option value="top" selected>top</option>
+            <option value="bottom">bottom</option>
+        </select> -->
         <input type="submit" value="적용하기">
     </form>
 
@@ -40,26 +54,44 @@
 </div>
 <script>
 
-    /*let watchColorPicker = function(event){
-        return event.target.value
-    };*/
-    let form = document.forms['formColor'],
-        colorStartEl = form.colorStart,
-        colorEndEl = form.colorEnd,
-        color1, color2;
+    var getCssValuePrefix =  function() {
+        var rtrnVal = '';//default to standard syntax
+        var prefixes = ['-o-', '-ms-', '-moz-', '-webkit-'];
+        // Create a temporary DOM object for testing
+        var dom = document.createElement('div');
+        for (var i = 0; i < prefixes.length; i++) {
+            // Attempt to set the style
+            dom.style.background = prefixes[i] + 'linear-gradient(#000000, #ffffff)';
+            // Detect if the style was successfully set
+            if (dom.style.background) rtrnVal = prefixes[i];
+        }
+        dom = null;
+        delete dom;
+        return rtrnVal;
+    }
 
-    colorStartEl.addEventListener('input', function(event){
-        color1 = this.value;
-        console.log(color1);
-    }, false);
-    colorEndEl.addEventListener('input', function(event){
-        color2 = this.value;
-        console.log(color2);
-    }, false);
+    
+    let form = document.forms['formColor'],
+        colorEl1 = form.color1,
+        colorEl2 = form.color2,
+        angleEl = form.angle,
+        directionEl1 = form.directon1,
+        directionEl2 = form.directon2,
+        color1, color2,
+        angle,
+        direction1, directon2;
+
 
     form.addEventListener('submit', function(event){
         event.preventDefault();
-        document.getElementById('target').style.backgroundImage = 'linear-gradient(-45deg, ' + color2 + ', ' + color1 + ')';
+        color1 = colorEl1.value;
+        color2 = colorEl2.value;
+        angle = angleEl.value;
+        // selelct1 = directionEl1.value;
+        // selelct2 = directionEl2.value;
+        // console.log('selelct1', selelct1);
+        // console.log('selelct2', selelct2);
+        document.getElementById('target').style.backgroundImage = getCssValuePrefix() + 'linear-gradient('+ angle + 'deg, ' + color1 + ', ' + color2 + ')';
     });
 
 
