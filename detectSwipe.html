@@ -72,7 +72,7 @@
     var el = document.getElementById('swipeZone');
     swipeDetect(el, function( swipedir ){
         // swipedir contains either "none", "left", "right", "top", or "down"
-        el.innerHTML = 'Swiped <span style="color:yellow">' + swipedir +'</span>';
+        el.textContent = 'Swiped <span style="color:yellow">' + swipedir +'</span>';
     });
 </script>
 

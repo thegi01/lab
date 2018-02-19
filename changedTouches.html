@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Changed Touches</title>
+    <style>
+        #el {
+            width: 90%; height: 300px;
+            box-sizing: border-box;
+            margin: 30px auto 0;
+            padding: 30px;
+            border: 1px solid orange;
+            text-align: center;
+        }
+        #displayEl {
+            width: 90%; height: 90px;
+            box-sizing: border-box;
+            margin: 10px auto;
+            padding: 5px 20px;
+            background-color: gray;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>changeTouches</h1>
+
+    <div id="el">div element <br>tocuhmove event</div>
+    <div id="displayEl">
+        <p>pageX : </br> pageY : </p>
+    </div>
+ 
+    <script>
+        var el = document.getElementById('el'),
+            displayEl = document.getElementById('displayEl');
+        el.addEventListener('touchmove', function(event){
+            var touches = event.changedTouches;
+            for(var i=0 ; i<touches.length ; i++){
+                console.log('pageX', touches[i].pageX, 'pageY', touches[i].pageY);
+                displayEl.innerHTML= '<p> pageX : ' + touches[i].pageX + '</br> pageY : ' + touches[i].pageY + '</p>';
+            }
+        }, false);
+    </script>
+
+</body>
+</html>
