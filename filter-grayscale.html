@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Filter grayscale</title>
+    <style>
+        .media[data-gray="true"] img {
+            filter: gray; /* IE6-9 */
+            -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+            filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Filter Grayscale</h1>
+    
+    <div class="media">
+        <img src="https://t1.daumcdn.net/daumtop_chanel/op/20170607102632403.png" width="140" height="50" class="img_logo" alt="다음">
+    </div>
+
+    <div class="media" data-gray="true">
+        <img src="https://t1.daumcdn.net/daumtop_chanel/op/20170607102632403.png" width="140" height="50" class="img_logo" alt="다음">
+    </div>
+ 
+    <script>
+    </script>
+
+</body>
+</html>
