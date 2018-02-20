@@ -8,5 +8,5 @@
 ## Color gradient : https://thegi01.github.io/lab/color-gradient.html
 ## Swiper Ooffset : https://thegi01.github.io/lab/swiper-offset.html
 ## filter-grayscale : https://thegi01.github.io/lab/filter-grayscale.html
-## font : https://thegi01.github.io/lab/font.html
-## font-ios : https://thegi01.github.io/lab/font-ios.html
+## font-web : https://thegi01.github.io/lab/font-web.html
+## font-mobile : https://thegi01.github.io/lab/font-mobile.html
