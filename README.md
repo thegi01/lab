@@ -7,4 +7,5 @@
 ## DetectSwipe : https://thegi01.github.io/lab/detectSwipe.html
 ## Color gradient : https://thegi01.github.io/lab/color-gradient.html
 ## Swiper Ooffset : https://thegi01.github.io/lab/swiper-offset.html
-## Swiper Ooffset : https://thegi01.github.io/lab/filter-grayscale.html
+## filter-grayscale : https://thegi01.github.io/lab/filter-grayscale.html
+## font : https://thegi01.github.io/lab/font.html
