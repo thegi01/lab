@@ -1,0 +1,15 @@
+@charset 'utf-8';
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+@font-face {
+  font-family: 'NanumGothic';
+  src: url('NanumGothic.eot'); /* IE9 Compat Modes */
+  src: url('NanumGothic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('NanumGothic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('NanumGothic.woff') format('woff'), /* Pretty Modern Browsers */
+       url('NanumGothic.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+
+p, div{
+    font-family: 'Nanum Gothic', sans-serif;
+}
