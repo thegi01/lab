@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Ellipsis</title>
+    <style>
+        .div--a {
+            overflow: hidden;
+            font-size: 15px; color: #aeaeae;
+        }
+        dl {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin-right: 120px;
+        }
+        dd {
+            display: inline-block;
+            margin: 0;
+        }
+        dd:not(:last-child):after{
+            content: '';
+            display: inline-block;
+            position: relative; top: 3px;
+            width: 2px; height: 14px;
+            margin: 0 5px;
+            background-color: #dbdbdb;
+        }
+        
+        .blind{
+            overflow: hidden;
+            position: absolute;
+            width: 0;
+            height: 0;
+            line-height: 0;
+            text-indent: -9999rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ellipsis</h1>
+    
+    <div class="div--a">
+        <dl>
+            <dt class="blind">날짜</dt><dd>18.01.08</dd><dt 
+            class="blind">매장</dt><dd>잠실점잠실점점</dd><dt 
+            class="blind">별명</dt><dd>abcdefghijeoepog pdgodgd**님</dd>
+        </dl>
+    </div>
+
+
+
+    <script>
+    </script>
+
+</body>
+</html>

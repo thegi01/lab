@@ -10,3 +10,4 @@
 ## filter-grayscale : https://thegi01.github.io/lab/filter-grayscale.html
 ## font-web : https://thegi01.github.io/lab/font-web.html
 ## font-mobile : https://thegi01.github.io/lab/font-mobile.html
+## font-mobile : https://thegi01.github.io/lab/ellipsis.html
