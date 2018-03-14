@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Preload Images</title>
+</head>
+<body>
+
+    <h1>Preload Images</h1>
+
+    <script>
+        var preloadImages = function( args ){
+            var images = [];
+            for(var i=0 ; i<args.length ; i++){
+                images[i] = new Image;
+                images[i].src = args[i];
+            }
+        };
+        var imgList = [
+            "https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png",
+            "https://img2.daumcdn.net/thumb/C308x188/?fname=http://t1.daumcdn.net/alvolo/_thumbnails_cutter/media_mobile/20180314GMT/20180314_021529GMT_UTy7g1sOp3EXy9IerQZ7",
+            "https://img2.daumcdn.net/thumb/S308x188/?fname=https://t1.daumcdn.net/daumtop_chanel/op/20180314110013268.jpg"
+        ];
+        preloadImages( imgList );
+    </script>
+   
+</body>
+</html>
