@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>HTML import</title>
+    <link rel="import" href="include/a.html">
+    <link rel="import" href="include/b.html">
+</head>
+<body>
+
+    <h1>HTML import</h1>
+    
+    <div data-include="a"></div>
+    <div data-include="b"></div>
+
+    <script>
+        /* html include */
+        var includes = {
+            'a' : 'a',
+            'b' : 'b'
+        }
+        for(var item in includes){
+            var link = document.querySelector('link[href="include/' + includes[item] + '.html"]');
+            var template = link.import.querySelector('template');
+            document.querySelector('[data-include='+ item +']').outerHTML = template.innerHTML;
+        }
+    </script>
+
+</body>
+</html>
