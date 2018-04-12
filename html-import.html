@@ -23,9 +23,16 @@
             'b' : 'b'
         }
         for(var item in includes){
-            var link = document.querySelector('link[href="include/' + includes[item] + '.html"]');
-            var template = link.import.querySelector('template');
-            document.querySelector('[data-include='+ item +']').outerHTML = template.innerHTML;
+
+            // var link = document.createElement('link');
+            // link.rel = 'import';
+            // link.href = 'include/' + includes[item] + '.html';
+            // document.head.appendChild(link);
+
+            
+            /*var imports = document.querySelector('link[href="include/' + includes[item] + '.html"]').import;
+            var template = imports.querySelector('template');
+            document.querySelector('[data-include='+ item +']').outerHTML = template.innerHTML;*/
         }
     </script>
 
