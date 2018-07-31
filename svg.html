@@ -1,0 +1,94 @@
+<?xml version="1.0" standalone="no"?>
+<!-- <svg version="1.1"
+    baseProfile="full"
+    width="300" height="200"
+    xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="red" />
+    <circle cx="150" cy="100" r="80" fill="green" />
+    <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
+</svg>
+
+<svg width="200" height="200" viewBox="0 0 100 100"></svg> -->
+
+<svg version="1.1" 
+    width="200" height="250" 
+    xmlns="http://www.w3.org/2000/svg">
+    
+    <!-- Reactangles 사각형 -->
+    <rect x="10" y="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5" />
+
+    <!-- r : radius -->
+    <rect x="60" y="10" rx="10" ry="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5" /> 
+
+    <!-- Circle 원 -->
+    <!-- c: center, r: radius -->
+    <circle cx="25" cy="75" r="20" stroke="red" fill="transparent" stroke-width="5" /> <!-- c : center fof the circle -->
+
+    <!-- Ellipse 타원 -->
+    <!-- r : radius, c: center -->
+    <ellipse cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5" /> 
+    
+    <!-- Line 선 -->
+    <line x1="10" x2="50" y1="110" y2="150" stroke="orange" stroke-width="5" />
+
+    <!-- Polyline : 연결된 직선들의 그룹, x y 좌표 -->
+    <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145" stroke="orange" fill="transparent" stroke-width=5 />
+    
+    <!-- Ploygon 다각형 -->
+    <polygon points="50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180" stroke="green" fill="transparent" stroke-width="5" />
+    
+    <!-- Path : 선과 곡선, 호 등 다양한 형태 -->
+    <!-- M : Move to -->
+    <path d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5" />
+    
+</svg>
+
+
+<h2>선(Line) 명령어</h2>
+<!-- 
+    1. L : Line to(선 그리기), x, y ( 1 dx dy )
+    2. H : 가로선 h dx
+    3. V : 세로선 v dy
+    4. Z : Close Path, 현 위치에서 시작점으로 직선을 그린다
+    5. 대문자 : 절대좌표, 소문자 : 상대좌표
+-->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 10" />
+    <!-- <path d="M10 10 H 90 V 90 H 10 L 10 10" /> -->
+    <!-- Z -->
+    <!-- <path d="M10 10 H 90 V 90 H 10 Z" /> -->
+    <!-- 상대좌표 -->
+    <path d="M10 10 h 80 v 80 h -80 Z" fill="transparent" stroke="black"/>
+
+    <!-- 점 -->
+    <circle cx="10" cy="10" r="2" fill="red" />
+    <circle cx="90" cy="90" r="2" fill="red" />
+    <circle cx="90" cy="10" r="2" fill="red" />
+    <circle cx="10" cy="90" r="2" fill="red" />
+</svg>
+
+<h2>곡선(Curve) 명령어</h2>
+<h3>베지어 곡선</h3>
+<!-- C x1 y1, x2 y2, x y (혹은 c dx1 dy1, dx2 dy2, dx dy -->
+<svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+
+  <path d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
+  <path d="M70 10 C 70 20, 120 20, 120 10" stroke="black" fill="transparent"/>
+  <path d="M130 10 C 120 20, 180 20, 170 10" stroke="black" fill="transparent"/>
+  <path d="M10 60 C 20 80, 40 80, 50 60" stroke="black" fill="transparent"/>
+  <path d="M70 60 C 70 80, 110 80, 110 60" stroke="black" fill="transparent"/>
+  <path d="M130 60 C 120 80, 180 80, 170 60" stroke="black" fill="transparent"/>
+  <path d="M10 110 C 20 140, 40 140, 50 110" stroke="black" fill="transparent"/>
+  <path d="M70 110 C 70 140, 110 140, 110 110" stroke="black" fill="transparent"/>
+  <path d="M130 110 C 120 140, 180 140, 170 110" stroke="black" fill="transparent"/>
+
+</svg>
+
+
+
+
+
+
+<!-- https://developer.mozilla.org/ko/docs/Web/SVG/Tutorial/%EC%9C%84%EC%B9%98 -->
+<!-- https://developers.google.com/chart/interactive/docs/gallery/columnchart -->
+<!-- https://developer.mozilla.org/ko/docs/Web/SVG/Tutorial/Paths -->
