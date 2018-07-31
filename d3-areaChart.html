@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
-<meta name="robots" content="noindex,nofollow">
-<meta name="googlebot" content="noindex,nofollow">
 <svg width="960" height="500"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
@@ -25,7 +21,7 @@ var area = d3.area()
     .x(function(d) { return x(d.date); })
     .y1(function(d) { return y(d.close); });
 
-d3.tsv("data2.tsv", function(d) {
+d3.tsv("data.tsv", function(d) {
   d.date = parseTime(d.date);
   d.close = +d.close;
   return d;
