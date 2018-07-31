@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  rect {
+    fill: steelblue;
+  }
+  
+circle {
+    fill: orange;
+  }
+  
+  rect:hover {
+    fill: brown;
+  }
+  
+  .axis {
+    font: 10px sans-serif;
+  }
+  
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  
+  .x.axis path {
+    display: none;
+  }
+  
+  .line {
+    fill: none;
+    stroke: orange
+  }
+</style>
+
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+  <script>
+    var margin = {
+        top: 75,
+        right: 20,
+        bottom: 30,
+        left: 40
+      },
+      width = 600 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+
+    var x = d3.scale.ordinal()
+      .rangeRoundBands([0, width], .1);
+
+    var y = d3.scale.linear()
+      .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left");
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // here's your data
+    var data = 
+    {
+      'point1': [{
+        'value': 50
+      }, {
+        'value': 100
+      }, {
+        'value': 100
+      }, {
+        'value': 150
+      }],
+      'point2': [{
+        'value': 25
+      }, {
+        'value': 40
+      }, {
+        'value': 60
+      }],
+      'point3': [{
+        'value': 25
+      }]
+    };
+    
+    // d3ify your data
+    // d3 likes arrays of objects, you have an object of objects
+    // so first make it an array
+    var barData = d3.entries(data);
+    // set x domain
+    x.domain(barData.map(function(d){ return d.key }));
+    // create lineData
+    var lineData = [];
+    barData.forEach(function(d0, i){
+      d0.mean = d3.mean(d0.value, function(d1){ return d1.value });
+      d0.max = d3.max(d0.value, function(d1){ return d1.value});
+      var N = d0.value.length,
+        // this is an inner scale
+        // that represents each bar
+        s = d3.scale.linear().range([
+          x(d0.key) + (x.rangeBand() / N) / 2,
+          x(d0.key) + x.rangeBand()
+        ]).domain([
+          0, N
+        ])
+      d0.value.forEach(function(d1, j){
+        lineData.push({
+          x: s(j), // this is the pixel position of x, it's jittered on the bar
+          y: d1.value // this is the user position of y
+        })
+      });
+    });
+
+    // set y domain
+    y.domain([0, d3.max(barData, function(d) {
+      return d.max;
+    })]);
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text");
+
+    // draw bars
+    var bars = svg.selectAll(".bar")
+      .data(barData)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr("x", function(d) {
+        return x(d.key);
+      })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) {
+        return y(d.mean);
+      })
+      .attr("height", function(d) {
+        return height - y(d.mean);
+      });
+    
+    // add points
+    var points = svg.selectAll('point')
+      .data(lineData)
+      .enter()
+      .append('circle')
+      .attr('class', 'point')
+      .attr("r", 5)
+      .attr("cx", function(d) {
+        return d.x; // already pixel position
+      })
+      .attr("cy", function(d) {
+        return y(d.y)
+      });
+
+    var line = d3.svg.line()
+      .x(function(d) {
+        return d.x; // already pixel position
+      })
+      .y(function(d) {
+        return y(d.y);
+      });
+
+    svg.append("path")
+      .attr("class", "line")
+      .datum(lineData)
+      .attr("d", line);
+
+    var indicator = svg.append("g")
+      .attr("transform", "translate(" + (x("point2") + x.rangeBand() / 2) + "," + -20 + ")");
+
+    indicator.append("circle")
+      .attr("r", 40)
+      .style("fill", "red");
+
+    indicator.append("text")
+      .text("!")
+      .style("fill", "white")
+      .style("text-anchor", "middle")
+      .style("alignment-baseline", "middle")
+      .style("font-size", 70);
+
+    indicator.append("line")
+      .attr("y1", 20)
+      .attr("y2", height + 20)
+      .attr("x1", 0)
+      .attr("x2", 0)
+      .style("stroke", "red")
+      .style("stroke-width", "4px");
+  </script>
+
+  <!-- https://stackoverflow.com/questions/35778044/d3-multiple-overlaying-charts-with-custom-dom-element -->
