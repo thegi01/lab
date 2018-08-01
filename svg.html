@@ -1,3 +1,4 @@
+<h1>SVG</h1>
 <?xml version="1.0" standalone="no"?>
 <!-- <svg version="1.1"
     baseProfile="full"
@@ -9,6 +10,10 @@
 </svg>
 
 <svg width="200" height="200" viewBox="0 0 100 100"></svg> -->
+
+
+
+<h2>기본 도형</h2>
 
 <svg version="1.1" 
     width="200" height="250" 
@@ -44,7 +49,11 @@
 </svg>
 
 
-<h2>선(Line) 명령어</h2>
+
+
+<h2>Path</h2>
+
+<h3>선(Line) 명령어</h3>
 <!-- 
     1. L : Line to(선 그리기), x, y ( 1 dx dy )
     2. H : 가로선 h dx
@@ -67,9 +76,9 @@
     <circle cx="10" cy="90" r="2" fill="red" />
 </svg>
 
-<h2>곡선(Curve) 명령어</h2>
+<h3>곡선(Curve) 명령어</h3>
 <h3>베지어 곡선</h3>
-<!-- C x1 y1, x2 y2, x y (혹은 c dx1 dy1, dx2 dy2, dx dy -->
+<!-- 3차 C(Cubic) x1 y1, x2 y2, x y (혹은 c dx1 dy1, dx2 dy2, dx dy) -->
 <svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
 
   <path d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
@@ -84,9 +93,157 @@
 
 </svg>
 
+<!-- S : 3차 베지어 곡선 (S x2 y2, x y) -->
+<svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent" />
+</svg>
+ 
+<!-- Q : 2차 Q(Quadratic) 베지어 곡선 (Q x1 y1, x y) -->
+<svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 80 Q 95 10 180 80" stroke="black" fill="transparent" />
+</svg>
+
+<!-- T : 3차 베지어 곡선과 2차 베지어 곡선을 연결하는 단축 명령어 -->
+<!-- 이전에 사용한 제어점으로부터 새로운 제어점을 만들어낸다. -->
+<!-- Q나 T 명령어 다음에 올 때만 적용 -->
+<svg width="190" height="160" xmlns="http://www.w3.org/200/svg">
+    <path d="M10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent" />
+</svg>
+
+<h3>원호(A, 호, arc)</h3>
+<p>호는 원이나 타원의 일부분</p>
+<!-- 
+A rx ry x축-회전각 큰-호-플래그 쓸기-방향-플래그 x y
+a rx ry x축-회전각 큰-호-플래그 쓸기-방향-플래그 dx dy 
+rx, ry : x축 y축 반지름
+-->
+<svg width="320" height="320" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 315
+             L 110 215
+             A 30 50 0 0 1 162.55 162.45
+                        L 172.55 152.45
+                        A 30 50 -45 0 1 215.1 109.9
+                        L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
+</svg>
 
 
 
+<h2>Fills and Strokes</h2>
+
+<h3>Fill and Stroke Attributes</h3>
+
+<h4>Painting</h4>
+<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="10" width="100" height="100" stroke="blue" fill="blue" fill-opacity="0.5" stroke-opacity="0.8" />
+</svg>
+
+<h4>Stroke</h4>
+<?xml version="1.0" standalone="no"?>
+<svg width="160" height="140" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <line x1="40" x2="120" y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="butt" />
+    <line x1="40" x2="120" y1="60" y2="60" stroke="black" stroke-width="20" stroke-linecap="square" />
+    <line x1="40" x2="120" y1="100" y2="100" stroke="black" stroke-width="20" stroke-linecap="round" />
+</svg>
+<?xml version="1.0" standalone="no"?>
+<svg width="160" height="280" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <polyline points="40 60 80 20 120 60" stroke="black" stroke-width="20" strole-linecap="butt" fill="none" stroke-linejoin="miter" />
+    <polyline points="40 140 80 100 120 140" stroke="black" stroke-width="20" stroke-linecap="round" fill="none" stroke-linejoin="round" />
+    <polyline points="40 220 80 180 120 220" stroke="black" stroke-width="20" stroke-linecap="square" fill="none" stroke-linejoin="bevel" />
+</svg>
+<?xml version="1.0" standalone="no"?>
+<svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black" stroke-linecap="round" stroke-dasharray="5, 10, 5" fill="none" />
+    <path d="M 10 75 L 190 75" stroke="red" stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fille="none" />
+</svg>
+
+<h3>Using CSS</h3>
+<?xml version="1.0" standalone="no"?>
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <rect x="10" height="180" y="10" width="100" style="stroke: black; fill: red;" />
+</svg>
+<?xml version="1.0" standalone="no"?>
+<!-- <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+        <style type="text/css"><![CDATA[
+            #MyRect{
+                stroke: black;
+                fill: red;
+            }
+            #MyRect:hover {
+               stroke: black;
+               fill: blue;
+             }
+        ]]</style>
+    </defs>
+    <rect x="10" height="100" y="10" width="180" id="MyRect" />
+</svg>
+ -->
+
+
+
+<h2>Texts</h2>
+
+<h3>Basic</h3>
+<svg width="200" height="50" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <text x="10" y="10">Hello World!, text-anchor</text>
+</svg>
+
+<h3>Setting font properties</h3>
+
+<h3>Other text-related elements</h3>
+<h4>tspan</h4>
+<tspan font-weight="bold" fill="red">This is bold and red</tspan>
+<h4>tref</h4>
+<?xml version="1.0" standalone="no"?>
+<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <text id="example">This is an example text.</text>
+    <text>
+        <tref xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#example" />
+    </text>
+</svg>
+<h4>textPath</h4>
+<?xml version="1.0" standalone="no"?>
+<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <path id="my_path" d="M 20,20 C 40,40 80,40 100,20" fill="transparent" />
+    <text>
+        <textPath xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#my_path">This is text follows a curve.</textPath>
+    </text>
+</svg>
+
+<h2>Basic Transformations</h2>
+<svg width="30" height="10">
+    <g fill="red">
+        <rect x="0" y="0" width="10" height="10" />
+        <rect x="20" y="0" width="10" height="10" />
+    </g>
+</svg>
+<h3>Translation</h3>
+<svg width="40" height="50" style="background-color:#bff">
+    <rect x="0" y="0" width="10" height="10" transform="translate(30, 40)" />
+</svg>
+<h3>Rotation</h3>
+<svg width="31" height="31">
+    <rect x="12" y="-10" width="20" height="20" transform="rotate(45)" />
+</svg>
+<h3>Skewing</h3>
+<h3>Scaling</h3>
+<h3>Complex transformations with matrix()</h3>
+<h3>Effects on Coordinate Systems</h3>
+<svg width="100" height="100">
+    <g transform="scale(2)">
+        <rect width="50" height="50" />
+    </g>
+</svg>
+<h3>Embedding SVG in SVG</h3>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100">
+    <svg width="100" height="100" viewBox="0 0 50 50">
+        <rect width="50" height="50" />
+    </svg>
+</svg>
+
+<svg width="50" height="50" viewBox="0 0 50 50">
+    <rect width="50" height="50" />
+</svg>
 
 
 <!-- https://developer.mozilla.org/ko/docs/Web/SVG/Tutorial/%EC%9C%84%EC%B9%98 -->
