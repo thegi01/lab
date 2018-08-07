@@ -85,8 +85,6 @@
         
         /* 그래프 */        
 
-
-
         var graphDraw = function(){
             var i,
                 xLen = 7, yLen = 4,
@@ -146,29 +144,33 @@
                 var x = unitX*i + w + spaceL,
                     h = data[i]/maxValue * gCanvasHeight,
                     y = gCanvasHeight-h+spaceT,
-                    tp = `<rect x=${x} y=${y} width=${w} height="${h}" onclick="dispayData(${data[i]}, ${x}, ${y});"></rect>`;
+                    tp = `<rect x=${x} y=${y} width=${w} height="${h}" onclick="dispayData(${data[i]}, ${x}, ${y}, event);"></rect>`;
                 arrGraph.push(tp);
             }
             gGraph.innerHTML = arrGraph.join('');
            
         }
 
-        var dispayData = function(data, x, y){
-            var g = document.getElementsByClassName('graph-tip')[0];
-            var x2 = x + 7;
+        var dispayData = function(data, x, y, event){
+            var graph = event.target;
+            var graphWidth = graph.getBoundingClientRect().width;
+
+            var gTip = document.getElementsByClassName('graph-tip')[0];
+            var x2 = x + graphWidth/2;
             var tp = `
                 <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
                 <text y="24" stroke="#fff">${data}</text>
                 <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
-            g.innerHTML = tp;
+            gTip.innerHTML = tp;
 
-            var text = g.getElementsByTagName('text')[0],
-                line0 = g.getElementsByTagName('line')[0],
-                w = text.getBoundingClientRect().width,
-                x3 = x-w/3;
+            var text = gTip.getElementsByTagName('text')[0],
+                textBox = gTip.getElementsByTagName('line')[0],
+                textWidth = text.getBoundingClientRect().width,
+                x3 = x-(textWidth-graphWidth)/2,
+                x4 = x3-5;
             text.setAttribute('x', x3);
-            line0.setAttribute('x1', x3);
-            line0.setAttribute('x2', x3+w);
+            textBox.setAttribute('x1', x4);
+            textBox.setAttribute('x2', x4+textWidth+7);
         };
 
         graphDraw();
