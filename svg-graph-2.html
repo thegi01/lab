@@ -226,7 +226,6 @@
 
 
 
-
         let graphWeekOptions = {
             cpnt: document.getElementById('svg'),
             height: 160,
@@ -258,102 +257,6 @@
         let graphWeek = new GraphSgv( graphWeekOptions );
 
 
-
-
-        /*var graphDraw = function(){
-            var i,
-                xLen = 7, yLen = 4,
-                spaceL = 50, spaceT = 40,
-                maxValue = 20000,
-                arrUnit = [], arrLine = [], arrGraph = [];
-
-            var svg = document.getElementById('svg'),
-                gBg = svg.getElementsByClassName('graph-area')[0],
-                gCanvas = svg.getElementsByClassName('graph-canvas')[0],
-                gUnit = svg.getElementsByClassName('graph-unit')[0],
-                gLine = svg.getElementsByClassName('graph-line')[0],
-                gGraph = svg.getElementsByClassName('graph-graph')[0];
-
-            var gCanvasWidth = gBg.getBoundingClientRect().width - spaceL,
-                gCanvasHeight = 160;
-
-            var unitX = gCanvasWidth/xLen,
-                unitY = gCanvasHeight/yLen;
-
-            // 가로 단위 
-            for(i=0 ; i<xLen; i++){
-                var week = ['월', '화', '수', '목', '금', '토', '일'],
-                    x = unitX*i + unitX/2 + spaceL,
-                    tp = `<text text-anchor="middle" x=${x} y="220">${week[i]}</text>`;
-                arrUnit.push(tp);
-            }
-            for(i=0 ; i<xLen; i++){
-                var week = ['7/2', '7/3', '7/4', '7/5', '7/6', '7/7', '7/8'],
-                    x = unitX*i + unitX/2 + spaceL,
-                    tp = `<text text-anchor="middle" x=${x} y="240">${week[i]}</text>`;
-                arrUnit.push(tp);
-            }
-            // 세로단위
-            for(i=0 ; i<yLen ; i++){
-                var unit = maxValue/yLen,
-                    value = unit + unit * (yLen-i-1),
-                    y = unitY * i + spaceT + 5,
-                    tp = `<text text-anchor="end" x=${spaceT} y=${y}>${value}</text>`;
-                arrUnit.push(tp);
-            }
-            gUnit.innerHTML = arrUnit.join('');
-
-            // 라인 
-            for(i=0 ; i<=yLen ; i++){
-                var y = unitY * i + spaceT,
-                    tp = `<line x1=${spaceL} y1=${y} x2="100%" y2=${y} />`;
-                arrLine.push(tp);
-            }
-            gLine.innerHTML = arrLine.join('');
-
-
-            // 그래프
-            var data = [5000, 10000, 15000, 20000, 5500, 13000, 1800],
-                w = unitX/3;
-            for(i=0 ; i<xLen; i++){
-                var x = unitX*i + w + spaceL,
-                    h = data[i]/maxValue * gCanvasHeight,
-                    y = gCanvasHeight-h+spaceT,
-                    tp = `<rect x=${x} y=${y} width=${w} height="${h}" onclick="dispayData(${data[i]}, ${x}, ${y}, event);"></rect>`;
-                arrGraph.push(tp);
-            }
-            gGraph.innerHTML = arrGraph.join('');
-           
-        }
-
-        var dispayData = function(data, x, y, event){
-            var graph = event.target;
-            var graphWidth = graph.getBoundingClientRect().width;
-
-            var gTip = document.getElementsByClassName('graph-tip')[0];
-            var x2 = x + graphWidth/2;
-            var tp = `
-                <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
-                <text y="24" stroke="#fff">${data}</text>
-                <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
-            gTip.innerHTML = tp;
-
-            var text = gTip.getElementsByTagName('text')[0],
-                textBox = gTip.getElementsByTagName('line')[0],
-                textWidth = text.getBoundingClientRect().width,
-                x3 = x-(textWidth-graphWidth)/2,
-                x4 = x3-5;
-            text.setAttribute('x', x3);
-            textBox.setAttribute('x1', x4);
-            textBox.setAttribute('x2', x4+textWidth+7);
-        };
-
-        graphDraw();
-
-        window.onresize = function(){
-            graphDraw();
-        };*/
-        
         
     </script>
 </body>
