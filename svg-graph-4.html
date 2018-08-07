@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>SVG Graph</title>
+    <link rel="stylesheet" href="./css/swiper.min.css">
+
+    <style>
+        html, body {
+          position: relative;
+          height: 100%;
+        }
+
+        body{
+            margin: 0; padding: 0;
+            background-color: #f8f8f8;
+        }
+        
+        .swiper-container {
+          width: 100%;
+          height: 100%;
+        }
+        .swiper-slide {
+          text-align: center;
+          font-size: 18px;
+          /*background: #fff;*/
+
+          /* Center slide text vertically */
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+        }
+        
+        .svgGraph{
+            position: relative;
+            /*border: 1px solid #ddd;*/
+            /*padding: 10px;*/
+            background-color: #fff;
+        }
+        .svgGraph svg{
+            width: 100%; 
+        }
+        .graph-line line{
+            stroke: #eee;
+            stroke-width: 1;
+        }
+        .graph-unit{}
+        .graph-unit text{
+            cursor: default; user-select: none; -webkit-font-smoothing: antialiased;
+            font-size: 12px; color: #333;
+        }
+        .graph-graph rect{
+            stroke: #b87333;
+            stroke-width: 1;
+            fill: #b87333
+        }
+        .graph-tip text{
+            font-size: 10px; 
+        }
+        .graph-tip line{}
+        .graph-swiper{
+            position: absolute; top: 0; right: 0; left: 50px; 
+        }
+
+        /* 고정값 */
+        .svgGraph svg,
+        .graph-swiper{
+            height: 270px;
+        }
+    </style>
+    <style>
+        
+      </style>
+</head>
+<body>
+
+    <div class="svgGraph">
+    
+        <!-- 그래프 고정 영역 -->
+        <!--?xml version="1.0" standalone="no"?-->
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg">
+            
+            <!-- graph-land -->
+            <g class="graph-land">
+                <rect width="100%" height="100%" stroke="none" stroke-width="0" fill="#fff"></rect>
+            </g>
+
+            <!-- graph canvas -->
+            <g class="graph-canvas">
+                <!-- horizontal line -->
+                <g class="graph-line">
+                    <!-- <line x1="50" y1="40" x2="100%" y2="40"></line>
+                    <line x1="50" y1="80" x2="100%" y2="80"></line>
+                    <line x1="50" y1="120" x2="100%" y2="120"></line>
+                    <line x1="50" y1="160" x2="100%" y2="160"></line>
+                    <line x1="50" y1="200" x2="100%" y2="200"></line> -->
+                </g>
+                <!-- unit -->
+                <g class="graph-unit">
+                    <!-- <text text-anchor="end" x="40" y="45">20000</text>
+                    <text text-anchor="end" x="40" y="85">15000</text>
+                    <text text-anchor="end" x="40" y="125">10000</text>
+                    <text text-anchor="end" x="40" y="165">5000</text> -->
+                </g>
+            </g>
+
+            <!-- 팁 -->
+            <g class="graph-tip"></g>
+
+        </svg>
+        <!-- // 그래프 고정 영역 -->
+
+        <!-- 그래프 Swiper -->
+        <div class="graph-swiper">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <!--?xml version="1.0" standalone="no"?-->
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            graph canvas
+                            <g class="graph-canvas">
+                                graph
+                                <g class="graph-graph">
+                                    <rect x="13.771429152715776" y="160" width="13.771429152715774" height="40" data-value="5000"></rect>
+                                    <rect x="55.0857166108631" y="120" width="13.771429152715774" height="80" data-value="10000"></rect>
+                                    <rect x="96.4000040690104" y="80" width="13.771429152715774" height="120" data-value="15000"></rect>
+                                    <rect x="137.71429152715774" y="40" width="13.771429152715774" height="160" data-value="20000"></rect>
+                                    <rect x="179.02857898530505" y="156" width="13.771429152715774" height="44" data-value="5500"></rect>
+                                    <rect x="220.34286644345235" y="96" width="13.771429152715774" height="104" data-value="13000"></rect>
+                                    <rect x="261.6571539015997" y="185.6" width="13.771429152715774" height="14.399999999999999" data-value="1800"></rect>
+                                </g>
+                                unit
+                                <g class="graph-unit">
+                                    <text text-anchor="middle" x="20.65714372907365" y="220">월</text>
+                                    <text text-anchor="middle" x="61.97143118722099" y="220">화</text>
+                                    <text text-anchor="middle" x="103.2857186453683" y="220">수</text>
+                                    <text text-anchor="middle" x="144.60000610351562" y="220">목</text>
+                                    <text text-anchor="middle" x="185.91429356166293" y="220">금</text>
+                                    <text text-anchor="middle" x="227.22858101981024" y="220">토</text>
+                                    <text text-anchor="middle" x="268.5428684779576" y="220">일</text>
+                                    <text text-anchor="middle" x="20.65714372907365" y="240">7/2</text>
+                                    <text text-anchor="middle" x="61.97143118722099" y="240">7/3</text>
+                                    <text text-anchor="middle" x="103.2857186453683" y="240">7/4</text>
+                                    <text text-anchor="middle" x="144.60000610351562" y="240">7/5</text>
+                                    <text text-anchor="middle" x="185.91429356166293" y="240">7/6</text>
+                                    <text text-anchor="middle" x="227.22858101981024" y="240">7/7</text>
+                                    <text text-anchor="middle" x="268.5428684779576" y="240">7/8</text>
+                                </g>
+                            </g>
+                        </svg> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- // 그래프 Swiper -->
+
+    </div>
+    <script src="./js/swiper.min.js"></script>
+    
+    <script>        
+
+        var swiper = new Swiper('.swiper-container');
+        
+        /* 그래프 */   
+        class GraphSgv{
+            constructor( options ){
+
+                // options
+                this.cpnt = options.cpnt;
+                this.unitH = options.unitH;
+                this.unitV = options.unitV;
+                this.space = options.space;
+                this.data = options.data;
+                this.isTipShow = options.isTipShow;
+
+                this.dispayTip = this.dispayTip.bind(this);
+
+                // selector
+                this.selector = {
+                    land: this.cpnt.getElementsByClassName('graph-land')[0],
+                    canvas: this.cpnt.getElementsByClassName('graph-canvas')[0],
+                    unit: this.cpnt.getElementsByClassName('graph-unit')[0],
+                    line: this.cpnt.getElementsByClassName('graph-line')[0]/*,
+                    graph: this.cpnt.getElementsByClassName('graph-graph')[0]*/
+                };
+
+                // canvas size
+                this.canvasWidth = this.selector.land.getBoundingClientRect().width - this.space.left,
+                this.canvasHeight = options.height;
+
+                // x,y unit
+                this.unitX = Math.ceil(this.canvasWidth/this.unitH.step);
+                this.unitY = Math.ceil(this.canvasHeight/this.unitV.step);
+
+                // Draw Unit
+                this.arrUnit = [];
+                if(this.unitH.isShow) this.drawH();
+                // if(this.unitV.isShow) this.drawV();
+                // if(this.unitV.isLineShow) this.drawVLine();
+                this.selector.unit.innerHTML = this.arrUnit.join('');
+
+                // Draw Graph
+                // this.drawGraph();
+
+                // Display tip
+                // if(this.isTipShow) this.dispayTip();
+            }
+
+            // 가로 단위
+            drawH(){
+                console.log('drawH');
+                let unitH = this.unitH,
+                    unitX = this.unitX,
+                    data = this.data,
+                    spaceLeft = this.space.left,
+                    i;
+                data.title.map( (title, index) => {
+                    // title.map( (item, i) =>{
+                        let x = unitX*i + unitX/2 + spaceLeft,
+                            tp = `<text text-anchor="middle" x=${x} y=${unitH.position.top}>${title}</text>`;
+                        this.arrUnit.push(tp);    
+                    // });
+                });
+            }
+
+            // 세로 단위
+            drawV(){
+                let unitV = this.unitV,
+                    spaceTop = this.space.top,
+                    step = unitV.step,
+                    i;
+                for(i=0 ; i<step ; i++){
+                    let unit = unitV.maxValue/step,
+                        value = unit + unit * (step-i-1),
+                        y = this.unitY * i + spaceTop + 5,
+                        tp = `<text text-anchor="end" x=${spaceTop} y=${y}>${value}</text>`;
+                    this.arrUnit.push(tp);
+                }
+            }
+
+            // 세로 단위 라인 
+            drawVLine(){
+                let i,
+                    arrLine = [];
+                for(i=0 ; i<=this.unitV.step ; i++){
+                    let y = this.unitY * i + this.space.top,
+                        tp = `<line x1=${this.space.left} y1=${y} x2="100%" y2=${y} />`;
+                    arrLine.push(tp);
+                }
+                this.selector.line.innerHTML = arrLine.join('');
+            }
+
+            // Draw Graph
+            drawGraph(){
+                let data = this.data,
+                    w = this.unitX/3,
+                    arrGraph = [],
+                    i;
+                data.map((item, i) => {
+                    let x = this.unitX*i + w + this.space.left,
+                        h = item/this.unitV.maxValue * this.canvasHeight,
+                        y = this.canvasHeight - h + this.space.top,
+                        tp = `<rect x=${x} y=${y} width=${w} height=${h} data-value=${item}></rect>`;
+                    arrGraph.push(tp);
+                });
+                this.selector.graph.innerHTML = arrGraph.join('');
+            }
+
+            // dispayTip
+            dispayTip(){
+                let self = this,
+                    graph = this.selector.graph.getElementsByTagName('rect'),
+                    gTip = self.cpnt.getElementsByClassName('graph-tip')[0];
+
+                let fn = function(event){
+                    var target = event.target;
+                    var x = parseInt(target.getAttribute('x')),
+                        y = parseInt(target.getAttribute('y')),
+                        w = parseInt(target.getAttribute('width')),
+                        data = target.dataset.value;
+                    
+                    var x2 = x + w/2;
+                    var tp = `
+                        <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
+                        <text y="24" stroke="#fff">${data}</text>
+                        <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
+                    gTip.innerHTML = tp;
+
+                    var text = gTip.getElementsByTagName('text')[0],
+                        textBox = gTip.getElementsByTagName('line')[0],
+                        textWidth = text.getBoundingClientRect().width,
+                        x3 = parseInt(x-(textWidth-w)/2),
+                        x4 = x3-5;
+                    text.setAttribute('x', x3);
+                    textBox.setAttribute('x1', x4);
+                    textBox.setAttribute('x2', x4+textWidth+7);
+                };
+
+                Object.keys(graph).map((index)=>{
+                    graph[index].addEventListener('click', function(event){
+                        fn(event);
+                    }, false);
+                });
+            }
+        }
+
+
+
+        let graphWeekOptions = {
+            cpnt: document.getElementById('svg'),
+            height: 160,
+            unitH: {
+                isShow: true,
+                step: 7,
+                position: {
+                    top : 220,
+                    space : 20
+                }
+            },
+            unitV: {
+                isShow: true,
+                isLineShow: true,
+                step: 4/*,
+                maxValue: 20000*/
+            },
+            space:{
+                top: 40,
+                left: 50
+            },
+            isTipShow: true,
+            data: {
+                title: ['월', '화', '수', '목', '금', '토', '일'],
+                texts: [
+                    ['7/2', '7/3', '7/4', '7/5', '7/6', '7/7', '7/8'],
+                    ['7/9', '7/10', '7/11', '7/12', '7/13', '7/14', '7/15'],
+                ],
+                value: [
+                    [5000, 10000, 15000, 20000, 5500, 13000, 1800],
+                    [20000, 5500, 13000, 1800, 5000, 10000, 15000]
+                ],
+                maxValue: 2000
+            }
+        }
+        let graphWeek = new GraphSgv( graphWeekOptions );
+
+
+        
+    </script>
+
+
+</body></html>
