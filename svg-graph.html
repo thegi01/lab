@@ -57,7 +57,7 @@
             <g class="graph-wrap">
 
                 <!-- background -->
-                <g class="graph-bg">
+                <g class="graph-area">
                     <rect width="100%" height="100%" stroke="none" stroke-width="0" fill="#fff"></rect>
                 </g>
                 
@@ -83,7 +83,7 @@
     
     <script>        
         
-        /* 그래프 */        
+        /* 그래프 */ 
 
         var graphDraw = function(){
             var i,
@@ -93,7 +93,7 @@
                 arrUnit = [], arrLine = [], arrGraph = [];
 
             var svg = document.getElementById('svg'),
-                gBg = svg.getElementsByClassName('graph-bg')[0],
+                gBg = svg.getElementsByClassName('graph-area')[0],
                 gCanvas = svg.getElementsByClassName('graph-canvas')[0],
                 gUnit = svg.getElementsByClassName('graph-unit')[0],
                 gLine = svg.getElementsByClassName('graph-line')[0],

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>SVG Graph</title>
+    <style>
+        body{
+            margin: 8px; padding: 0;
+            background-color: #f8f8f8;
+        }
+        .graph{
+            /*border: 1px solid #ddd;*/
+            padding: 10px;
+            background-color: #fff;
+        }
+        .graph svg{
+            width: 100%; height: 250px;
+        }
+        .graph-wrap{
+        }
+        .graph-line line{
+            stroke: #eee;
+            stroke-width: 1;
+        }
+        .graph-unit{
+        }
+        .graph-unit text{
+            cursor: default; user-select: none; -webkit-font-smoothing: antialiased;
+            font-size: 12px; color: #333;
+        }
+        .graph-graph rect{
+            stroke: #b87333;
+            stroke-width: 1;
+            fill: #b87333
+        }
+        .graph-tip text{
+            font-size: 10px; 
+        }
+        .graph-tip line{
+            /*stroke: #b87333;
+            stroke-width: 1;*/
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="graph">
+
+        <?xml version="1.0" standalone="no"?>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg">
+
+            <!-- 그래프 영역 -->
+            <g class="graph-wrap">
+
+                <!-- background -->
+                <g class="graph-area">
+                    <rect width="100%" height="100%" stroke="none" stroke-width="0" fill="#fff"></rect>
+                </g>
+                
+                <!-- graph area -->
+                <g class="graph-canvas">
+                    <!-- horizontal line -->
+                    <g class="graph-line"></g>
+                    <!-- graph -->
+                    <g class="graph-graph"></g>
+                </g>
+                    
+                <!-- unit -->
+                <g class="graph-unit"></g>
+
+            </g>
+
+            <!-- 팁 -->
+            <g class="graph-tip"></g>
+
+        </svg>
+
+    </div>
+    
+    <script>        
+        
+        /* 그래프 */   
+        class GraphSgv{
+            constructor( options ){
+
+                // options
+                this.cpnt = options.cpnt;
+                this.unitH = options.unitH;
+                this.unitV = options.unitV;
+                this.space = options.space;
+                this.data = options.data;
+                this.isTipShow = options.isTipShow;
+
+                this.dispayTip = this.dispayTip.bind(this);
+
+                // selector
+                this.selector = {
+                    area: this.cpnt.getElementsByClassName('graph-area')[0],
+                    canvas: this.cpnt.getElementsByClassName('graph-canvas')[0],
+                    unit: this.cpnt.getElementsByClassName('graph-unit')[0],
+                    line: this.cpnt.getElementsByClassName('graph-line')[0],
+                    graph: this.cpnt.getElementsByClassName('graph-graph')[0]
+                };
+
+                // canvas size
+                this.canvasWidth = this.selector.area.getBoundingClientRect().width - this.space.left,
+                this.canvasHeight = options.height;
+
+                // x,y unit
+                this.unitX = this.canvasWidth/this.unitH.step;
+                this.unitY = this.canvasHeight/this.unitV.step;
+
+                // Draw Unit
+                this.arrUnit = [];
+                if(this.unitH.isShow) this.drawH();
+                if(this.unitV.isShow) this.drawV();
+                if(this.unitV.isLineShow) this.drawVLine();
+                this.selector.unit.innerHTML = this.arrUnit.join('');
+
+                // Draw Graph
+                this.drawGraph();
+
+                // Display tip
+                if(this.isTipShow) this.dispayTip();
+            }
+
+            // 가로 단위
+            drawH(){                
+                let unitH = this.unitH,
+                    unitX = this.unitX,
+                    spaceLeft = this.space.left,
+                    i;
+                unitH.texts.map( (texts, index) => {
+                    texts.map( (item, i) =>{
+                        let x = unitX*i + unitX/2 + spaceLeft,
+                            tp = `<text text-anchor="middle" x=${x} y=${unitH.position.top+index*unitH.position.space}>${item}</text>`;
+                        this.arrUnit.push(tp);    
+                    });
+                });
+            }
+
+            // 세로 단위
+            drawV(){
+                let unitV = this.unitV,
+                    spaceTop = this.space.top,
+                    step = unitV.step,
+                    i;
+                for(i=0 ; i<step ; i++){
+                    let unit = unitV.maxValue/step,
+                        value = unit + unit * (step-i-1),
+                        y = this.unitY * i + spaceTop + 5,
+                        tp = `<text text-anchor="end" x=${spaceTop} y=${y}>${value}</text>`;
+                    this.arrUnit.push(tp);
+                }
+            }
+
+            // 세로 단위 라인 
+            drawVLine(){
+                let i,
+                    arrLine = [];
+                for(i=0 ; i<=this.unitV.step ; i++){
+                    let y = this.unitY * i + this.space.top,
+                        tp = `<line x1=${this.space.left} y1=${y} x2="100%" y2=${y} />`;
+                    arrLine.push(tp);
+                }
+                this.selector.line.innerHTML = arrLine.join('');
+            }
+
+            // Draw Graph
+            drawGraph(){
+                let data = this.data,
+                    w = this.unitX/3,
+                    arrGraph = [],
+                    i;
+                data.map((item, i) => {
+                    let x = this.unitX*i + w + this.space.left,
+                        h = item/this.unitV.maxValue * this.canvasHeight,
+                        y = this.canvasHeight - h + this.space.top,
+                        tp = `<rect x=${x} y=${y} width=${w} height=${h} data-value=${item}></rect>`;
+                    arrGraph.push(tp);
+                });
+                this.selector.graph.innerHTML = arrGraph.join('');
+            }
+
+            // dispayTip
+            dispayTip(){
+                let self = this,
+                    graph = this.selector.graph.getElementsByTagName('rect'),
+                    gTip = self.cpnt.getElementsByClassName('graph-tip')[0];
+
+                let fn = function(event){
+                    var target = event.target;
+                    var x = parseInt(target.getAttribute('x')),
+                        y = parseInt(target.getAttribute('y')),
+                        w = parseInt(target.getAttribute('width')),
+                        data = target.dataset.value;
+                    
+                    var x2 = x + w/2;
+                    var tp = `
+                        <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
+                        <text y="24" stroke="#fff">${data}</text>
+                        <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
+                    gTip.innerHTML = tp;
+
+                    var text = gTip.getElementsByTagName('text')[0],
+                        textBox = gTip.getElementsByTagName('line')[0],
+                        textWidth = text.getBoundingClientRect().width,
+                        x3 = parseInt(x-(textWidth-w)/2),
+                        x4 = x3-5;
+                    text.setAttribute('x', x3);
+                    textBox.setAttribute('x1', x4);
+                    textBox.setAttribute('x2', x4+textWidth+7);
+                };
+
+                Object.keys(graph).map((index)=>{
+                    graph[index].addEventListener('click', function(event){
+                        fn(event);
+                    }, false);
+                });
+            }
+        }
+
+
+
+
+        let graphWeekOptions = {
+            cpnt: document.getElementById('svg'),
+            height: 160,
+            unitH: {
+                isShow: true,
+                step: 7,
+                position: {
+                    top : 220,
+                    space : 20
+                },
+                texts: [
+                    ['월', '화', '수', '목', '금', '토', '일'],
+                    ['7/2', '7/3', '7/4', '7/5', '7/6', '7/7', '7/8']
+                ]
+            },
+            unitV: {
+                isShow: true,
+                isLineShow: true,
+                step: 4,
+                maxValue: 20000
+            },
+            space:{
+                top: 40,
+                left: 50
+            },
+            data: [5000, 10000, 15000, 20000, 5500, 13000, 1800],
+            isTipShow: true
+        }
+        let graphWeek = new GraphSgv( graphWeekOptions );
+
+
+
+
+        /*var graphDraw = function(){
+            var i,
+                xLen = 7, yLen = 4,
+                spaceL = 50, spaceT = 40,
+                maxValue = 20000,
+                arrUnit = [], arrLine = [], arrGraph = [];
+
+            var svg = document.getElementById('svg'),
+                gBg = svg.getElementsByClassName('graph-area')[0],
+                gCanvas = svg.getElementsByClassName('graph-canvas')[0],
+                gUnit = svg.getElementsByClassName('graph-unit')[0],
+                gLine = svg.getElementsByClassName('graph-line')[0],
+                gGraph = svg.getElementsByClassName('graph-graph')[0];
+
+            var gCanvasWidth = gBg.getBoundingClientRect().width - spaceL,
+                gCanvasHeight = 160;
+
+            var unitX = gCanvasWidth/xLen,
+                unitY = gCanvasHeight/yLen;
+
+            // 가로 단위 
+            for(i=0 ; i<xLen; i++){
+                var week = ['월', '화', '수', '목', '금', '토', '일'],
+                    x = unitX*i + unitX/2 + spaceL,
+                    tp = `<text text-anchor="middle" x=${x} y="220">${week[i]}</text>`;
+                arrUnit.push(tp);
+            }
+            for(i=0 ; i<xLen; i++){
+                var week = ['7/2', '7/3', '7/4', '7/5', '7/6', '7/7', '7/8'],
+                    x = unitX*i + unitX/2 + spaceL,
+                    tp = `<text text-anchor="middle" x=${x} y="240">${week[i]}</text>`;
+                arrUnit.push(tp);
+            }
+            // 세로단위
+            for(i=0 ; i<yLen ; i++){
+                var unit = maxValue/yLen,
+                    value = unit + unit * (yLen-i-1),
+                    y = unitY * i + spaceT + 5,
+                    tp = `<text text-anchor="end" x=${spaceT} y=${y}>${value}</text>`;
+                arrUnit.push(tp);
+            }
+            gUnit.innerHTML = arrUnit.join('');
+
+            // 라인 
+            for(i=0 ; i<=yLen ; i++){
+                var y = unitY * i + spaceT,
+                    tp = `<line x1=${spaceL} y1=${y} x2="100%" y2=${y} />`;
+                arrLine.push(tp);
+            }
+            gLine.innerHTML = arrLine.join('');
+
+
+            // 그래프
+            var data = [5000, 10000, 15000, 20000, 5500, 13000, 1800],
+                w = unitX/3;
+            for(i=0 ; i<xLen; i++){
+                var x = unitX*i + w + spaceL,
+                    h = data[i]/maxValue * gCanvasHeight,
+                    y = gCanvasHeight-h+spaceT,
+                    tp = `<rect x=${x} y=${y} width=${w} height="${h}" onclick="dispayData(${data[i]}, ${x}, ${y}, event);"></rect>`;
+                arrGraph.push(tp);
+            }
+            gGraph.innerHTML = arrGraph.join('');
+           
+        }
+
+        var dispayData = function(data, x, y, event){
+            var graph = event.target;
+            var graphWidth = graph.getBoundingClientRect().width;
+
+            var gTip = document.getElementsByClassName('graph-tip')[0];
+            var x2 = x + graphWidth/2;
+            var tp = `
+                <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
+                <text y="24" stroke="#fff">${data}</text>
+                <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
+            gTip.innerHTML = tp;
+
+            var text = gTip.getElementsByTagName('text')[0],
+                textBox = gTip.getElementsByTagName('line')[0],
+                textWidth = text.getBoundingClientRect().width,
+                x3 = x-(textWidth-graphWidth)/2,
+                x4 = x3-5;
+            text.setAttribute('x', x3);
+            textBox.setAttribute('x1', x4);
+            textBox.setAttribute('x2', x4+textWidth+7);
+        };
+
+        graphDraw();
+
+        window.onresize = function(){
+            graphDraw();
+        };*/
+        
+        
+    </script>
+</body>
+</html>
