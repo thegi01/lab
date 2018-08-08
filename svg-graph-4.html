@@ -42,13 +42,14 @@
           align-items: center;
         }
         
-        .graphWeek{
+        .graphWeek, .graphMonth{
             position: relative;
             /*border: 1px solid #ddd;*/
             margin: 10px;
             background-color: #fff;
         }
-        .graphWeek svg{
+        .graphWeek svg,
+        .graphMonth svg{
             width: 100%; 
         }
         .graph-lineV line{
@@ -58,7 +59,7 @@
         .graph-stepV text,
         .graph-stepH text{
             cursor: default; user-select: none; -webkit-font-smoothing: antialiased;
-            font-size: 12px; color: #333;
+            font-size: 10px; color: #333;
         }
         .graph-graph rect{
             stroke: #b87333;
@@ -70,11 +71,13 @@
         }
         .graph-tip line{}
         .graph-swiper{
-            position: absolute; top: 0; right: 0; left: 50px; 
+            position: absolute; top: 0; right: 0; 
         }
+
 
         /* 고정값 */
         .graphWeek svg,
+        .graphMonth svg,
         .graph-swiper{
             height: 270px;
         }
@@ -120,6 +123,44 @@
         <!-- // 그래프 Swiper -->
 
     </div>
+
+    <div class="graphMonth" id="graphMonth">
+    
+        <!-- 그래프 고정 영역 -->
+        <?xml version="1.0" standalone="no"?>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-role="svgBase">
+            
+            <!-- graph-land -->
+            <g class="graph-land">
+                <rect width="100%" height="100%" stroke="none" stroke-width="0" fill="#fff"></rect>
+            </g>
+
+            <!-- graph canvas -->
+            <g class="graph-canvas">
+                <!-- vertical step -->
+                <g class="graph-stepV"></g>
+                <!-- vertical line -->
+                <g class="graph-lineV"></g>
+            </g>
+
+            <!-- 팁 -->
+            <g class="graph-tip"></g>
+
+        </svg>
+        <!-- // 그래프 고정 영역 -->
+
+        <!-- 그래프 Swiper -->
+        <div class="graph-swiper">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                </div>
+            </div>
+        </div>
+        <!-- // 그래프 Swiper -->
+
+    </div>
+
+
     <script src="./js/swiper.min.js"></script>
     
     <script>        
@@ -153,52 +194,59 @@
                 };
                 // console.log('this.selector', this.selector);
 
-                // canvas size
-                this.canvasWidth = Math.ceil(this.selector.land.getBoundingClientRect().width) - this.space.left,
-                this.canvasHeight = options.height;
-                // console.log('Canvas width', this.canvasWidth, 'height', this.canvasHeight);
-
-                // x,y unit
-                this.unitX = Math.ceil(this.canvasWidth/this.stepH.length);
-                this.unitY = Math.ceil(this.canvasHeight/this.stepV.length);
-                // console.log('unitX:', this.unitX, 'unitY:',this.unitY);
+                // init
+                this.init(options);
 
                 // Draw Step
                 this.arrStep = [];
                 if(this.stepV.isShow) this.drawStepV();
-                if(this.stepV.isLineShow) this.drawStepVLine();
-                // if(this.stepH.isShow) this.drawStepH();
+                this.drawStepVLine( this.stepV.isLineShow );
                 this.selector.stepV.innerHTML = this.arrStep.join('');
 
                 // Draw Swiper( 그래프, 가로 텍스트 )
                 if(this.data.list.length > 0) this.drawSwiperGrapn();
 
-                // Display tip
-                // if(this.isTipShow) this.dispayTip();
+                // Swiper 실행
+                this.runSwiper();
+            }
+
+            init(options){
+                this.selector.swiperDiv.style.left =  this.space.left + 'px';
+
+                // canvas size
+                this.canvasWidth = Math.ceil(this.selector.land.getBoundingClientRect().width) - this.space.left,
+                this.canvasHeight = options.height;
+                // console.log('Canvas width', this.canvasWidth, 'height', this.canvasHeight);
+
+                // y unit
+                this.unitY = Math.ceil(this.canvasHeight/this.stepV.length);
+                // console.log('unitY:',this.unitY);
             }
 
             // 세로 단위
             drawStepV(){
                 let stepV = this.stepV,
                     spaceTop = this.space.top,
+                    spaceLeft = this.space.left,
                     length = stepV.length,
                     i;
                 for(i=0 ; i<length ; i++){
                     let unit = this.data.maxValue/length,
                         value = unit + unit * (length-i-1),
                         y = this.unitY * i + spaceTop + 5,
-                        tp = `<text text-anchor="end" x=${spaceTop} y=${y}>${value}</text>`;
+                        tp = `<text text-anchor="end" x=${spaceLeft} y=${y}>${value}</text>`;
                     this.arrStep.push(tp);
                 }
             }
 
             // 세로 단위 라인 
-            drawStepVLine(){
+            drawStepVLine( isAll ){
                 let i,
                     arrLine = [];
                 for(i=0 ; i<=this.stepV.length ; i++){
                     let y = this.unitY * i + this.space.top,
                         tp = `<line x1=${this.space.left} y1=${y} x2="100%" y2=${y} />`;
+                    if(!isAll && i<this.stepV.length) tp='';
                     arrLine.push(tp);
                 }
                 this.selector.lineV.innerHTML = arrLine.join('');
@@ -206,9 +254,7 @@
 
             // Draw Swiper
             drawSwiperGrapn(){
-                let unitX = this.unitX,
-                    w = Math.ceil(this.unitX/3),
-                    maxValue = this.data.maxValue,
+                let maxValue = this.data.maxValue,
                     arrSwiper = [];
 
                 this.data.list.map( (item, i) =>{
@@ -216,9 +262,14 @@
                     // Draw Graph, text
                     let arrGraph = [];
                     let arrStep = [];
+
+                    let itemLength = item.length;
+                    let unitX = Math.ceil(this.canvasWidth/item.length);
+                    let w = Math.ceil(unitX/3);
+
                     item.map( (_data, j) => {
 
-                        let x = unitX*j + w ,
+                        let x = unitX*j + w,
                             v = _data.value,
                             h = v/maxValue * this.canvasHeight,
                             y = this.canvasHeight - h + this.space.top;
@@ -229,10 +280,29 @@
 
                         // Display Text
                         if(_data.text.length>0){
-                            let p = this.stepH.position;
+                            let stepH = this.stepH;
+                            let p = stepH.position;
                             _data.text.map((_text, k) => {
+                                let anchor = 'middle';
+                                let _str= _text;
+                                if(stepH.unit>0){
+
+                                    if(j===0) anchor = 'start';
+                                    if(j===itemLength-1) anchor = 'end';
+
+                                    if( (j+1)%5 === 0 ){
+                                        if(item.length === 31 && j===29) 
+                                            _str = '';
+                                    } else {
+                                        _str = '';
+                                        if(j===0 || item.length === 31 && j===30)
+                                            _str = _text;
+                                    }
+                                }
+
                                 let x2 = unitX*j + unitX/2,
-                                    tp = `<text text-anchor="middle" x=${x2} y=${p.top + p.space*k}>${_text}</text>`;
+                                    tp = `<text text-anchor=${anchor} x=${x2} y=${p.top + p.space*k}>${_str}</text>`;
+
                                 arrStep.push(tp);
                             });
                         }
@@ -265,7 +335,7 @@
                     gTip = this.selector.tip;
 
 
-                let fn = function( graph ){
+                let fn = function( graph, index ){
                     var x = Math.ceil(graph.getAttribute('x')),
                         y = Math.ceil(graph.getAttribute('y')),
                         w = Math.ceil(graph.getAttribute('width')),
@@ -279,22 +349,19 @@
                         <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
                     gTip.innerHTML = tp;
 
-                    var textEl = gTip.getElementsByTagName('text')[0],
-                        bgEl = gTip.getElementsByTagName('line')[0],
+                    var bgEl = gTip.getElementsByTagName('line')[0],
+                        textEl = gTip.getElementsByTagName('text')[0],
                         textWidth = textEl.getBoundingClientRect().width,
                         x3 = Math.ceil(x-(textWidth-w)/2 + spaceLeft),
                         x4 = x3-5;
                     textEl.setAttribute('x', x3);
                     bgEl.setAttribute('x1', x4);
                     bgEl.setAttribute('x2', x4+textWidth+7);
-                    
-                    // gTip.dataset.hidden = false;
                 };
 
                 Object.keys(graphs).map((index)=>{
                     graphs[index].addEventListener('click', function(){
-                        // console.log(this, index);
-                        fn(this);
+                        fn(this, index);
                     }, false);
                 });
             }
@@ -302,24 +369,43 @@
             tipReset(){
                 this.selector.tip.innerHTML= '';
             }
+
+            runSwiper(){
+                this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
+                    on: {
+                        init: function(){
+                            if(this.isTipShow)
+                                this.dispayTip();
+                        },
+                        touchMove: function(){
+                            if(this.isTipShow)
+                                this.tipReset();
+                        }, 
+                        transitionEnd : function(){
+                            if(this.isTipShow)
+                                this.dispayTip();
+                        }
+                    }
+                });
+            }
         }
 
 
+        /* Week Graph */
         let graphWeekOptions = {
             cpnt: document.getElementById('graphWeek'),
             height: 160,
             space:{
                 top: 40,
-                left: 50
+                left: 0
             },
             stepV: {
-                isShow: true,
-                isLineShow: true,
+                isShow: false,
+                isLineShow: false,
                 length: 4
             },
             stepH: {
                 isShow: true,
-                length: 7,
                 position: {
                     top : 220,
                     space : 20
@@ -424,22 +510,283 @@
         }
         let graphWeek = new GraphSgv( graphWeekOptions );
 
-        let weekSwiper = new Swiper('#graphWeek .swiper-container', {
-            on: {
-                init: function(){
-                    if(graphWeekOptions.isTipShow)
-                        graphWeek.dispayTip();
-                },
-                touchMove: function(){
-                    if(graphWeekOptions.isTipShow)
-                        graphWeek.tipReset();
-                }, 
-                transitionEnd : function(){
-                    if(graphWeekOptions.isTipShow)
-                        graphWeek.dispayTip();
+        /* Month Graph */
+        let graphMonthOptions = {
+            cpnt: document.getElementById('graphMonth'),
+            height: 160,
+            space:{
+                top: 40,
+                left: 30
+            },
+            stepV: {
+                isShow: true,
+                isLineShow: true,
+                length: 4
+            },
+            stepH: {
+                isShow: true,
+                unit: 5,
+                position: {
+                    top : 220,
+                    space : 20
                 }
+            },
+            isTipShow: false,
+            data: {
+                list:[
+                    [
+                        {
+                            text:['6/1'],
+                            value: 5000
+                        },
+                        {
+                            text:['2'],
+                            value: 5000
+                        },
+                        {
+                            text:['3'],
+                            value: 10000
+                        },
+                        {
+                            text:['4'],
+                            value: 15000
+                        },
+                        {
+                            text:['5'],
+                            value: 18000
+                        },
+                        {
+                            text:['6'],
+                            value: 20000
+                        },
+                        {
+                            text:['7'],
+                            value: 13000
+                        },
+                        {
+                            text:['8'],
+                            value: 10000
+                        },
+                        {
+                            text:['9'],
+                            value: 5000
+                        },
+                        {
+                            text:['10'],
+                            value: 5000
+                        },
+                        {
+                            text:['11'],
+                            value: 10000
+                        },
+                        {
+                            text:['12'],
+                            value: 15000
+                        },
+                        {
+                            text:['13'],
+                            value: 18000
+                        },
+                        {
+                            text:['14'],
+                            value: 20000
+                        },
+                        {
+                            text:['15'],
+                            value: 13000
+                        },
+                        {
+                            text:['16'],
+                            value: 10000
+                        },
+                        {
+                            text:['17'],
+                            value: 5000
+                        },
+                        {
+                            text:['18'],
+                            value: 10000
+                        },
+                        {
+                            text:['19'],
+                            value: 15000
+                        },
+                        {
+                            text:['20'],
+                            value: 18000
+                        },
+                        {
+                            text:['21'],
+                            value: 20000
+                        },
+                        {
+                            text:['22'],
+                            value: 13000
+                        },
+                        {
+                            text:['23'],
+                            value: 10000
+                        },
+                        {
+                            text:['24'],
+                            value: 5000
+                        },
+                        {
+                            text:['25'],
+                            value: 5000
+                        },
+                        {
+                            text:['26'],
+                            value: 10000
+                        },
+                        {
+                            text:['27'],
+                            value: 15000
+                        },
+                        {
+                            text:['28'],
+                            value: 18000
+                        },
+                        {
+                            text:['29'],
+                            value: 20000
+                        },
+                        {
+                            text:['30'],
+                            value: 13000
+                        }
+                    ],
+                    [
+                        {
+                            text:['7/1'],
+                            value: 5000
+                        },
+                        {
+                            text:['2'],
+                            value: 5000
+                        },
+                        {
+                            text:['3'],
+                            value: 10000
+                        },
+                        {
+                            text:['4'],
+                            value: 15000
+                        },
+                        {
+                            text:['5'],
+                            value: 18000
+                        },
+                        {
+                            text:['6'],
+                            value: 20000
+                        },
+                        {
+                            text:['7'],
+                            value: 13000
+                        },
+                        {
+                            text:['8'],
+                            value: 10000
+                        },
+                        {
+                            text:['9'],
+                            value: 5000
+                        },
+                        {
+                            text:['10'],
+                            value: 5000
+                        },
+                        {
+                            text:['11'],
+                            value: 10000
+                        },
+                        {
+                            text:['12'],
+                            value: 15000
+                        },
+                        {
+                            text:['13'],
+                            value: 18000
+                        },
+                        {
+                            text:['14'],
+                            value: 20000
+                        },
+                        {
+                            text:['15'],
+                            value: 13000
+                        },
+                        {
+                            text:['16'],
+                            value: 10000
+                        },
+                        {
+                            text:['17'],
+                            value: 5000
+                        },
+                        {
+                            text:['18'],
+                            value: 10000
+                        },
+                        {
+                            text:['19'],
+                            value: 15000
+                        },
+                        {
+                            text:['20'],
+                            value: 18000
+                        },
+                        {
+                            text:['21'],
+                            value: 20000
+                        },
+                        {
+                            text:['22'],
+                            value: 13000
+                        },
+                        {
+                            text:['23'],
+                            value: 10000
+                        },
+                        {
+                            text:['24'],
+                            value: 5000
+                        },
+                        {
+                            text:['25'],
+                            value: 5000
+                        },
+                        {
+                            text:['26'],
+                            value: 10000
+                        },
+                        {
+                            text:['27'],
+                            value: 15000
+                        },
+                        {
+                            text:['28'],
+                            value: 18000
+                        },
+                        {
+                            text:['29'],
+                            value: 20000
+                        },
+                        {
+                            text:['30'],
+                            value: 13000
+                        },
+                        {
+                            text:['31'],
+                            value: 10000
+                        }
+                    ]
+                ],
+                maxValue: 20000
             }
-        });
+        }
+        let graphMonth = new GraphSgv( graphMonthOptions );
 
         
     </script>
