@@ -42,21 +42,21 @@
           align-items: center;
         }
         
-        .svgGraph{
+        .graphWeek{
             position: relative;
             /*border: 1px solid #ddd;*/
-            /*padding: 10px;*/
+            margin: 10px;
             background-color: #fff;
         }
-        .svgGraph svg{
+        .graphWeek svg{
             width: 100%; 
         }
-        .graph-line line{
+        .graph-lineV line{
             stroke: #eee;
             stroke-width: 1;
         }
-        .graph-unit{}
-        .graph-unit text{
+        .graph-stepV text,
+        .graph-stepH text{
             cursor: default; user-select: none; -webkit-font-smoothing: antialiased;
             font-size: 12px; color: #333;
         }
@@ -74,7 +74,7 @@
         }
 
         /* 고정값 */
-        .svgGraph svg,
+        .graphWeek svg,
         .graph-swiper{
             height: 270px;
         }
@@ -85,11 +85,11 @@
 </head>
 <body>
 
-    <div class="svgGraph">
+    <div class="graphWeek" id="graphWeek">
     
         <!-- 그래프 고정 영역 -->
-        <!--?xml version="1.0" standalone="no"?-->
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg">
+        <?xml version="1.0" standalone="no"?>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-role="svgBase">
             
             <!-- graph-land -->
             <g class="graph-land">
@@ -98,21 +98,10 @@
 
             <!-- graph canvas -->
             <g class="graph-canvas">
-                <!-- horizontal line -->
-                <g class="graph-line">
-                    <!-- <line x1="50" y1="40" x2="100%" y2="40"></line>
-                    <line x1="50" y1="80" x2="100%" y2="80"></line>
-                    <line x1="50" y1="120" x2="100%" y2="120"></line>
-                    <line x1="50" y1="160" x2="100%" y2="160"></line>
-                    <line x1="50" y1="200" x2="100%" y2="200"></line> -->
-                </g>
-                <!-- unit -->
-                <g class="graph-unit">
-                    <!-- <text text-anchor="end" x="40" y="45">20000</text>
-                    <text text-anchor="end" x="40" y="85">15000</text>
-                    <text text-anchor="end" x="40" y="125">10000</text>
-                    <text text-anchor="end" x="40" y="165">5000</text> -->
-                </g>
+                <!-- vertical step -->
+                <g class="graph-stepV"></g>
+                <!-- vertical line -->
+                <g class="graph-lineV"></g>
             </g>
 
             <!-- 팁 -->
@@ -125,41 +114,6 @@
         <div class="graph-swiper">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <!--?xml version="1.0" standalone="no"?-->
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                            graph canvas
-                            <g class="graph-canvas">
-                                graph
-                                <g class="graph-graph">
-                                    <rect x="13.771429152715776" y="160" width="13.771429152715774" height="40" data-value="5000"></rect>
-                                    <rect x="55.0857166108631" y="120" width="13.771429152715774" height="80" data-value="10000"></rect>
-                                    <rect x="96.4000040690104" y="80" width="13.771429152715774" height="120" data-value="15000"></rect>
-                                    <rect x="137.71429152715774" y="40" width="13.771429152715774" height="160" data-value="20000"></rect>
-                                    <rect x="179.02857898530505" y="156" width="13.771429152715774" height="44" data-value="5500"></rect>
-                                    <rect x="220.34286644345235" y="96" width="13.771429152715774" height="104" data-value="13000"></rect>
-                                    <rect x="261.6571539015997" y="185.6" width="13.771429152715774" height="14.399999999999999" data-value="1800"></rect>
-                                </g>
-                                unit
-                                <g class="graph-unit">
-                                    <text text-anchor="middle" x="20.65714372907365" y="220">월</text>
-                                    <text text-anchor="middle" x="61.97143118722099" y="220">화</text>
-                                    <text text-anchor="middle" x="103.2857186453683" y="220">수</text>
-                                    <text text-anchor="middle" x="144.60000610351562" y="220">목</text>
-                                    <text text-anchor="middle" x="185.91429356166293" y="220">금</text>
-                                    <text text-anchor="middle" x="227.22858101981024" y="220">토</text>
-                                    <text text-anchor="middle" x="268.5428684779576" y="220">일</text>
-                                    <text text-anchor="middle" x="20.65714372907365" y="240">7/2</text>
-                                    <text text-anchor="middle" x="61.97143118722099" y="240">7/3</text>
-                                    <text text-anchor="middle" x="103.2857186453683" y="240">7/4</text>
-                                    <text text-anchor="middle" x="144.60000610351562" y="240">7/5</text>
-                                    <text text-anchor="middle" x="185.91429356166293" y="240">7/6</text>
-                                    <text text-anchor="middle" x="227.22858101981024" y="240">7/7</text>
-                                    <text text-anchor="middle" x="268.5428684779576" y="240">7/8</text>
-                                </g>
-                            </g>
-                        </svg> -->
-                    </div>
                 </div>
             </div>
         </div>
@@ -170,7 +124,7 @@
     
     <script>        
 
-        var swiper = new Swiper('.swiper-container');
+        
         
         /* 그래프 */   
         class GraphSgv{
@@ -178,182 +132,314 @@
 
                 // options
                 this.cpnt = options.cpnt;
-                this.unitH = options.unitH;
-                this.unitV = options.unitV;
+                this.stepH = options.stepH;
+                this.stepV = options.stepV;
                 this.space = options.space;
-                this.data = options.data;
                 this.isTipShow = options.isTipShow;
+                this.data = options.data;
 
+                // bind
                 this.dispayTip = this.dispayTip.bind(this);
 
                 // selector
                 this.selector = {
+                    svgBase : this.cpnt.querySelector('[data-role=svgBase]'),
                     land: this.cpnt.getElementsByClassName('graph-land')[0],
                     canvas: this.cpnt.getElementsByClassName('graph-canvas')[0],
-                    unit: this.cpnt.getElementsByClassName('graph-unit')[0],
-                    line: this.cpnt.getElementsByClassName('graph-line')[0]/*,
-                    graph: this.cpnt.getElementsByClassName('graph-graph')[0]*/
+                    stepV: this.cpnt.getElementsByClassName('graph-stepV')[0],
+                    lineV: this.cpnt.getElementsByClassName('graph-lineV')[0],
+                    swiperDiv: this.cpnt.getElementsByClassName('graph-swiper')[0],
+                    tip: this.cpnt.getElementsByClassName('graph-tip')[0]
                 };
+                // console.log('this.selector', this.selector);
 
                 // canvas size
-                this.canvasWidth = this.selector.land.getBoundingClientRect().width - this.space.left,
+                this.canvasWidth = Math.ceil(this.selector.land.getBoundingClientRect().width) - this.space.left,
                 this.canvasHeight = options.height;
+                // console.log('Canvas width', this.canvasWidth, 'height', this.canvasHeight);
 
                 // x,y unit
-                this.unitX = Math.ceil(this.canvasWidth/this.unitH.step);
-                this.unitY = Math.ceil(this.canvasHeight/this.unitV.step);
+                this.unitX = Math.ceil(this.canvasWidth/this.stepH.length);
+                this.unitY = Math.ceil(this.canvasHeight/this.stepV.length);
+                // console.log('unitX:', this.unitX, 'unitY:',this.unitY);
 
-                // Draw Unit
-                this.arrUnit = [];
-                if(this.unitH.isShow) this.drawH();
-                // if(this.unitV.isShow) this.drawV();
-                // if(this.unitV.isLineShow) this.drawVLine();
-                this.selector.unit.innerHTML = this.arrUnit.join('');
+                // Draw Step
+                this.arrStep = [];
+                if(this.stepV.isShow) this.drawStepV();
+                if(this.stepV.isLineShow) this.drawStepVLine();
+                // if(this.stepH.isShow) this.drawStepH();
+                this.selector.stepV.innerHTML = this.arrStep.join('');
 
-                // Draw Graph
-                // this.drawGraph();
+                // Draw Swiper( 그래프, 가로 텍스트 )
+                if(this.data.list.length > 0) this.drawSwiperGrapn();
 
                 // Display tip
                 // if(this.isTipShow) this.dispayTip();
             }
 
-            // 가로 단위
-            drawH(){
-                console.log('drawH');
-                let unitH = this.unitH,
-                    unitX = this.unitX,
-                    data = this.data,
-                    spaceLeft = this.space.left,
-                    i;
-                data.title.map( (title, index) => {
-                    // title.map( (item, i) =>{
-                        let x = unitX*i + unitX/2 + spaceLeft,
-                            tp = `<text text-anchor="middle" x=${x} y=${unitH.position.top}>${title}</text>`;
-                        this.arrUnit.push(tp);    
-                    // });
-                });
-            }
-
             // 세로 단위
-            drawV(){
-                let unitV = this.unitV,
+            drawStepV(){
+                let stepV = this.stepV,
                     spaceTop = this.space.top,
-                    step = unitV.step,
+                    length = stepV.length,
                     i;
-                for(i=0 ; i<step ; i++){
-                    let unit = unitV.maxValue/step,
-                        value = unit + unit * (step-i-1),
+                for(i=0 ; i<length ; i++){
+                    let unit = this.data.maxValue/length,
+                        value = unit + unit * (length-i-1),
                         y = this.unitY * i + spaceTop + 5,
                         tp = `<text text-anchor="end" x=${spaceTop} y=${y}>${value}</text>`;
-                    this.arrUnit.push(tp);
+                    this.arrStep.push(tp);
                 }
             }
 
             // 세로 단위 라인 
-            drawVLine(){
+            drawStepVLine(){
                 let i,
                     arrLine = [];
-                for(i=0 ; i<=this.unitV.step ; i++){
+                for(i=0 ; i<=this.stepV.length ; i++){
                     let y = this.unitY * i + this.space.top,
                         tp = `<line x1=${this.space.left} y1=${y} x2="100%" y2=${y} />`;
                     arrLine.push(tp);
                 }
-                this.selector.line.innerHTML = arrLine.join('');
+                this.selector.lineV.innerHTML = arrLine.join('');
             }
 
-            // Draw Graph
-            drawGraph(){
-                let data = this.data,
-                    w = this.unitX/3,
-                    arrGraph = [],
-                    i;
-                data.map((item, i) => {
-                    let x = this.unitX*i + w + this.space.left,
-                        h = item/this.unitV.maxValue * this.canvasHeight,
-                        y = this.canvasHeight - h + this.space.top,
-                        tp = `<rect x=${x} y=${y} width=${w} height=${h} data-value=${item}></rect>`;
-                    arrGraph.push(tp);
+            // Draw Swiper
+            drawSwiperGrapn(){
+                let unitX = this.unitX,
+                    w = Math.ceil(this.unitX/3),
+                    maxValue = this.data.maxValue,
+                    arrSwiper = [];
+
+                this.data.list.map( (item, i) =>{
+
+                    // Draw Graph, text
+                    let arrGraph = [];
+                    let arrStep = [];
+                    item.map( (_data, j) => {
+
+                        let x = unitX*j + w ,
+                            v = _data.value,
+                            h = v/maxValue * this.canvasHeight,
+                            y = this.canvasHeight - h + this.space.top;
+
+                        // Draw Graph
+                        let tpGraph = `<rect x=${x} y=${y} width=${w} height=${h} data-value=${v}></rect>`;
+                        arrGraph.push(tpGraph);
+
+                        // Display Text
+                        if(_data.text.length>0){
+                            let p = this.stepH.position;
+                            _data.text.map((_text, k) => {
+                                let x2 = unitX*j + unitX/2,
+                                    tp = `<text text-anchor="middle" x=${x2} y=${p.top + p.space*k}>${_text}</text>`;
+                                arrStep.push(tp);
+                            });
+                        }
+                    });
+
+                    // Draw Swiper
+                    let tp = `
+                        <div class="swiper-slide">
+                            <?xml version="1.0" standalone="no"?>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                <g class="graph-graph">
+                                    ${arrGraph.join('')}
+                                </g>
+                                <g class="graph-stepH">
+                                    ${arrStep.join('')}
+                                </g>
+                            </svg>
+                        </div>`;
+
+                    arrSwiper.push(tp);
                 });
-                this.selector.graph.innerHTML = arrGraph.join('');
+
+                this.cpnt.getElementsByClassName('swiper-wrapper')[0].innerHTML = arrSwiper.join('');
             }
 
             // dispayTip
             dispayTip(){
                 let self = this,
-                    graph = this.selector.graph.getElementsByTagName('rect'),
-                    gTip = self.cpnt.getElementsByClassName('graph-tip')[0];
+                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('rect'),
+                    gTip = this.selector.tip;
 
-                let fn = function(event){
-                    var target = event.target;
-                    var x = parseInt(target.getAttribute('x')),
-                        y = parseInt(target.getAttribute('y')),
-                        w = parseInt(target.getAttribute('width')),
-                        data = target.dataset.value;
-                    
-                    var x2 = x + w/2;
+
+                let fn = function( graph ){
+                    var x = Math.ceil(graph.getAttribute('x')),
+                        y = Math.ceil(graph.getAttribute('y')),
+                        w = Math.ceil(graph.getAttribute('width')),
+                        data = graph.dataset.value,
+                        spaceLeft = self.space.left;
+
+                    var x2 = x + w/2 + spaceLeft;
                     var tp = `
                         <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
                         <text y="24" stroke="#fff">${data}</text>
                         <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
                     gTip.innerHTML = tp;
 
-                    var text = gTip.getElementsByTagName('text')[0],
-                        textBox = gTip.getElementsByTagName('line')[0],
-                        textWidth = text.getBoundingClientRect().width,
-                        x3 = parseInt(x-(textWidth-w)/2),
+                    var textEl = gTip.getElementsByTagName('text')[0],
+                        bgEl = gTip.getElementsByTagName('line')[0],
+                        textWidth = textEl.getBoundingClientRect().width,
+                        x3 = Math.ceil(x-(textWidth-w)/2 + spaceLeft),
                         x4 = x3-5;
-                    text.setAttribute('x', x3);
-                    textBox.setAttribute('x1', x4);
-                    textBox.setAttribute('x2', x4+textWidth+7);
+                    textEl.setAttribute('x', x3);
+                    bgEl.setAttribute('x1', x4);
+                    bgEl.setAttribute('x2', x4+textWidth+7);
+                    
+                    // gTip.dataset.hidden = false;
                 };
 
-                Object.keys(graph).map((index)=>{
-                    graph[index].addEventListener('click', function(event){
-                        fn(event);
+                Object.keys(graphs).map((index)=>{
+                    graphs[index].addEventListener('click', function(){
+                        // console.log(this, index);
+                        fn(this);
                     }, false);
                 });
+            }
+
+            tipReset(){
+                this.selector.tip.innerHTML= '';
             }
         }
 
 
-
         let graphWeekOptions = {
-            cpnt: document.getElementById('svg'),
+            cpnt: document.getElementById('graphWeek'),
             height: 160,
-            unitH: {
+            space:{
+                top: 40,
+                left: 50
+            },
+            stepV: {
                 isShow: true,
-                step: 7,
+                isLineShow: true,
+                length: 4
+            },
+            stepH: {
+                isShow: true,
+                length: 7,
                 position: {
                     top : 220,
                     space : 20
                 }
             },
-            unitV: {
-                isShow: true,
-                isLineShow: true,
-                step: 4/*,
-                maxValue: 20000*/
-            },
-            space:{
-                top: 40,
-                left: 50
-            },
             isTipShow: true,
             data: {
-                title: ['월', '화', '수', '목', '금', '토', '일'],
-                texts: [
-                    ['7/2', '7/3', '7/4', '7/5', '7/6', '7/7', '7/8'],
-                    ['7/9', '7/10', '7/11', '7/12', '7/13', '7/14', '7/15'],
+                list:[
+                    [
+                        {
+                            text:['월', '7/2'],
+                            value: 5000
+                        },
+                        {
+                            text:['화', '7/3'],
+                            value: 10000
+                        },
+                        {
+                            text:['수', '7/4'],
+                            value: 15000
+                        },
+                        {
+                            text:['목', '7/5'],
+                            value: 18000
+                        },
+                        {
+                            text:['금', '7/6'],
+                            value: 20000
+                        },
+                        {
+                            text:['토', '7/7'],
+                            value: 13000
+                        },
+                        {
+                            text:['일', '7/8'],
+                            value: 10000
+                        }
+                    ],
+                    [
+                        {
+                            text: ['월', '7/9'],
+                            value: 5000
+                        },
+                        {
+                            text: ['화', '7/10'],
+                            value: 10000
+                        },
+                        {
+                            text: ['수', '7/11'],
+                            value: 15000
+                        },
+                        {
+                            text: ['목', '7/12'],
+                            value: 18000
+                        },
+                        {
+                            text: ['금', '7/13'],
+                            value: 20000
+                        },
+                        {
+                            text: ['토', '7/14'],
+                            value: 13000
+                        },
+                        {
+                            text: ['일', '7/15'],
+                            value: 10000
+                        }
+                    ],
+                    [
+                        {
+                            text: ['월', '7/10'],
+                            value: 5000
+                        },
+                        {
+                            text: ['화', '7/11'],
+                            value: 10000
+                        },
+                        {
+                            text: ['수', '7/12'],
+                            value: 15000
+                        },
+                        {
+                            text: ['목', '7/13'],
+                            value: 18000
+                        },
+                        {
+                            text: ['금', '7/14'],
+                            value: 0
+                        },
+                        {
+                            text: ['토', '7/15'],
+                            value: 0
+                        },
+                        {
+                            text: ['일', '7/16'],
+                            value: 0 
+                        }
+                    ]
                 ],
-                value: [
-                    [5000, 10000, 15000, 20000, 5500, 13000, 1800],
-                    [20000, 5500, 13000, 1800, 5000, 10000, 15000]
-                ],
-                maxValue: 2000
+                maxValue: 20000
             }
         }
         let graphWeek = new GraphSgv( graphWeekOptions );
 
+        let weekSwiper = new Swiper('#graphWeek .swiper-container', {
+            on: {
+                init: function(){
+                    if(graphWeekOptions.isTipShow)
+                        graphWeek.dispayTip();
+                },
+                touchMove: function(){
+                    if(graphWeekOptions.isTipShow)
+                        graphWeek.tipReset();
+                }, 
+                transitionEnd : function(){
+                    if(graphWeekOptions.isTipShow)
+                        graphWeek.dispayTip();
+                }
+            }
+        });
 
         
     </script>
