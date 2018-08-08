@@ -330,6 +330,7 @@
 
             // dispayTip
             dispayTip(){
+                console.log('dispayTip');
                 let self = this,
                     graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('rect'),
                     gTip = this.selector.tip;
@@ -371,19 +372,20 @@
             }
 
             runSwiper(){
+                let self = this;
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
                     on: {
                         init: function(){
-                            if(this.isTipShow)
-                                this.dispayTip();
+                            if(self.isTipShow)
+                                self.dispayTip();
                         },
                         touchMove: function(){
-                            if(this.isTipShow)
-                                this.tipReset();
+                            if(self.isTipShow)
+                                self.tipReset();
                         }, 
                         transitionEnd : function(){
-                            if(this.isTipShow)
-                                this.dispayTip();
+                            if(self.isTipShow)
+                                self.dispayTip();
                         }
                     }
                 });
