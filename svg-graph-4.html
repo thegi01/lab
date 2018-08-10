@@ -216,12 +216,12 @@
                 this.selector.swiperDiv.style.left =  this.space.left + 'px';
 
                 // canvas size
-                this.canvasWidth = Math.ceil(this.selector.land.getBoundingClientRect().width) - this.space.left,
+                this.canvasWidth = Math.round(this.selector.land.getBoundingClientRect().width) - this.space.left,
                 this.canvasHeight = options.height;
                 // console.log('Canvas width', this.canvasWidth, 'height', this.canvasHeight);
 
                 // y unit
-                this.unitY = Math.ceil(this.canvasHeight/this.stepV.length);
+                this.unitY = Math.round(this.canvasHeight/this.stepV.length);
                 // console.log('unitY:',this.unitY);
             }
 
@@ -266,8 +266,8 @@
                     let arrStep = [];
 
                     let itemLength = item.length;
-                    let unitX = Math.ceil(this.canvasWidth/item.length);
-                    let w = Math.ceil(unitX/3);
+                    let unitX = this.canvasWidth/item.length;
+                    let w = unitX/3;
 
                     item.map( (_data, j) => {
 
@@ -284,21 +284,23 @@
                         if(_data.text.length>0){
                             let stepH = this.stepH;
                             let p = stepH.position;
+                               
+                            // anchor 
+                            let anchor = 'middle';
+                            if(stepH.unit>0){
+                                if(j===0) anchor = 'start';
+                                if(j===itemLength-1) anchor = 'end';
+                            }
+
                             _data.text.map((_text, k) => {
-                                let anchor = 'middle';
                                 let _str= _text;
                                 if(stepH.unit>0){
-                                    if(j===0) anchor = 'start';
-                                    if(j===itemLength-1) anchor = 'end';
-
-                                    if( (j+1)%5 === 0 ){
-                                        if(item.length === 31 && j===29) 
-                                            _str = '';
-                                    } else {
+                                    // str : step 5, end-1 
+                                    if( !((j+1)%5 === 0) || j === item.length-2 ) 
                                         _str = '';
-                                        if(j===0 || item.length === 31 && j===30)
-                                            _str = _text;
-                                    }
+                                    // str : first, end 
+                                    if(j===0 || j === item.length-1) 
+                                        _str = _text;
                                 }
 
                                 if(!_str.length>0) return;
@@ -332,16 +334,15 @@
 
             // dispayTip
             dispayTip(){
-                console.log('dispayTip');
                 let self = this,
                     graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('rect'),
                     gTip = this.selector.tip;
 
 
                 let fn = function( graph, index ){
-                    var x = Math.ceil(graph.getAttribute('x')),
-                        y = Math.ceil(graph.getAttribute('y')),
-                        w = Math.ceil(graph.getAttribute('width')),
+                    var x = Math.round(graph.getAttribute('x')),
+                        y = Math.round(graph.getAttribute('y')),
+                        w = Math.round(graph.getAttribute('width')),
                         data = graph.dataset.value,
                         spaceLeft = self.space.left;
 
@@ -355,7 +356,7 @@
                     var bgEl = gTip.getElementsByTagName('line')[0],
                         textEl = gTip.getElementsByTagName('text')[0],
                         textWidth = textEl.getBoundingClientRect().width,
-                        x3 = Math.ceil(x-(textWidth-w)/2 + spaceLeft),
+                        x3 = Math.round(x-(textWidth-w)/2 + spaceLeft),
                         x4 = x3-5;
                     textEl.setAttribute('x', x3);
                     bgEl.setAttribute('x1', x4);
