@@ -234,8 +234,8 @@
                     i;
                 for(i=0 ; i<length ; i++){
                     let unit = this.data.maxValue/length,
-                        value = unit + unit * (length-i-1),
-                        y = this.unitY * i + spaceTop + 5,
+                        value = Math.round(unit + unit * (length-i-1)),
+                        y = this.unitY * i + spaceTop + 3,
                         tp = `<text text-anchor="end" x=${spaceLeft} y=${y}>${value}</text>`;
                     this.arrStep.push(tp);
                 }
@@ -788,7 +788,7 @@
                         }
                     ]
                 ],
-                maxValue: 20000
+                maxValue: 20001
             }
         }
         let graphMonth = new GraphSgv( graphMonthOptions );
