@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>todolist</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css"> 
+    <link rel="stylesheet" type="text/css" href="./css/todolist.css">
+</head>
+<body>
+
+    <div class="wrap" data-page="main">
+
+        <header class="header">
+            <h1 class="__title">h</h1>
+            <nav class="actions">
+                <!-- <button type="button" id="btnAdd" data-hidden="false">추가</button> -->
+                <button type="button" id="btnEdit">편집</button>
+            </nav>
+        </header>
+
+        <div class="container">
+            <main class="main">
+                
+                <!-- 입력 -->
+                <form class="todolist-add" id="add" data-hidden="false">
+                    <div class="ico"><span>+</span></div>
+                    <input type="date" name="date" value="2018-08-10" min="2018-08-09" max="2018-12-31" />
+                    <label><input type="text" name="name" placeholder="할 일 입력"></label>
+                    <button type="sumit"><span>완료</span></button>
+                </form>
+
+                <!-- 목록 -->
+                <div class="todolist-secton"></div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <span>footer</span>
+        </footer>
+
+    </div>
+
+    <script src="./json/todolist.js"></script>
+    <script>
+
+        // let tpAF = function(index, text){
+        //     return tp = `
+        //         <li class="lst-item" data-index=${index}>
+        //             <a href="#href">${text}</a>
+        //         </li>`;
+        // };
+
+        let drawTodolist = function(){
+            // Draw
+            let arrA = [];
+            data.map( (a, i)=>{
+
+                let arrB = [];
+
+                a.list.map( (b, j)=>{
+                    tp = `
+                        <li class="lst-item" data-index=${j}>
+                            <a href="#href">${b}</a>
+                            <button type="button" class="btn-delete" data-hidden=true><span></span></button>
+                        </li>`;
+                    arrB.push(tp);
+                    // tpAF(j, b);
+                });
+
+                tp =  `
+                <section class="todolist-card" data-index=${i}>
+                    <header class="div-header">
+                        <h3 class="__title">${a.date}</h3>
+                    </header>
+                    <ul class="div-lst">${arrB.join('')}</ul>
+                </section>`;
+
+                arrA.push(tp);
+            });
+            document.getElementsByClassName('todolist-secton')[0].innerHTML = arrA.join('');
+        }
+
+
+        // init
+        drawTodolist();
+
+
+        // Event : button add 
+        /*document.getElementById('btnAdd').addEventListener('click', function(){
+            this.dataset.hidden = true;
+            document.getElementById('add').dataset.hidden = false;
+        }, false);*/
+
+
+        // Event : button edit 
+        document.getElementById('btnEdit').addEventListener('click', function(){
+            this.textContent = '완료';
+            var btnDelete = document.getElementsByClassName('btn-delete');
+            for(var i=0 ; i<btnDelete.length ; i++){
+                btnDelete[i].dataset.hidden = false;
+            }
+        }, false);
+
+
+        // Event : add
+        document.getElementById('add').addEventListener('submit', function(){
+            event.preventDefault();
+            let value = this.querySelector('input[type=text]').value;
+            if(value){
+                let date = this.querySelector('input[type=date]').value;
+
+                data.map( (item, index)=>{
+                    if(item.date === date){
+                        item.list.push(value);
+                        drawTodolist();
+                    }
+                    /*if(item.date === date){
+                        item.list.push(value);
+                        let itemIndex = item.list.length-1;
+                        let tp = tpAF(itemIndex, value);
+                        let card = document.getElementsByClassName('todolist-card')[index];
+                        card.innerHTML = card.innerHTML + tp;
+                    }*/
+                })
+
+            } else{
+                window.alert("할일을 입력해주세요.");
+            }
+        }, false);
+
+
+
+        // localStorage.setItem('todolist', data);
+        // localStorage.setItem("username", "John");
+        // console.log(localStorage.getItem());
+
+        // localStorage.setItem('data', data);
+        // console.log(localStorage)
+
+        // localStorage.removeItem('a1');
+
+
+    </script>
+
+</body>
+</html>
