@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+/* layout */
+html,
+body{
+    height: 100%;
+}
+
+body{
+    color: #666;
+    background-color: #fff;
+}
+
+.wrap{
+    height: 100%;
+}
+
+.header{
+    position: absolute; top: 0; left:0; right: 0;
+    height: 50px;
+    box-sizing: border-box;
+    padding: 8px 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+.header .actions{
+    position: absolute; top: 12px; right: 15px;
+}
+.header .actions button{
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+.header .actions button[data-hidden=true]{
+    display: none;
+}
+
+.container{
+    min-height: 100%;
+    box-sizing: border-box;
+    margin-bottom: -30px;
+    padding: 65px 15px 30px;
+}
+
+.footer{
+    height: 30px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 14px; color: #999; 
+    line-height: 30px;
+}
+
+
+/* main */
+/* .todolist-add */
+.todolist-add{
+    display: table;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.todolist-add[data-hidden=true]{
+    display: none;
+}
+.todolist-add .ico{
+    display: table-cell;
+    width: 1%;
+    white-space: nowrap;
+}
+.todolist-add .ico span{
+    margin-right: 10px;
+}
+.todolist-add input[type=date]{
+    display: table-cell;
+    width: 110px;
+    white-space: nowrap;   
+}
+.todolist-add label{
+    display: table-cell;
+    width: 100%;
+}
+.todolist-add input[type=text]{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+}
+.todolist-add button{
+    display: table-cell;
+    width: 1%;
+    white-space: nowrap;
+    margin-left: 5px;
+}
+.todolist-add button span{
+    display: inline-block;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+/* .todolist-card */
+.todolist-card{
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.todolist-card .div-header{
+    margin-bottom: 8px;
+    
+}
+.todolist-card .div-header .__title{
+    font-size: 16px;
+}
+.todolist-card .lst-item{
+    position: relative;
+    padding: 5px 0;
+    border-bottom: dashed 1px #eee;
+}
+.todolist-card .lst-item a {
+    display: block;
+    margin-right: 15px;
+    color: #333;
+}
+.todolist-card .lst-item .btn-delete{
+    display: inline-block;
+    position: absolute; top: 5px; right: 0;
+    padding: 0 5px;
+    border: 1px solid #ddd;
+}
+.todolist-card .lst-item .btn-delete span{
+    display: inline-block;
+    width: 10px; height: 2px; 
+    background-color: #ccc;
+    vertical-align: middle;
+}
+.todolist-card .lst-item .btn-delete[data-hidden=true]{
+    display: none;
+}
