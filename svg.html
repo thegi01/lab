@@ -86,7 +86,7 @@
         <circle cx="90" cy="10" r="2" fill="red" />
         <circle cx="10" cy="90" r="2" fill="red" />
     </svg>
-
+    
     <h3>곡선(Curve) 명령어</h3>
     <h3>베지어 곡선</h3>
     <!-- 3차 C(Cubic) x1 y1, x2 y2, x y (혹은 c dx1 dy1, dx2 dy2, dx dy) -->
@@ -136,6 +136,26 @@
                             A 30 50 -45 0 1 215.1 109.9
                             L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
     </svg>
+    
+    <svg width="325" height="325" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80 80
+               A 45 45, 0, 0, 0, 125 125
+               L 125 80 Z" fill="green"/>
+      <path d="M230 80
+               A 45 45, 0, 1, 0, 275 125
+               L 275 80 Z" fill="red"/>
+      <path d="M80 230
+               A 45 45, 0, 0, 1, 125 275
+               L 125 230 Z" fill="purple"/>
+      <path d="M230 230
+               A 45 45, 0, 1, 1, 275 275
+               L 275 230 Z" fill="blue"/>
+    </svg>
+
+    <svg width="400" height="400" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid black">
+        <!-- <path d="M100,100 h200 a20,20 0 0 1 20,20 v200 a20,20 0 0 1 -20,20 h-200 a20,20 0 0 1 -20,-20 v-200 a20,20 0 0 1 20,-20 z" /> -->
+        <!-- <path d="M100,100 h200 a20,20 0 0 1 20,20 v220 h-220 v-200 a20,20 0 0 1 20,-20 z" /> -->
+    </svg>   
 
 
 
@@ -266,6 +286,57 @@
         <rect width="50%" height="100%" stroke="#000" fill="transparent" />
         <rect x="50%" width="50%" height="100%" stroke="#000" fill="transparent" />
     </svg>
+
+    <h2>Radius</h2>
+    <svg width="960" height="500" id="svgRadius">
+        <style>
+            path{
+                fill: #222;
+                stroke: #fef; stroke-width: 1.5px;
+            }
+        </style>
+        <g transform="translate(480, 250)">
+            <path></path>
+        </g>
+    </svg>
+    
+    <script>
+        svgRadius.querySelector('path').setAttribute('d', leftRoundedRect(-240, -120, 480, 240, 20));
+        function rightRoundedRect(x, y, width, height, radius) {
+          return "M" + x + "," + y
+               + "h" + (width - radius)
+               + "a" + radius + "," + radius + " 0 0 1 " + radius + "," + radius
+               + "v" + (height - 2 * radius)
+               + "a" + radius + "," + radius + " 0 0 1 " + -radius + "," + radius
+               + "h" + (radius - width)
+               + "z";
+        }
+        function leftRoundedRect(x, y, width, height, radius) {
+          return "M" + (x + radius) + "," + y
+               + "h" + (width - radius)
+               + "v" + height
+               + "h" + (radius - width)
+               + "a" + radius + "," + radius + " 0 0 1 " + (-radius) + "," + (-radius)
+               + "v" + (2 * radius - height)
+               + "a" + radius + "," + radius + " 0 0 1 " + radius + "," + (-radius)
+               + "z";
+        }
+    </script>
+
+    <h2>Graph test</h2>
+    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 490 V60 Q10 0 50 0 H60 Q100 0 100 60 V490z" fill="rgba(255, 122, 0, 0.8)" />
+    </svg>
+    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 500 v-450 q0 -50 50 -50 h10 q50 0 50 50 v450" fill="rgba(255, 122, 0, 0.8)" />
+    </svg>
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 200 v-180 q0 -20 20 -20 q20 0 20 20 v180" fill="rgba(255, 122, 0, 0.8)" />
+    </svg>
+    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 200 v-170 q0 -30 20 -30 q20 0 20 30 v170" fill="rgba(255, 122, 0, 0.8)" />
+    </svg>
+
 
     <!-- https://developer.mozilla.org/ko/docs/Web/SVG/Tutorial/%EC%9C%84%EC%B9%98 -->
     <!-- https://developer.mozilla.org/ko/docs/Web/SVG/Tutorial/Paths -->
