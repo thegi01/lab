@@ -223,7 +223,7 @@
                 // console.log('Canvas width', this.canvasWidth, 'height', this.canvasHeight);
 
                 // y unit
-                this.unitY = Math.round(this.canvasHeight/this.stepV.length);
+                this.unitY = this.canvasHeight/this.stepV.length;
                 // console.log('unitY:',this.unitY);
             }
 
@@ -408,9 +408,9 @@
         /* Week Graph */
         let graphWeekOptions = {
             cpnt: document.getElementById('graphWeek'),
-            height: 160,
+            height: 180,
             space:{
-                top: 40,
+                top: 20,
                 left: 0
             },
             radius: {
