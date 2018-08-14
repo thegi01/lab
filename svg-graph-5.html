@@ -192,7 +192,7 @@
         
         /* 그래프 */   
         class GraphSvg{
-            constructor( options, dataWeek ){
+            constructor( options, data ){
 
                 // options
                 this.cpnt = options.cpnt;
@@ -203,7 +203,7 @@
                 this.radius = options.radius;
                 this.isShowMaxValue = options.isShowMaxValue;
                 this.isShowTip = options.isShowTip;
-                this.data = dataWeek;
+                this.data = data;
 
                 if(this.isShowTip)
                     this.maxIndexes = []; // 주별 max index
