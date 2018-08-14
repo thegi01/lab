@@ -207,8 +207,11 @@
                 this.isShowTip = options.isShowTip;
                 this.data = dataWeek;
 
+                if(this.isShowTip)
+                    this.maxIndexes = []; // 주별 max index
+
                 // bind
-                this.dispayTip = this.dispayTip.bind(this);
+                this.handleTip = this.handleTip.bind(this);
 
                 // selector
                 this.selector = {
@@ -307,7 +310,8 @@
 
             // Draw Swiper
             drawSwiperGraph(){
-                let data = this.data,
+                let self = this,
+                    data = this.data,
                     maxValue = data.maxValue,
                     arrSwiper = [];
 
@@ -315,15 +319,22 @@
 
                     // Draw Graph, text
                     let arrGraph = [],
-                        arrStep = []/*,
-                        arrText = []*/;
+                        arrStep = [];
 
                     let itemLength = item.length;
                     let unitX = this.canvasWidth/item.length;
                     let w = unitX/3;
 
                     // Draw Unit & Graph
+                    let max = 0,
+                        maxIndex = 0;
                     item.map( (_data, j) => {
+
+                        // Get max value, index (week graph)
+                        if(self.isShowTip && _data.value > max) {
+                            max = _data.value;
+                            maxIndex = j;
+                        }
 
                         // Draw Unit
                         if(_data.text.length>0){
@@ -370,6 +381,9 @@
 
                     });
 
+                    if(this.isShowTip)
+                        this.maxIndexes.push(maxIndex);
+
                     // Draw Swiper
                     let tp = `
                         <div class="swiper-slide">
@@ -387,48 +401,56 @@
                     arrSwiper.push(tp);
                 });
 
+                // console.log('this.maxIndexes', this.maxIndexes);
+
                 this.cpnt.getElementsByClassName('swiper-wrapper')[0].innerHTML = arrSwiper.join('');
             }
 
-            // dispayTip
-            dispayTip(){
+            // handleTip
+            handleTip(){
                 let self = this,
-                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path'),
-                    gTip = this.selector.tip;
-
-                let fn = function( graph, index ){
-                    var graphClient = graph.getBoundingClientRect();
-                    var x = graphClient.x,
-                        y = graphClient.y,
-                        w = graphClient.width,
-                        data = graph.dataset.value,
-                        spaceLeft = self.space.left;
-
-                    var x2 = x + spaceLeft;
-                    var tp = `
-                        <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
-                        <text y="24" stroke="#fff">${data}</text>
-                        <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
-                    gTip.innerHTML = tp;
-
-                    var bgEl = gTip.getElementsByTagName('line')[0],
-                        textEl = gTip.getElementsByTagName('text')[0],
-                        textWidth = textEl.getBoundingClientRect().width,
-                        x3 = Math.round(x2-textWidth/2),
-                        x4 = x3-5;
-                    textEl.setAttribute('x', x3);
-                    bgEl.setAttribute('x1', x4);
-                    bgEl.setAttribute('x2', x4+textWidth+7);
-                };
-
+                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path') ;
                 Object.keys(graphs).map((index)=>{
                     graphs[index].addEventListener('click', function(){
-                        fn(this, index);
+                        self.showTip(this, index);
                     }, false);
                 });
             }
 
-            tipReset(){
+            // showTip
+            showTip( graphEl ){
+                let tipEl = this.selector.tip;
+
+                let graphClient = graphEl.getBoundingClientRect(),
+                    x = graphClient.x,
+                    y = graphClient.y,
+                    w = graphClient.width,
+                    data = graphEl.dataset.value,
+                    spaceLeft = this.space.left;
+
+                let x2 = x + spaceLeft;
+                let tp = `
+                    <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
+                    <text y="24" stroke="#fff">${data}</text>
+                    <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
+                tipEl.innerHTML = tp;
+
+                let bgEl = tipEl.getElementsByTagName('line')[0],
+                    textEl = tipEl.getElementsByTagName('text')[0],
+                    textWidth = textEl.getBoundingClientRect().width,
+                    x3 = Math.round(x2-textWidth/2),
+                    x4 = x3-5;
+                textEl.setAttribute('x', x3);
+                bgEl.setAttribute('x1', x4);
+                bgEl.setAttribute('x2', x4+textWidth+7);
+            };
+
+            autoShowTip(activeIndex, maxIndex){
+                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path')[maxIndex];
+                this.showTip( graphEl );
+            }
+
+            resetTip(){
                 this.selector.tip.innerHTML= '';
             }
 
@@ -437,18 +459,23 @@
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
                     on: {
                         init: function(){
-                            if(self.isShowTip)
-                                self.dispayTip();
+                            if(self.isShowTip){
+                                self.handleTip();
+                                self.autoShowTip(0, self.maxIndexes[0]);
+                            }
                             self.drawStatistics(0);
                         },
                         touchMove: function(){
                             if(self.isShowTip)
-                                self.tipReset();
+                                self.resetTip();
                         }, 
                         transitionEnd : function(){
-                            if(self.isShowTip)
-                                self.dispayTip();
-                            self.drawStatistics( this.activeIndex );
+                            let activeIndex = this.activeIndex;
+                            if(self.isShowTip){
+                                self.handleTip();
+                                self.autoShowTip(activeIndex, self.maxIndexes[activeIndex]);
+                            }
+                            self.drawStatistics( activeIndex );
                         }
                     }
                 });
