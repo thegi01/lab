@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Button Ing</title>
+    <link rel="stylesheet" type="text/css" href="reset.css"> 
+    <style>
+        body{
+            margin: 50px;
+        }
+        .button-ing{
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+            width: 200px; height: 50px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+        }
+        .base{
+            position: relative; 
+            display: inline-block;
+            width: 100%; height: 100%;
+            line-height: 50px;
+            background-color: transparent;
+            text-align: center;
+        }
+        .ing{
+            position: absolute; top:0; bottom:0; left: 0; right:0;
+            display: inline-block;
+            width: 0;
+            background-color: green;
+            opacity: 0.7;
+            transition: width 1s;
+        }
+        #button{
+            margin-top: 10px;
+            width: 100px; height: 30px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="button-ing">
+        <span class="ing"></span>
+        <span class="base">전송 중</span>    
+    </div>
+
+    <button id="button">클릭</button>
+
+    <script>
+        button.addEventListener('click', function(){
+            document.getElementsByClassName('ing')[0].style.width = '100%';
+        }, false);
+    </script>
+    
+
+</body>
+</html>
