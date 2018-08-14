@@ -289,18 +289,15 @@
                 let data = this.data;
                 let tp =  `
                     <dl class="total">
-                        <dt>합계 : </dt>
-                        <dd>${data.total[index]}보</dd>
+                        <dt>합계 : </dt><dd>${ data.total[index] }보</dd>
                     </dl>
                     <dl class="average">
-                        <dt>평균 : </dt>
-                        <dd>${data.average[index]}보</dd>
+                        <dt>평균 : </dt><dd>${ data.average[index] }보</dd>
                     </dl>`;
                 if(this.isShowMaxValue){
                     tp = tp + `
                         <dl class="max">
-                            <dt>최고기록 : </dt>
-                            <dd>${data.maxValue}보</dd>
+                            <dt>최고기록 : </dt><dd>${ data.maxValue }보</dd>
                         </dl>`;
                 }
                 this.selector.statistics.innerHTML = tp;
