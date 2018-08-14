@@ -289,22 +289,22 @@
             drawSwiperGraph(){
                 let self = this,
                     data = this.data,
-                    maxValue = data.maxValue,
                     arrSwiper = [];
 
                 data.list.map( (item, i) =>{
-
                     // Draw Graph, text
+                    
                     let arrGraph = [],
                         arrStep = [];
 
-                    let itemLength = item.length;
-                    let unitX = this.canvasWidth/item.length;
-                    let w = unitX/3;
+                    let itemLength = item.lengthm
+                        unitX = this.canvasWidth/itemLength,
+                        w = unitX/3;
 
-                    // Draw Unit & Graph
                     let max = 0,
                         maxIndex = 0;
+
+                    // Draw Unit & Graph
                     item.map( (_data, j) => {
 
                         // Get max value, index (week graph)
@@ -348,7 +348,7 @@
                         let value = _data.value;
                         if( value<=0 ) return;
                         let x = Math.round(unitX*j + w),
-                            h = value/maxValue * this.canvasHeight,
+                            h = value/data.maxValue * this.canvasHeight,
                             y = this.canvasHeight - h + this.space.top,
                             rh = this.radius.h, 
                             rv = this.radius.v,
@@ -646,7 +646,7 @@
                 [
                     {
                         text:['6/1'],
-                        value: 5000
+                        value: 500
                     },
                     {
                         text:['2'],
@@ -658,7 +658,7 @@
                     },
                     {
                         text:['4'],
-                        value: 15000
+                        value: 1000
                     },
                     {
                         text:['5'],
@@ -666,7 +666,7 @@
                     },
                     {
                         text:['6'],
-                        value: 20000
+                        value: 0
                     },
                     {
                         text:['7'],
@@ -674,7 +674,7 @@
                     },
                     {
                         text:['8'],
-                        value: 10000
+                        value: 900
                     },
                     {
                         text:['9'],
@@ -706,7 +706,7 @@
                     },
                     {
                         text:['16'],
-                        value: 10000
+                        value: 30000
                     },
                     {
                         text:['17'],
