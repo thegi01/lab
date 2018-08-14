@@ -375,8 +375,8 @@
                             y = this.canvasHeight - h + this.space.top,
                             rh = this.radius.h, 
                             rv = this.radius.v,
-                            v = h-rv;
-                        let tpGraph =`<path d="M${x} ${this.canvasHeight + this.space.top} v-${v} q0 -${rv} ${rh} -${rv} q${rh} 0 ${rh} ${rv} v${v}" data-value=${value} />`
+                            v = (h-rv)>0 ? h-rv : 0;
+                        let tpGraph =`<path d="M${x} ${this.canvasHeight + this.space.top} v-${v} q0 -${rv} ${rh} -${rv} q${rh} 0 ${rh} ${rv} v${v}" data-index=${j} data-value=${value} />`
                         arrGraph.push(tpGraph);
 
                     });
@@ -445,8 +445,8 @@
                 bgEl.setAttribute('x2', x4+textWidth+7);
             };
 
-            autoShowTip(activeIndex, maxIndex){
-                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path')[maxIndex];
+            autoShowTip(maxIndex){
+                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ maxIndex + '"]');
                 this.showTip( graphEl );
             }
 
@@ -456,12 +456,13 @@
 
             runSwiper(){
                 let self = this;
+                console.log('this.maxIndexes', this.maxIndexes);
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
                     on: {
                         init: function(){
                             if(self.isShowTip){
                                 self.handleTip();
-                                self.autoShowTip(0, self.maxIndexes[0]);
+                                self.autoShowTip(self.maxIndexes[0]);
                             }
                             self.drawStatistics(0);
                         },
@@ -473,7 +474,7 @@
                             let activeIndex = this.activeIndex;
                             if(self.isShowTip){
                                 self.handleTip();
-                                self.autoShowTip(activeIndex, self.maxIndexes[activeIndex]);
+                                self.autoShowTip(self.maxIndexes[activeIndex]);
                             }
                             self.drawStatistics( activeIndex );
                         }
@@ -517,15 +518,15 @@
                 [
                     {
                         text:['월', '7/2'],
-                        value: 5000
+                        value: 1000
                     },
                     {
                         text:['화', '7/3'],
-                        value: 10000
+                        value: 0
                     },
                     {
                         text:['수', '7/4'],
-                        value: 15000
+                        value: 500
                     },
                     {
                         text:['목', '7/5'],
@@ -533,11 +534,11 @@
                     },
                     {
                         text:['금', '7/6'],
-                        value: 20000
+                        value: 5000
                     },
                     {
                         text:['토', '7/7'],
-                        value: 13000
+                        value: 20000
                     },
                     {
                         text:['일', '7/8'],
