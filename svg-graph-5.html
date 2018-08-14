@@ -193,7 +193,7 @@
         class GraphSvg{
             constructor( options, data ){
 
-                // options
+                // props setting
                 this.cpnt = options.cpnt;
                 this.height = options.height;
                 this.stepH = options.stepH;
@@ -203,12 +203,9 @@
                 this.isShowMaxValue = options.isShowMaxValue;
                 this.isShowTip = options.isShowTip;
                 this.data = data;
-
                 if(this.isShowTip)
                     this.maxIndexes = []; // 주별 max index
 
-                // bind
-                this.handleTip = this.handleTip.bind(this);
 
                 // selector
                 this.selector = {
@@ -223,14 +220,17 @@
                 };
                 // console.log('this.selector', this.selector);
 
+
                 // init
                 this.init();
+
 
                 // Draw Step
                 this.arrStep = [];
                 if(this.stepV.isShow) this.drawStepV();
                 this.drawStepVLine( this.stepV.isLineShow );
                 this.selector.stepV.innerHTML = this.arrStep.join('');
+
 
                 // Swiper
                 if(this.data.list.length > 0) {
@@ -241,6 +241,7 @@
                     this.runSwiper();
                 }
             }
+
 
             init(){
                 this.selector.swiperDiv.style.left =  this.space.left + 'px';
@@ -253,6 +254,7 @@
                 this.unitY = this.canvasHeight/this.stepV.length;
                 // console.log('unitY:',this.unitY);
             }
+
 
             // 세로 단위
             drawStepV(){
@@ -269,7 +271,6 @@
                     this.arrStep.push(tp);
                 }
             }
-
             // 세로 단위 라인 
             drawStepVLine( isAll ){
                 let i,
@@ -283,24 +284,6 @@
                 this.selector.lineV.innerHTML = arrLine.join('');
             }
 
-            // Draw 통계
-            drawStatistics( index ){
-                let data = this.data;
-                let tp =  `
-                    <dl class="total">
-                        <dt>합계 : </dt><dd>${ data.total[index] }보</dd>
-                    </dl>
-                    <dl class="average">
-                        <dt>평균 : </dt><dd>${ data.average[index] }보</dd>
-                    </dl>`;
-                if(this.isShowMaxValue){
-                    tp = tp + `
-                        <dl class="max">
-                            <dt>최고기록 : </dt><dd>${ data.maxValue }보</dd>
-                        </dl>`;
-                }
-                this.selector.statistics.innerHTML = tp;
-            }
 
             // Draw Swiper
             drawSwiperGraph(){
@@ -400,18 +383,28 @@
                 this.cpnt.getElementsByClassName('swiper-wrapper')[0].innerHTML = arrSwiper.join('');
             }
 
-            // handleTip
-            handleTip(){
-                let self = this,
-                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path') ;
-                Object.keys(graphs).map((index)=>{
-                    graphs[index].addEventListener('click', function(){
-                        self.showTip(this, index);
-                    }, false);
-                });
+
+            // Draw 통계
+            drawStatistics( index ){
+                let data = this.data;
+                let tp =  `
+                    <dl class="total">
+                        <dt>합계 : </dt><dd>${ data.total[index] }보</dd>
+                    </dl>
+                    <dl class="average">
+                        <dt>평균 : </dt><dd>${ data.average[index] }보</dd>
+                    </dl>`;
+                if(this.isShowMaxValue){
+                    tp = tp + `
+                        <dl class="max">
+                            <dt>최고기록 : </dt><dd>${ data.maxValue }보</dd>
+                        </dl>`;
+                }
+                this.selector.statistics.innerHTML = tp;
             }
 
-            // showTip
+
+            // Display tip
             showTip( graphEl ){
                 let tipEl = this.selector.tip;
 
@@ -438,16 +431,25 @@
                 bgEl.setAttribute('x1', x4);
                 bgEl.setAttribute('x2', x4+textWidth+7);
             };
-
-            autoShowTip(maxIndex){
+            handleTip(){
+                let self = this,
+                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path') ;
+                Object.keys(graphs).map((index)=>{
+                    graphs[index].addEventListener('click', function(){
+                        self.showTip(this);
+                    }, false);
+                });
+            }
+            autoShowTip( maxIndex ){
                 let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ maxIndex + '"]');
                 this.showTip( graphEl );
             }
-
             resetTip(){
                 this.selector.tip.innerHTML= '';
             }
 
+
+            // Run Swiper
             runSwiper(){
                 let self = this;
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
@@ -455,7 +457,7 @@
                         init: function(){
                             if(self.isShowTip){
                                 self.handleTip();
-                                self.autoShowTip(self.maxIndexes[0]);
+                                self.autoShowTip( self.maxIndexes[0] );
                             }
                             self.drawStatistics(0);
                         },
@@ -467,7 +469,7 @@
                             let activeIndex = this.activeIndex;
                             if(self.isShowTip){
                                 self.handleTip();
-                                self.autoShowTip(self.maxIndexes[activeIndex]);
+                                self.autoShowTip( self.maxIndexes[activeIndex] );
                             }
                             self.drawStatistics( activeIndex );
                         }
