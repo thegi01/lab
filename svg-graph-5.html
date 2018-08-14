@@ -293,17 +293,17 @@
 
                 data.list.map( (item, i) =>{
                     // Draw Graph, text
-                    
+
                     let arrGraph = [],
                         arrStep = [];
 
-                    let itemLength = item.lengthm
-                        unitX = this.canvasWidth/itemLength,
-                        w = unitX/3;
+                    let itemLength = item.length;
+                    let unitX = this.canvasWidth/item.length;
+                    let w = unitX/3;
 
                     let max = 0,
                         maxIndex = 0;
-
+                        
                     // Draw Unit & Graph
                     item.map( (_data, j) => {
 
