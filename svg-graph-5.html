@@ -83,8 +83,23 @@
         } 
 
         .graph-statistics{
-
-
+            padding: 20px;
+        
+        }
+        .graph-statistics dl {
+            display: inline-block;
+            margin: 0 30px 0;
+        }
+        .graph-statistics dt,
+        .graph-statistics dd {
+            display: inline-block;
+        }
+        .graph-statistics dd{
+            margin-left: 0;
+        }
+        .graph-statistics .max{
+            display: block;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -126,17 +141,7 @@
         <!-- // 그래프 Swiper -->
 
         <!-- 통계 -->
-        <div class="graph-statistics">
-            <dl class="total">
-                <dt>합계</dt>
-                <dd>541,201보</dd>
-            </dl>
-            <dl class="average">
-                <dt>평균</dt>
-                <dd>4,521보</dd>
-            </dl>
-        </div>
-        <!-- //통계 -->
+        <div class="graph-statistics"></div>
 
     </div>
     
@@ -175,6 +180,9 @@
         </div>
         <!-- // 그래프 Swiper -->
 
+        <!-- 통계 -->
+        <div class="graph-statistics"></div>
+
     </div>
 
 
@@ -196,7 +204,7 @@
                 this.space = options.space;
                 this.radius = options.radius;
                 this.isShowMaxValue = options.isShowMaxValue;
-                this.isTipShow = options.isTipShow;
+                this.isShowTip = options.isShowTip;
                 this.data = dataWeek;
 
                 // bind
@@ -210,7 +218,8 @@
                     stepV: this.cpnt.getElementsByClassName('graph-stepV')[0],
                     lineV: this.cpnt.getElementsByClassName('graph-lineV')[0],
                     swiperDiv: this.cpnt.getElementsByClassName('graph-swiper')[0],
-                    tip: this.cpnt.getElementsByClassName('graph-tip')[0]
+                    tip: this.cpnt.getElementsByClassName('graph-tip')[0],
+                    statistics: this.cpnt.getElementsByClassName('graph-statistics')[0]
                 };
                 // console.log('this.selector', this.selector);
 
@@ -274,12 +283,35 @@
                 this.selector.lineV.innerHTML = arrLine.join('');
             }
 
+            // Draw 통계
+            drawStatistics( index ){
+                let data = this.data;
+                let tp =  `
+                    <dl class="total">
+                        <dt>합계 : </dt>
+                        <dd>${data.total[index]}보</dd>
+                    </dl>
+                    <dl class="average">
+                        <dt>평균 : </dt>
+                        <dd>${data.average[index]}보</dd>
+                    </dl>`;
+                if(this.isShowMaxValue){
+                    tp = tp + `
+                        <dl class="max">
+                            <dt>최고기록 : </dt>
+                            <dd>${data.maxValue}보</dd>
+                        </dl>`;
+                }
+                this.selector.statistics.innerHTML = tp;
+            }
+
             // Draw Swiper
             drawSwiperGraph(){
-                let maxValue = this.data.maxValue,
+                let data = this.data,
+                    maxValue = data.maxValue,
                     arrSwiper = [];
 
-                this.data.list.map( (item, i) =>{
+                data.list.map( (item, i) =>{
 
                     // Draw Graph, text
                     let arrGraph = [],
@@ -337,22 +369,6 @@
                         arrGraph.push(tpGraph);
 
                     });
-
-                    // Draw text
-                    /*let data = this.data,
-                        total = data.total[i],
-                        average = data.average[i];
-                    let tpText = `
-                        <text x="20" y="300">합계 : ${total}보</text>
-                        <text x="220" y="300">평균 : ${average}보</text>`;
-                    let tpText2;
-                    arrText.push(tpText);
-                    if(this.isShowMaxValue){
-                        tpText2 = `<text x="20" y="330">최고기록 : ${data.maxValue}보</text>`
-                        arrText.push(tpText2);
-                    }*/
-
-
 
                     // Draw Swiper
                     let tp = `
@@ -421,16 +437,18 @@
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
                     on: {
                         init: function(){
-                            if(self.isTipShow)
+                            if(self.isShowTip)
                                 self.dispayTip();
+                            self.drawStatistics(0);
                         },
                         touchMove: function(){
-                            if(self.isTipShow)
+                            if(self.isShowTip)
                                 self.tipReset();
                         }, 
                         transitionEnd : function(){
-                            if(self.isTipShow)
+                            if(self.isShowTip)
                                 self.dispayTip();
+                            self.drawStatistics( this.activeIndex );
                         }
                     }
                 });
@@ -465,7 +483,7 @@
                 v: 10
             },
             isShowMaxValue: false,
-            isTipShow: true
+            isShowTip: true
         }
         let dataWeek = {
             list:[
@@ -560,12 +578,12 @@
                     }
                 ]
             ],
-            /*total: [
-                '41,201', '50,000', '60,001'
+            total: [
+                '41,200', '50,000', '60,000'
             ],
             average: [
                 '5,000', '6,000', '7,000'
-            ],*/
+            ],
             maxValue: 20000
         }
         let graphWeek = new GraphSvg( graphWeekOptions, dataWeek );
@@ -598,7 +616,7 @@
                 v: 3
             },
             isShowMaxValue: true,
-            isTipShow: false        
+            isShowTip: false        
         }
         let dataMonth = {
             list:[
@@ -851,13 +869,13 @@
                     }
                 ]
             ],
-           /* total: [
-                '541,201', '650,000', '760,001'
+            total: [
+                '541,200', '650,000', '760,000'
             ],
             average: [
                 '5,000', '6,000', '7,000'
-            ],*/
-            maxValue: 20001
+            ],
+            maxValue: 30000
         }
         let graphMonth = new GraphSvg( graphMonthOptions, dataMonth );
 
