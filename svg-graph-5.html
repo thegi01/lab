@@ -14,7 +14,7 @@
         }
 
         body{
-            margin: 0; padding: 0;
+            margin: 50px 0 0 0; padding: 0;
             background-color: #f8f8f8;
         }
         
@@ -45,7 +45,7 @@
         .graphWeek, .graphMonth{
             position: relative;
             /*border: 1px solid #ddd;*/
-            margin: 10px;
+            margin: 0;
             background-color: #fff;
         }
         .graphWeek svg,
@@ -405,13 +405,14 @@
                     y = graphClient.y,
                     w = graphClient.width,
                     data = graphEl.dataset.value,
-                    spaceLeft = this.space.left;
+                    spaceLeft = this.space.left,
+                    top = this.selector.svgBase.getBoundingClientRect().top;
 
-                let x2 = x + spaceLeft;
+                let x2 = x + w/2 + spaceLeft;
                 let tp = `
                     <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
                     <text y="24" stroke="#fff">${data}</text>
-                    <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
+                    <line x1=${x2} y1="30" x2=${x2} y2=${y-top} stroke="black" stroke-width="1" />`;
                 tipEl.innerHTML = tp;
 
                 let bgEl = tipEl.getElementsByTagName('line')[0],
