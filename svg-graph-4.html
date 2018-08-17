@@ -271,7 +271,7 @@
 
                     item.map( (_data, j) => {
 
-                        let x = unitX*j + w,
+                        let x = Math.round(unitX*j + w),
                             v = _data.value,
                             h = v/maxValue * this.canvasHeight,
                             y = this.canvasHeight - h + this.space.top;

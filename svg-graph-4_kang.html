@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>SVG Graph</title>
+    <link rel="stylesheet" href="./css/swiper.min.css">
+
+    <style>
+        html, body {
+          position: relative;
+          height: 100%;
+        }
+
+        body{
+            margin: 0; padding: 0;
+            background-color: #f8f8f8;
+        }
+        
+        .swiper-container {
+          width: 100%;
+          height: 100%;
+        }
+        .swiper-slide {
+          text-align: center;
+          font-size: 18px;
+          /*background: #fff;*/
+
+          /* Center slide text vertically */
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+        }
+        
+        .graphWeek, .graphMonth{
+            position: relative;
+            /*border: 1px solid #ddd;*/
+            margin: 10px;
+            background-color: #fff;
+        }
+        .graphWeek svg,
+        .graphMonth svg{
+            width: 100%; 
+        }
+        .graph-lineV line{
+            stroke: #eee;
+            stroke-width: 1;
+        }
+        .graph-stepV text,
+        .graph-stepH text{
+            cursor: default; user-select: none; -webkit-font-smoothing: antialiased;
+            font-size: 10px; color: #333;
+        }
+        .graph-graph rect{
+            stroke: #b87333;
+            stroke-width: 1;
+            fill: #b87333
+        }
+        .graph-tip text{
+            font-size: 10px; 
+        }
+        .graph-tip line{}
+        .graph-swiper{
+            position: absolute; top: 0; right: 0; 
+        }
+
+
+        /* 고정값 */
+        .graphWeek svg,
+        .graphMonth svg,
+        .graph-swiper{
+            height: 270px;
+        }
+    </style>
+    <style>
+        
+      </style>
+</head>
+<body>
+
+    <div class="graphWeek" id="graphWeek">
+    
+        <!-- 그래프 고정 영역 -->
+        <?xml version="1.0" standalone="no"?>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-role="svgBase">
+            
+            <!-- graph-land -->
+            <g class="graph-land">
+                <rect width="100%" height="100%" stroke="none" stroke-width="0" fill="#fff"></rect>
+            </g>
+
+            <!-- graph canvas -->
+            <g class="graph-canvas">
+                <!-- vertical step -->
+                <g class="graph-stepV"></g>
+                <!-- vertical line -->
+                <g class="graph-lineV"></g>
+            </g>
+
+            <!-- 팁 -->
+            <g class="graph-tip"></g>
+
+        </svg>
+        <!-- // 그래프 고정 영역 -->
+
+        <!-- 그래프 Swiper -->
+        <div class="graph-swiper">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                </div>
+            </div>
+        </div>
+        <!-- // 그래프 Swiper -->
+
+    </div>
+
+    <div class="graphMonth" id="graphMonth">
+    
+        <!-- 그래프 고정 영역 -->
+        <?xml version="1.0" standalone="no"?>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" data-role="svgBase">
+            
+            <!-- graph-land -->
+            <g class="graph-land">
+                <rect width="100%" height="100%" stroke="none" stroke-width="0" fill="#fff"></rect>
+            </g>
+
+            <!-- graph canvas -->
+            <g class="graph-canvas">
+                <!-- vertical step -->
+                <g class="graph-stepV"></g>
+                <!-- vertical line -->
+                <g class="graph-lineV"></g>
+            </g>
+
+            <!-- 팁 -->
+            <g class="graph-tip"></g>
+
+        </svg>
+        <!-- // 그래프 고정 영역 -->
+
+        <!-- 그래프 Swiper -->
+        <div class="graph-swiper">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                </div>
+            </div>
+        </div>
+        <!-- // 그래프 Swiper -->
+
+    </div>
+
+
+    <script src="./js/swiper.min.js"></script>
+    
+    <script>        
+
+        
+        
+        /* 그래프 */   
+        class GraphSgv{
+            constructor( options ){
+
+                // options
+                this.cpnt = options.cpnt;
+                this.stepH = options.stepH;
+                this.stepV = options.stepV;
+                this.space = options.space;
+                this.isTipShow = options.isTipShow;
+                this.data = options.data;
+
+                // bind
+                this.dispayTip = this.dispayTip.bind(this);
+
+                // selector
+                this.selector = {
+                    svgBase : this.cpnt.querySelector('[data-role=svgBase]'),
+                    land: this.cpnt.getElementsByClassName('graph-land')[0],
+                    canvas: this.cpnt.getElementsByClassName('graph-canvas')[0],
+                    stepV: this.cpnt.getElementsByClassName('graph-stepV')[0],
+                    lineV: this.cpnt.getElementsByClassName('graph-lineV')[0],
+                    swiperDiv: this.cpnt.getElementsByClassName('graph-swiper')[0],
+                    tip: this.cpnt.getElementsByClassName('graph-tip')[0]
+                };
+                // console.log('this.selector', this.selector);
+
+                // init
+                this.init(options);
+
+                // Draw Step
+                this.arrStep = [];
+                if(this.stepV.isShow) this.drawStepV();
+                this.drawStepVLine( this.stepV.isLineShow );
+                this.selector.stepV.innerHTML = this.arrStep.join('');
+
+                // Draw Swiper( 그래프, 가로 텍스트 )
+                if(this.data.list.length > 0) this.drawSwiperGrapn();
+
+                // Swiper 실행
+                this.runSwiper();
+            }
+
+            init(options){
+                this.selector.swiperDiv.style.left =  this.space.left + 'px';
+
+                // canvas size
+                this.canvasWidth = Math.ceil(this.selector.land.getBoundingClientRect().width) - this.space.left,
+                this.canvasHeight = options.height;
+                // console.log('Canvas width', this.canvasWidth, 'height', this.canvasHeight);
+
+                // y unit
+                this.unitY = Math.ceil(this.canvasHeight/this.stepV.length);
+                // console.log('unitY:',this.unitY);
+            }
+
+            // 세로 단위
+            drawStepV(){
+                let stepV = this.stepV,
+                    spaceTop = this.space.top,
+                    spaceLeft = this.space.left,
+                    length = stepV.length,
+                    i;
+                for(i=0 ; i<length ; i++){
+                    let unit = this.data.maxValue/length,
+                        value = unit + unit * (length-i-1),
+                        y = this.unitY * i + spaceTop + 5,
+                        tp = `<text text-anchor="end" x=${spaceLeft} y=${y}>${value}</text>`;
+                    this.arrStep.push(tp);
+                }
+            }
+
+            // 세로 단위 라인 
+            drawStepVLine( isAll ){
+                let i,
+                    arrLine = [];
+                for(i=0 ; i<=this.stepV.length ; i++){
+                    let y = this.unitY * i + this.space.top,
+                        tp = `<line x1=${this.space.left} y1=${y} x2="100%" y2=${y} />`;
+                    if(!isAll && i<this.stepV.length) tp='';
+                    arrLine.push(tp);
+                }
+                this.selector.lineV.innerHTML = arrLine.join('');
+            }
+
+            // Draw Swiper
+            drawSwiperGrapn(){
+                let maxValue = this.data.maxValue,
+                    arrSwiper = [];
+
+                this.data.list.map( (item, i) =>{
+
+                    // Draw Graph, text
+                    let arrGraph = [];
+                    let arrStep = [];
+
+                    let itemLength = item.length;
+                    let unitX = Math.ceil(this.canvasWidth/item.length);
+                    let w = Math.ceil(unitX/3);
+
+                    item.map( (_data, j) => {
+
+                        let x = unitX*j + w,
+                            v = _data.value,
+                            h = v/maxValue * this.canvasHeight,
+                            y = this.canvasHeight - h + this.space.top;
+
+                        // Draw Graph
+                        let tpGraph = `<rect x=${x} y=${y} width=${w} height=${h} data-value=${v}></rect>`;
+                        arrGraph.push(tpGraph);
+
+                        // Display Text
+                        if(_data.text.length>0){
+                            let stepH = this.stepH;
+                            let p = stepH.position;
+                            _data.text.map((_text, k) => {
+                                let anchor = 'middle';
+                                let _str= _text;
+                                if(stepH.unit>0){
+
+                                    if(j===0) anchor = 'start';
+                                    if(j===itemLength-1) anchor = 'end';
+
+                                    if( (j+1)%5 === 0 ){
+                                        if(item.length === 31 && j===29) 
+                                            _str = '';
+                                    } else {
+                                        _str = '';
+                                        if(j===0 || item.length === 31 && j===30)
+                                            _str = _text;
+                                    }
+                                }
+
+                                let x2 = unitX*j + unitX/2,
+                                    tp = `<text text-anchor=${anchor} x=${x2} y=${p.top + p.space*k}>${_str}</text>`;
+
+                                arrStep.push(tp);
+                            });
+                        }
+                    });
+
+                    // Draw Swiper
+                    let tp = `
+                        <div class="swiper-slide">
+                            <?xml version="1.0" standalone="no"?>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                <g class="graph-graph">
+                                    ${arrGraph.join('')}
+                                </g>
+                                <g class="graph-stepH">
+                                    ${arrStep.join('')}
+                                </g>
+                            </svg>
+                        </div>`;
+
+                    arrSwiper.push(tp);
+                });
+
+                this.cpnt.getElementsByClassName('swiper-wrapper')[0].innerHTML = arrSwiper.join('');
+            }
+
+            // dispayTip
+            dispayTip(){
+                // console.log('dispayTip');
+                let self = this,
+                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('rect'),
+                    gTip = this.selector.tip;
+
+
+                let fn = function( graph, index ){
+                    var x = Math.ceil(graph.getAttribute('x')),
+                        y = Math.ceil(graph.getAttribute('y')),
+                        w = Math.ceil(graph.getAttribute('width')),
+                        data = graph.dataset.value,
+                        spaceLeft = self.space.left;
+
+                    var x2 = x + w/2 + spaceLeft;
+                    var tp = `
+                        <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
+                        <text y="24" stroke="#fff">${data}</text>
+                        <line x1=${x2} y1="30" x2=${x2} y2=${y} stroke="black" stroke-width="1" />`;
+                    gTip.innerHTML = tp;
+
+                    var bgEl = gTip.getElementsByTagName('line')[0],
+                        textEl = gTip.getElementsByTagName('text')[0],
+                        textWidth = textEl.getBoundingClientRect().width,
+                        x3 = Math.ceil(x-(textWidth-w)/2 + spaceLeft),
+                        x4 = x3-5;
+                    textEl.setAttribute('x', x3);
+                    bgEl.setAttribute('x1', x4);
+                    bgEl.setAttribute('x2', x4+textWidth+7);
+                };
+
+                Object.keys(graphs).map((index)=>{
+                    graphs[index].addEventListener('click', function(){
+                        fn(this, index);
+                    }, false);
+                });
+            }
+
+            tipReset(){
+                this.selector.tip.innerHTML= '';
+            }
+
+            runSwiper(){
+                let self = this;
+                this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
+                    on: {
+                        init: function(){
+                            if(self.isTipShow)
+                                self.dispayTip();
+                        },
+                        touchMove: function(){
+                            if(self.isTipShow)
+                                self.tipReset();
+                        }, 
+                        transitionEnd : function(){
+                            if(self.isTipShow)
+                                self.dispayTip();
+                        }
+                    }
+                });
+            }
+        }
+
+
+        /* Week Graph */
+        let graphWeekOptions = {
+            cpnt: document.getElementById('graphWeek'),
+            height: 160,
+            space:{
+                top: 40,
+                left: 0
+            },
+            stepV: {
+                isShow: false,
+                isLineShow: false,
+                length: 4
+            },
+            stepH: {
+                isShow: true,
+                position: {
+                    top : 220,
+                    space : 20
+                }
+            },
+            isTipShow: true,
+            data: {
+                list:[],
+                maxValue: 0
+            }
+        }
+
+        function createWeekGraph(data){
+            
+            if(!data) return;
+            // data = {   
+            //     start: "20180801",
+            //     end : "20180821",
+            //     steps:[
+            //         {yyyymmdd:"20180801",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180802",step:"1301",cal:"",range:""},
+            //         {yyyymmdd:"20180803",step:"1041",cal:"",range:""},
+            //         {yyyymmdd:"20180804",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180805",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180806",step:"5101",cal:"",range:""},
+            //         {yyyymmdd:"20180807",step:"1091",cal:"",range:""},
+            //         {yyyymmdd:"20180810",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180811",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180812",step:"1301",cal:"",range:""},
+            //         {yyyymmdd:"20180813",step:"1041",cal:"",range:""},
+            //         {yyyymmdd:"20180814",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180815",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180817",step:"5101",cal:"",range:""},
+            //         {yyyymmdd:"20180818",step:"1091",cal:"",range:""},
+            //         {yyyymmdd:"20180821",step:"4101",cal:"",range:""}
+            //     ]
+            // };
+
+            var dataWeek = data;
+
+            var sd = dataWeek.start;
+            var ed = dataWeek.end;
+
+            var start = sd.substr(4,2) +  "/" + sd.substr(6,2) + "/" + sd.substr(0,4);  // yyyymmdd -> mm/dd/yyyy 포멧변경
+            var end = ed.substr(4,2) +  "/" + ed.substr(6,2) + "/" + ed.substr(0,4);    // yyyymmdd -> mm/dd/yyyy 포멧변경
+
+
+            /* 총 일수 계산 */
+            var st = new Date(start).getTime();
+            var et = new Date(end).getTime();
+            var elapsed = Math.floor((et - st) / 86400000);
+
+            var steps = dataWeek.steps;
+            var maxStep = 0; // 최대 걸음수
+            //var maxStep = Math.max.apply(null,steps);
+            var dt = new Date(start);
+            // var startDay = dt.getDay();
+            var days = ["일","월","화","수","목","금","토"];
+            var week = [];
+            var weeks = [];
+            var weeksMaxIndex = [];
+
+
+            for(var i=0; i< (elapsed+1); i++){
+
+                /* 시작일이 월요일이 아닐경우 offset을 채움 */
+                if(i==0 && dt.getDay()!= 1){
+
+                    if(dt.getDay() == 0)
+                        offSet = 6;
+                    else
+                        offSet = dt.getDay() - 1;
+
+                    var offDt = new Date(start);
+
+                    
+
+                    offDt.setDate(offDt.getDate() - offSet);
+
+
+                    for(var j=0; j<offSet; j++){
+                        var gd = {};
+                        gd["text"] = [days[offDt.getDay()], (offDt.getMonth()+1) + "/" + offDt.getDate()]; 
+                        gd["value"] = "0";
+                        week.push(gd);
+                        offDt.setDate(offDt.getDate() + 1);
+                    }
+                }
+
+                if(dt.getDay()==1) week = [];
+                
+                var graphData = {};
+                graphData["text"] = [days[dt.getDay()], (dt.getMonth()+1) + "/" + dt.getDate()]; 
+
+                var yyyymmdd = dt.getFullYear().toString() + lpad((dt.getMonth()+1).toString(),2,"0") + lpad(dt.getDate().toString(),2,"0");
+                var step = getStep(yyyymmdd,dataWeek.steps);
+
+                if(parseInt(maxStep) < parseInt(step)) maxStep = step;
+
+                graphData["value"] = step;
+
+                week.push(graphData);
+
+                if(dt.getDay() == 0) weeks.push(week);
+
+                /* 일요일로 끝나지 않을 경우 부족한 날짜를 채움 */
+                if(i == elapsed && dt.getDay() != 0){
+
+                    var short = 7 - dt.getDay();
+
+                    var shortDt = new Date(end);
+                    
+                    for(var j=0; j<short; j++){
+
+                        shortDt.setDate(shortDt.getDate() + 1);
+
+                        var gd = {};
+                        gd["text"] = [days[shortDt.getDay()], (shortDt.getMonth()+1) + "/" + shortDt.getDate()]; 
+                        gd["value"] = "0";
+
+                        week.push(gd);
+                    }
+
+                    weeks.push(week);
+                }
+
+                dt.setDate(dt.getDate() + 1);
+
+            }
+
+            let arrMaxIndex = [];
+            weeks.map( (week, i) => {
+                let maxStep = 0,
+                    maxIndex = 0;
+                week.map( (data, j) =>{
+                    if( data.value > maxStep ){
+                        maxStep = data.value;
+                        maxIndex = j;
+                    }
+                })
+                arrMaxIndex.push(maxIndex);
+            });
+
+            graphWeekOptions.data.list = weeks;
+            graphWeekOptions.data.maxValue = maxStep;
+            graphWeekOptions.data.maxIndex = arrMaxIndex;
+
+            let graphWeek = new GraphSgv( graphWeekOptions );
+        }
+
+        /* Month Graph */
+        let graphMonthOptions = {
+            cpnt: document.getElementById('graphMonth'),
+            height: 160,
+            space:{
+                top: 40,
+                left: 30
+            },
+            stepV: {
+                isShow: true,
+                isLineShow: true,
+                length: 4
+            },
+            stepH: {
+                isShow: true,
+                unit: 5,
+                position: {
+                    top : 220,
+                    space : 20
+                }
+            },
+            isTipShow: false,
+            data: {
+                list:[],
+                maxValue: 0
+            }
+        }
+
+        function createMonthGraph(data){
+            if(!data) return;
+            // data = {   
+            //     start: "20180801",
+            //     end : "20180901",
+            //     steps:[
+            //         {yyyymmdd:"20180801",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180802",step:"1301",cal:"",range:""},
+            //         {yyyymmdd:"20180803",step:"1041",cal:"",range:""},
+            //         {yyyymmdd:"20180804",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180805",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180806",step:"5101",cal:"",range:""},
+            //         {yyyymmdd:"20180807",step:"1091",cal:"",range:""},
+            //         {yyyymmdd:"20180810",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180811",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180812",step:"1301",cal:"",range:""},
+            //         {yyyymmdd:"20180813",step:"1041",cal:"",range:""},
+            //         {yyyymmdd:"20180814",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180815",step:"1021",cal:"",range:""},
+            //         {yyyymmdd:"20180817",step:"5101",cal:"",range:""},
+            //         {yyyymmdd:"20180818",step:"1091",cal:"",range:""},
+            //         {yyyymmdd:"20180821",step:"4101",cal:"",range:""},
+            //         {yyyymmdd:"20180911",step:"10221",cal:"",range:""},
+            //         {yyyymmdd:"20180912",step:"13301",cal:"",range:""},
+            //         {yyyymmdd:"20180913",step:"14041",cal:"",range:""},
+            //         {yyyymmdd:"20180914",step:"45101",cal:"",range:""},
+            //         {yyyymmdd:"20180915",step:"10121",cal:"",range:""},
+            //         {yyyymmdd:"20180917",step:"51201",cal:"",range:""}
+            //     ]
+            // };
+
+            var dataMonth = data;
+
+            var sd = dataMonth.start;
+            var ed = dataMonth.end;
+
+            var start = sd.substr(4,2) +  "/" + "01" + "/" + sd.substr(0,4);  // yyyymmdd -> mm/dd/yyyy 포멧변경
+            var end = ed.substr(4,2) +  "/" + "01" + "/" + sd.substr(0,4);   // yyyymmdd -> mm/dd/yyyy 포멧변경
+            
+            var dt = new Date(start);
+            var endDt = new Date(end);
+
+            var maxStep = 0;
+            
+            /*
+            [
+                {[text:[""], value:""]},
+                {[text:[""], value:""]},
+                {[text:[""], value:""]},
+                {[text:[""], value:""]}
+            ],
+            [
+                {[text:[""], value:""]},
+                {[text:[""], value:""]},
+                {[text:[""], value:""]},
+                {[text:[""], value:""]}
+            ]....*/
+
+            var monCnt = 1;
+            var months = [];
+            var month = [];
+            do{
+                month = [];
+                var firstDt = new Date(dt.getFullYear(), dt.getMonth(), 1);
+                var lastDt = new Date(dt.getFullYear(), dt.getMonth()+1, 0);
+                // console.log(dt, firstDt, lastDt);
+
+                var dateCnt = 1;
+                while(firstDt.getTime() <= lastDt.getTime()){
+                    if(dateCnt > 31) break;
+
+                    var yyyymmdd = firstDt.getFullYear().toString() + lpad((firstDt.getMonth()+1).toString(),2,"0") + lpad(firstDt.getDate().toString(),2,"0");
+                    var step = getStep(yyyymmdd,dataMonth.steps);
+
+                    month.push({text: [(dateCnt != 1) ? firstDt.getDate().toString() :  (firstDt.getMonth() + 1).toString()+"/"+ firstDt.getDate().toString()], value:step});
+                    if(parseInt(maxStep) < parseInt(step)) maxStep = step;
+                    
+                    firstDt.setDate(firstDt.getDate() + 1);
+                    dateCnt ++;
+                }
+
+                months.push(month);
+
+                dt.setMonth(dt.getMonth() + 1);
+
+                if(monCnt > 3) break;
+                monCnt ++;
+
+            } while(dt.getTime() <= endDt.getTime())
+            
+            graphMonthOptions.data.list = months;
+
+            var n = maxStep;
+
+            if(n.toString().length > 2){
+                var g = Math.pow(10, n.toString().length - 2)
+                graphMonthOptions.data.maxValue = Math.ceil(n/g) * g;
+            } else
+                graphMonthOptions.data.maxValue = 100;
+
+            console.log(graphMonthOptions.data.list)
+
+            let graphMonth = new GraphSgv(graphMonthOptions);
+        }
+
+        // 네이티브에서 콜백 받는 함수 (주별 그래프)
+        window.createWeekGraph_G = function(data){
+            createWeekGraph(data);
+        }
+
+        // 네이티브에서 콜백 받는 함수 (월별 그래프)
+        window.createMonthGraph_G = function(data){
+            createMonthGraph(data);
+        }
+        
+        
+        createWeekGraph();
+        createMonthGraph();
+
+
+        /*
+        ** 일자별 걸음 수를 반환
+        **
+        */
+        function getStep(yyyymmdd,arr){
+            var i = arr.map((a) => { return a.yyyymmdd; }).indexOf(yyyymmdd);
+            return !!arr[i] ? arr[i].step : "0";
+        }
+
+        /*
+        ** LPAD
+        **
+        */
+        function lpad(str, len, padStr){
+            while(str.length < len)
+                str = padStr + str;
+            return str;
+        }
+
+        // native 에 호출하는 것 처럼 만든 테스트 함수 (주별)
+        window.base = {};
+        window.base.getWeekGraph = function(){
+            createWeekGraph_G({
+                start: "20180801",
+                end : "20180821",
+                steps:[
+                    {yyyymmdd:"20180801",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180802",step:"1301",cal:"",range:""},
+                    {yyyymmdd:"20180803",step:"1041",cal:"",range:""},
+                    {yyyymmdd:"20180804",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180805",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180806",step:"5101",cal:"",range:""},
+                    {yyyymmdd:"20180807",step:"1091",cal:"",range:""},
+                    {yyyymmdd:"20180810",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180811",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180812",step:"1301",cal:"",range:""},
+                    {yyyymmdd:"20180813",step:"1041",cal:"",range:""},
+                    {yyyymmdd:"20180814",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180815",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180817",step:"5101",cal:"",range:""},
+                    {yyyymmdd:"20180818",step:"1091",cal:"",range:""},
+                    {yyyymmdd:"20180821",step:"4101",cal:"",range:""}
+                ]
+            });
+        }
+
+        // native 에 호출하는 것 처럼 만든 테스트 함수 (월별)
+        window.base.getMonthGraph = function(){
+            createMonthGraph_G({
+                start: "20180801",
+                end : "20180901",
+                steps:[
+                    {yyyymmdd:"20180801",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180802",step:"1301",cal:"",range:""},
+                    {yyyymmdd:"20180803",step:"1041",cal:"",range:""},
+                    {yyyymmdd:"20180804",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180805",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180806",step:"5101",cal:"",range:""},
+                    {yyyymmdd:"20180807",step:"1091",cal:"",range:""},
+                    {yyyymmdd:"20180810",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180811",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180812",step:"1301",cal:"",range:""},
+                    {yyyymmdd:"20180813",step:"1041",cal:"",range:""},
+                    {yyyymmdd:"20180814",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180815",step:"1021",cal:"",range:""},
+                    {yyyymmdd:"20180817",step:"5101",cal:"",range:""},
+                    {yyyymmdd:"20180818",step:"1091",cal:"",range:""},
+                    {yyyymmdd:"20180821",step:"4101",cal:"",range:""},
+                    {yyyymmdd:"20180911",step:"10221",cal:"",range:""},
+                    {yyyymmdd:"20180912",step:"13301",cal:"",range:""},
+                    {yyyymmdd:"20180913",step:"14041",cal:"",range:""},
+                    {yyyymmdd:"20180914",step:"45101",cal:"",range:""},
+                    {yyyymmdd:"20180915",step:"10121",cal:"",range:""},
+                    {yyyymmdd:"20180917",step:"51201",cal:"",range:""}
+                ]
+            });
+        }
+
+        // 테스트 함수 호출
+        window.base.getWeekGraph();
+        window.base.getMonthGraph();
+    </script>
+
+
+</body></html>
