@@ -202,11 +202,12 @@
                 this.stepV = options.stepV;
                 this.space = options.space;
                 this.radius = options.radius;
-                this.isShowMaxValue = options.isShowMaxValue;
                 this.isShowTip = options.isShowTip;
+                this.isActiveMaxGraph = options.isActiveMaxGraph,
+                this.isShowMaxValueItem = options.isShowMaxValueItem;
                 this.data = data;
-                if(this.isShowTip)
-                    this.maxIndexes = []; // 주별 max index
+                // if(this.isShowTip)
+                //     this.maxIndexes = []; // 구간별 max index
 
 
                 // selector
@@ -303,17 +304,8 @@
                     let unitX = this.canvasWidth/item.length;
                     let w = unitX/3;
 
-                    let max = 0,
-                        maxIndex = 0;
-
                     // Draw Unit & Graph
                     item.map( (_data, j) => {
-
-                        // Get max value, index (week graph)
-                        if(self.isShowTip && _data.value > max) {
-                            max = _data.value;
-                            maxIndex = j;
-                        }
 
                         // Draw Unit
                         if(_data.text.length>0){
@@ -360,8 +352,8 @@
 
                     });
 
-                    if(this.isShowTip)
-                        this.maxIndexes.push(maxIndex);
+                    // if(this.isShowTip)
+                    //     this.maxIndexes.push(maxIndex);
 
                     // Draw Swiper
                     let tp = `
@@ -380,8 +372,6 @@
                     arrSwiper.push(tp);
                 });
 
-                // console.log('this.maxIndexes', this.maxIndexes);
-
                 this.cpnt.getElementsByClassName('swiper-wrapper')[0].innerHTML = arrSwiper.join('');
             }
 
@@ -396,10 +386,10 @@
                     <dl class="average">
                         <dt>평균 : </dt><dd>${ data.average[index] }보</dd>
                     </dl>`;
-                if(this.isShowMaxValue){
+                if(this.isShowMaxValueItem){
                     tp = tp + `
                         <dl class="max">
-                            <dt>최고기록 : </dt><dd>${ data.maxValue }보</dd>
+                            <dt>최고기록 : </dt><dd>${ data.maxValueItem[index].step }보</dd>
                         </dl>`;
                 }
                 this.selector.statistics.innerHTML = tp;
@@ -442,24 +432,33 @@
                     }, false);
                 });
             }
-            autoShowTip( maxIndex ){
-                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ maxIndex + '"]');
+            autoShowTip( index ){
+                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ index + '"]');
                 this.showTip( graphEl );
             }
             resetTip(){
                 this.selector.tip.innerHTML= '';
             }
 
+            activeGraph( index ){
+                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ index + '"]');
+                graphEl.style.stroke="black";
+                graphEl.style.fill="black";
+            }
 
             // Run Swiper
             runSwiper(){
-                let self = this;
+                let self = this,
+                    maxItem = self.data.maxValueItem;
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
                     on: {
                         init: function(){
                             if(self.isShowTip){
                                 self.handleTip();
-                                self.autoShowTip( self.maxIndexes[0] );
+                                self.autoShowTip( maxItem[0].index );
+                            }
+                            if(self.isActiveMaxGraph){
+                                self.activeGraph( maxItem[0].index );
                             }
                             self.drawStatistics(0);
                         },
@@ -468,10 +467,14 @@
                                 self.resetTip();
                         }, 
                         transitionEnd : function(){
+                            // console.log(this.realIndex);
                             let activeIndex = this.activeIndex;
                             if(self.isShowTip){
                                 self.handleTip();
-                                self.autoShowTip( self.maxIndexes[activeIndex] );
+                                self.autoShowTip( maxItem[activeIndex].index );
+                            }
+                            if(self.isActiveMaxGraph){
+                                self.activeGraph( maxItem[activeIndex].index );
                             }
                             self.drawStatistics( activeIndex );
                         }
@@ -479,7 +482,6 @@
                 });
             }
         }
-
 
         /* Week Graph */
         let graphWeekOptions = {
@@ -507,8 +509,9 @@
                 h: 10,
                 v: 10
             },
-            isShowMaxValue: false,
-            isShowTip: true
+            isShowTip: true,                // 그래프 클릭시 현재 결음수 수치 표시 여부
+            isActiveMaxGraph: false,        // 가장 높은 걸음수 그래프 표시 여부
+            isShowMaxValueItem: false,      // 주별 가장 높은 걸음수 수치 표시 여부
         }
         let dataWeek = {
             list:[
@@ -609,6 +612,20 @@
             average: [
                 '5,000', '6,000', '7,000'
             ],
+            maxValueItem: [
+                {
+                    'step' : 20000, 
+                    'index' : 5
+                },
+                {
+                    'step' : 20000, 
+                    'index' : 4
+                },
+                {
+                    'step' : 18000, 
+                    'index' : 3
+                }
+            ],
             maxValue: 20000
         }
         let graphWeek = new GraphSvg( graphWeekOptions, dataWeek );
@@ -640,8 +657,9 @@
                 h: 3,
                 v: 3
             },
-            isShowMaxValue: true,
-            isShowTip: false        
+            isShowTip: false,               // 그래프 클릭시 현재 결음수 수치 표시 여부
+            isActiveMaxGraph: true,         // 가장 높은 걸음수 그래프 표시 여부
+            isShowMaxValueItem: true,       // 월별 가장 높은 걸음수 수치 표시 여부
         }
         let dataMonth = {
             list:[
@@ -874,7 +892,7 @@
                     },
                     {
                         text:['27'],
-                        value: 15000
+                        value: 25000
                     },
                     {
                         text:['28'],
@@ -899,6 +917,16 @@
             ],
             average: [
                 '5,000', '6,000', '7,000'
+            ],
+            maxValueItem: [
+                {
+                    'step' : 30000, 
+                    'index' : 15
+                },
+                {
+                    'step' : 25000, 
+                    'index' : 26
+                }
             ],
             maxValue: 30000
         }

@@ -538,22 +538,9 @@
 
             }
 
-            let arrMaxIndex = [];
-            weeks.map( (week, i) => {
-                let maxStep = 0,
-                    maxIndex = 0;
-                week.map( (data, j) =>{
-                    if( data.value > maxStep ){
-                        maxStep = data.value;
-                        maxIndex = j;
-                    }
-                })
-                arrMaxIndex.push(maxIndex);
-            });
-
             graphWeekOptions.data.list = weeks;
             graphWeekOptions.data.maxValue = maxStep;
-            graphWeekOptions.data.maxIndex = arrMaxIndex;
+            graphWeekOptions.data.maxValueItem = getMaxStep(weeks);
 
             let graphWeek = new GraphSgv( graphWeekOptions );
         }
@@ -686,7 +673,8 @@
             } else
                 graphMonthOptions.data.maxValue = 100;
 
-            console.log(graphMonthOptions.data.list)
+            // console.log(graphMonthOptions.data.list)
+            graphMonthOptions.data.maxValueItem = getMaxStep(months);
 
             let graphMonth = new GraphSgv(graphMonthOptions);
         }
@@ -723,6 +711,30 @@
             while(str.length < len)
                 str = padStr + str;
             return str;
+        }
+
+        /*
+        ** 각 주별, 월별 max step, index 가져오기
+        **
+        */
+        function getMaxStep( array ){
+            let arrMax = [];
+            array.map( (item, i) => {
+                let maxStep = 0,
+                    maxIndex = 0;
+                item.map( (data, j) =>{
+                    if( data.value > maxStep ){
+                        maxStep = data.value;
+                        maxIndex = j;
+                    }
+                });
+                let _d = {
+                    'step' : maxStep,
+                    'index' : maxIndex
+                }
+                arrMax.push(_d);
+            });
+            return arrMax;
         }
 
         // native 에 호출하는 것 처럼 만든 테스트 함수 (주별)
