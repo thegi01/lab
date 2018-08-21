@@ -14,7 +14,7 @@
         }
 
         body{
-            margin: 50px 0 0 0; padding: 0;
+            margin: 0; padding: 0;
             background-color: #f8f8f8;
         }
         
@@ -45,7 +45,7 @@
         .graphWeek, .graphMonth{
             position: relative;
             /*border: 1px solid #ddd;*/
-            margin: 0;
+            margin: 10px;
             background-color: #fff;
         }
         .graphWeek svg,
@@ -66,6 +66,10 @@
             stroke: #b87333;
             stroke-width: 1;
             fill: #b87333
+        }
+        .graph-graph path[data-selected=true]{
+            stroke: black;
+            fill: black;
         }
         .graph-tip text{
             font-size: 10px; 
@@ -203,11 +207,9 @@
                 this.space = options.space;
                 this.radius = options.radius;
                 this.isShowTip = options.isShowTip;
-                this.isActiveMaxGraph = options.isActiveMaxGraph,
+                this.isActiveGraph = options.isActiveGraph,
                 this.isShowMaxValueItem = options.isShowMaxValueItem;
                 this.data = data;
-                // if(this.isShowTip)
-                //     this.maxIndexes = []; // 구간별 max index
 
 
                 // selector
@@ -256,6 +258,7 @@
                 // y unit
                 this.unitY = this.canvasHeight/this.stepV.length;
                 // console.log('unitY:',this.unitY);
+
             }
 
 
@@ -292,8 +295,9 @@
             drawSwiperGraph(){
                 let self = this,
                     data = this.data,
-                    arrSwiper = [];
-
+                    arrSwiper = [],
+                    hasUnitXStep = this.stepH.unit>1 ? true : false;
+                
                 data.list.map( (item, i) =>{
                     // Draw Graph, text
 
@@ -301,7 +305,7 @@
                         arrStep = [];
 
                     let itemLength = item.length;
-                    let unitX = this.canvasWidth/item.length;
+                    let unitX = this.canvasWidth/itemLength;
                     let w = unitX/3;
 
                     // Draw Unit & Graph
@@ -314,25 +318,28 @@
                                
                             // anchor 
                             let anchor = 'middle';
-                            if(stepH.unit>1){
+                            if(hasUnitXStep){
                                 if(j===0) anchor = 'start';
                                 if(j===itemLength-1) anchor = 'end';
                             }
 
                             _data.text.map((_text, k) => {
-                                let _str= _text;
-                                if(stepH.unit>1){
+                                let _str = _text;
+                                if(hasUnitXStep){
                                     // str : step 5, end-1 
-                                    if( !((j+1)%5 === 0) || j === item.length-2 ) 
+                                    if( !((j+1)%stepH.unit === 0) || j === itemLength-2 ) 
                                         _str = '';
                                     // str : first, end 
-                                    if(j===0 || j === item.length-1) 
+                                    if(j===0 || j === itemLength-1) 
                                         _str = _text;
                                 }
 
                                 if(!_str.length>0) return;
-                                let x2 = unitX*j + unitX/2,
-                                    tp = `<text text-anchor=${anchor} x=${x2} y=${p.top + p.space*k}>${_str}</text>`;    
+                                let x2 = Math.round(unitX*j + unitX/2);
+                                if(hasUnitXStep && j===0)
+                                    x2 = unitX*j;
+                                x2 = Math.round(x2);
+                                let tp = `<text text-anchor=${anchor} x=${x2} y=${p.top + p.space*k}>${_str}</text>`;    
 
                                 arrStep.push(tp);
                             });
@@ -343,11 +350,11 @@
                         if( value<=0 ) return;
                         let x = Math.round(unitX*j + w),
                             h = value/data.maxValue * this.canvasHeight,
-                            y = this.canvasHeight - h + this.space.top,
+                            y = this.space.top + this.canvasHeight,
                             rh = this.radius.h, 
                             rv = this.radius.v,
                             v = (h-rv)>0 ? h-rv : 0;
-                        let tpGraph =`<path d="M${x} ${this.canvasHeight + this.space.top} v-${v} q0 -${rv} ${rh} -${rv} q${rh} 0 ${rh} ${rv} v${v}" data-index=${j} data-value=${value} />`
+                        let tpGraph =`<path d="M${x} ${y} v-${v} q0 -${rv} ${rh} -${rv} q${rh} 0 ${rh} ${rv} v${v}" data-index=${j} data-value=${value} />`
                         arrGraph.push(tpGraph);
 
                     });
@@ -406,62 +413,79 @@
                     w = graphClient.width,
                     data = graphEl.dataset.value,
                     spaceLeft = this.space.left,
-                    top = this.selector.svgBase.getBoundingClientRect().top;
+                    svgBaseRect = this.selector.svgBase.getBoundingClientRect(),
+                    svgBaseTop = svgBaseRect.top,
+                    svgBaseLeft = svgBaseRect.left;
 
-                let x2 = x + w/2 + spaceLeft;
+                let x2 = x + w/2 - svgBaseLeft + spaceLeft,
+                    y2 = y-svgBaseTop;
                 let tp = `
                     <line y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="round"></line>
                     <text y="24" stroke="#fff">${data}</text>
-                    <line x1=${x2} y1="30" x2=${x2} y2=${y-top} stroke="black" stroke-width="1" />`;
+                    <line x1=${x2} y1="30" x2=${x2} y2=${y2} stroke="black" stroke-width="1" />`;
                 tipEl.innerHTML = tp;
 
                 let bgEl = tipEl.getElementsByTagName('line')[0],
                     textEl = tipEl.getElementsByTagName('text')[0],
                     textWidth = textEl.getBoundingClientRect().width,
                     x3 = Math.round(x2-textWidth/2),
-                    x4 = x3-5;
+                    x4 = x3-5,
+                    x5 = x4+textWidth+7;
+
+                if(x5 + svgBaseRect.x > svgBaseRect.width){
+                    x3 = Math.round(svgBaseRect.y + svgBaseRect.x),
+                    x4 = x3-5,
+                    x5 = x4+textWidth+7;
+                }
+
+                if(x3 < svgBaseRect.x){
+                    x3 = Math.round(svgBaseRect.x + 5),
+                    x4 = svgBaseRect.x,
+                    x5 = x4+textWidth+7;
+                }
+
                 textEl.setAttribute('x', x3);
                 bgEl.setAttribute('x1', x4);
                 bgEl.setAttribute('x2', x4+textWidth+7);
             };
-            handleTip(){
-                let self = this,
-                    graphs = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].getElementsByTagName('path') ;
-                Object.keys(graphs).map((index)=>{
-                    graphs[index].addEventListener('click', function(){
-                        self.showTip(this);
-                    }, false);
-                });
-            }
-            autoShowTip( index ){
-                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ index + '"]');
-                this.showTip( graphEl );
-            }
             resetTip(){
                 this.selector.tip.innerHTML= '';
             }
 
-            activeGraph( index ){
-                let graphEl = this.cpnt.getElementsByClassName('swiper-slide-active')[0].getElementsByClassName('graph-graph')[0].querySelector('path[data-index="'+ index + '"]');
-                graphEl.style.stroke="black";
-                graphEl.style.fill="black";
+            activeGraph( graphEl ){
+                let _parentEl = graphEl.parentElement;
+                if(_parentEl.querySelector('[data-selected="true"]'))
+                    _parentEl.querySelector('[data-selected="true"]').dataset.selected = false;    
+                graphEl.dataset.selected = true;
+                _parentEl.dataset.active = graphEl.dataset.index;
+            }
+
+            handleEvent( slider ){
+                let self = this;
+                let graphs = slider.querySelectorAll('path');
+                Object.keys(graphs).map( (index) =>{
+                    graphs[index].addEventListener('click', function(){
+
+                        if(self.isActiveGraph)
+                            self.activeGraph(this);
+
+                        if(self.isShowTip)
+                            self.showTip(this);
+
+                    });
+                });
             }
 
             // Run Swiper
             runSwiper(){
                 let self = this,
-                    maxItem = self.data.maxValueItem;
+                    maxItem = self.data.maxValueItem,
+                    initIndex = self.data.list.length-1;
                 this.swiper = new Swiper(this.cpnt.getElementsByClassName('swiper-container'), {
+                    initialSlide:initIndex,
                     on: {
                         init: function(){
-                            if(self.isShowTip){
-                                self.handleTip();
-                                self.autoShowTip( maxItem[0].index );
-                            }
-                            if(self.isActiveMaxGraph){
-                                self.activeGraph( maxItem[0].index );
-                            }
-                            self.drawStatistics(0);
+                            
                         },
                         touchMove: function(){
                             if(self.isShowTip)
@@ -469,15 +493,18 @@
                         }, 
                         transitionEnd : function(){
                             // console.log(this.realIndex);
-                            let activeIndex = this.activeIndex;
-                            if(self.isShowTip){
-                                self.handleTip();
-                                self.autoShowTip( maxItem[activeIndex].index );
-                            }
-                            if(self.isActiveMaxGraph){
-                                self.activeGraph( maxItem[activeIndex].index );
-                            }
+                            let activeIndex = this.activeIndex,
+                                activerSlider = this.el.getElementsByClassName('swiper-slide-active')[0],
+                                graphEl = activerSlider.querySelector('path[data-index="'+ maxItem[activeIndex].index + '"]');
+                            if(self.isShowTip)
+                                self.showTip(graphEl);
+
+                            if(self.isActiveGraph)
+                                self.activeGraph( graphEl ); 
+
                             self.drawStatistics( activeIndex );
+
+                            self.handleEvent( activerSlider );
                         }
                     }
                 });
@@ -510,8 +537,8 @@
                 h: 10,
                 v: 10
             },
+            isActiveGraph: true,           // 그래프 acitve
             isShowTip: true,                // 그래프 클릭시 현재 결음수 수치 표시 여부
-            isActiveMaxGraph: false,        // 가장 높은 걸음수 그래프 표시 여부
             isShowMaxValueItem: false,      // 주별 가장 높은 걸음수 수치 표시 여부
         }
         let dataWeek = {
@@ -658,8 +685,8 @@
                 h: 3,
                 v: 3
             },
+            isActiveGraph: true,            // 그래프 acitve
             isShowTip: false,               // 그래프 클릭시 현재 결음수 수치 표시 여부
-            isActiveMaxGraph: true,         // 가장 높은 걸음수 그래프 표시 여부
             isShowMaxValueItem: true,       // 월별 가장 높은 걸음수 수치 표시 여부
         }
         let dataMonth = {
