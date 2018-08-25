@@ -55,8 +55,30 @@
 
         let drawTodolist = function(){
             // Draw
-            let arrA = [];
-            data.map( (a, i)=>{
+            let arr = [];
+            Object.keys(data).map( (item, i)=>{
+
+                let arrList=[];
+                data[item].map( (list, j) =>{
+                    let tp1 = `
+                        <li class="lst-item" data-index=${j}>
+                            <a href="#href">${list}</a>
+                            <button type="button" class="btn-delete" data-hidden=true><span></span></button>
+                        </li>`;
+                    arrList.push(tp1);
+                });
+
+                let tp2 =  `
+                <section class="todolist-card" data-value=${item} data-index=${i}>
+                    <header class="div-header">
+                        <h3 class="__title">${item}</h3>
+                    </header>
+                    <ul class="div-lst">${arrList.join('')}</ul>
+                </section>`;
+                arr.push(tp2);
+            });
+            document.getElementsByClassName('todolist-secton')[0].innerHTML = arr.join('');
+            /*data.map( (a, i)=>{
 
                 let arrB = [];
 
@@ -80,11 +102,10 @@
 
                 arrA.push(tp);
             });
-            document.getElementsByClassName('todolist-secton')[0].innerHTML = arrA.join('');
+            document.getElementsByClassName('todolist-secton')[0].innerHTML = arrA.join('');*/
         }
 
-
-        // init
+        // Draw
         drawTodolist();
 
 
@@ -93,6 +114,21 @@
             this.dataset.hidden = true;
             document.getElementById('add').dataset.hidden = false;
         }, false);*/
+
+
+        // Event : add
+        document.getElementById('add').addEventListener('submit', function(){
+            event.preventDefault();
+            let value = this.querySelector('input[type=text]').value;
+            if(value){
+                let date = this.querySelector('input[type=date]').value;
+                data[date].push(value);
+
+                drawTodolist();
+            } else{
+                window.alert("할일을 입력해주세요.");
+            }
+        }, false);
 
 
         // Event : button edit 
@@ -105,33 +141,7 @@
         }, false);
 
 
-        // Event : add
-        document.getElementById('add').addEventListener('submit', function(){
-            event.preventDefault();
-            let value = this.querySelector('input[type=text]').value;
-            if(value){
-                let date = this.querySelector('input[type=date]').value;
-
-                data.map( (item, index)=>{
-                    if(item.date === date){
-                        item.list.push(value);
-                        drawTodolist();
-                    }
-                    /*if(item.date === date){
-                        item.list.push(value);
-                        let itemIndex = item.list.length-1;
-                        let tp = tpAF(itemIndex, value);
-                        let card = document.getElementsByClassName('todolist-card')[index];
-                        card.innerHTML = card.innerHTML + tp;
-                    }*/
-                })
-
-            } else{
-                window.alert("할일을 입력해주세요.");
-            }
-        }, false);
-
-
+    
 
         // localStorage.setItem('todolist', data);
         // localStorage.setItem("username", "John");
