@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Array Delete</title>
+</head>
+<body>
+
+<script>
+    
+    var arrayDelete = function(array, item ){
+        let index  = array.indexOf(item);
+        array.splice(index, 1);        
+    };
+
+    // 'a', 'c' 삭제 후 배열 반환
+    var arr = ['a', 'b', 'c', 'd', 'e'];
+    var arrDel = ['a', 'c'];
+    arrDel.map( item => {
+        arrayDelete(arr, item);
+    });
+
+    console.log('arr', arr);
+
+</script>
+</body>
+</html>
