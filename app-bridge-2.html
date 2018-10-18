@@ -24,13 +24,17 @@
     <a href="" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">applink</a>
 
     <hr>
-    <button onclick="open()">열기</button>
+    <button onclick="handleClick()">열기</button>
+    <button onclick="handleClick2()">열기</button>
 
 <script>
     
-    var open = function(){
+    function handleClick(){
         window.location.href = "lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist";
-    };
+    }
+    function handleClick2(){
+        window.open("lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist")
+    }
 
     $(document).ready(function () {
 
