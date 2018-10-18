@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>app bridge 2</title>
+    <meta name="viewport"  content="width=device-width">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="jquery.applink.js"></script>
 </head>
@@ -16,8 +17,11 @@
 
 
 
-<!-- <a href="http://itunes.apple.com/app/id987435592" 
-    data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-5</a> -->
+<a href="http://itunes.apple.com/app/id987435592" 
+    data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-9</a>
+    <br>
+    <a href="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app</a><br>
+    <a href="" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">applink</a>
 
 
 <script>
@@ -25,7 +29,7 @@
     $(document).ready(function () {
 
         // let url = "?_route=/eventlist";
-        document.body.innerHTML='<a data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-8</a>'
+//        document.body.innerHTML='<a data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-8</a>'
         //document.body.innerHTML='<a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-8</a>'
 
          $('a[data-applink]').applink();
