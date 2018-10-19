@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>전단지 샘플</title>
+    <link rel="stylesheet" href="https://idangero.us/swiper/dist/css/swiper.min.css">
+    <style>
+        html, body {
+          position: relative;
+          height: 100%;
+        }
+        body {
+          background: #eee;
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          font-size: 14px;
+          color:#000;
+          margin: 0;
+          padding: 0;
+        }
+        .swiper-container {
+          /*width: 100%;
+          height: 100%;*/
+        }
+        .swiper-slide {
+          text-align: center;
+          font-size: 18px;
+
+          /* Center slide text vertically */
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+        }
+        
+        .wrap{
+            height: 100%;
+        }
+
+        .nav {
+            position: absolute; top: 0;
+            width: 100%;
+            padding-left: 50px; padding-right: 50px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }   
+        .nav .swiper-container{
+            position: static;
+        }
+        .nav .swiper-wrapper{
+        }
+        .nav .swiper-slide{
+            height: 50px;
+        }
+        .nav .swiper-button-prev,
+        .nav .swiper-button-next{
+            top: 0;
+            width: 50px; height: 50px;
+            background-image: none; background-color: gray;
+            margin-top: 0; 
+
+        }
+        .nav .swiper-button-prev{
+            left: 0;
+        }
+        .nav .swiper-button-next{
+            right: 0;
+        }
+        .nav a{
+            display: block;
+            width:100%; height: 100%; 
+            text-decoration: none;
+            font-size: 14px; color: #222;
+            line-height: 50px;
+        }
+
+        .panel{
+            height: 100%;
+            padding-top: 50px;
+            box-sizing: border-box;
+        }
+        .panel .swiper-container {
+            height: 100%;
+        }
+      </style>
+</head>
+<body>
+
+    
+
+    <div class="wrap">
+        <nav class="nav">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><a href="#href">Nav 1</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 2</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 3</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 4</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 5</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 6</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 7</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 8</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 9</a></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </nav>
+        <div class="panel">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><a href="#href">Panel 1</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 2</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 3</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 4</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 5</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 6</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 7</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 8</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 9</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://idangero.us/swiper/dist/js/swiper.min.js"></script>
+    <script>
+        let activeIndex = 0;
+        let swiperPanel = new Swiper('.panel .swiper-container', {
+        });
+        let swiperNav = new Swiper('.nav .swiper-container', {
+            slidesPerView: 5,
+            slidesPerGroup: 5,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+
+        swiperNav.on('tap', function() {
+            if(!this.clickedIndex) return;
+            // console.log(this.clickedSlide);
+            swiperPanel.slideTo(this.clickedIndex);
+        });
+        swiperNav.on('slideChange', function() {
+            // console.log(this.activeIndex);
+            activeIndex = this.activeIndex;
+            swiperPanel.slideTo(activeIndex);
+        });
+
+        swiperPanel.on('slideChange', function(){
+            activeIndex = this.activeIndex;
+            // swiperNav.slideTo(this.activeIndex);
+            console.log(activeIndex);
+        });
+
+
+      </script>
+    
+</body>
+</html>
