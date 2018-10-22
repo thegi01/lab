@@ -15,16 +15,20 @@
         <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">href, applink</a>    
     </section>
     
+    <br><br>
+
+    <section>
+        <a href="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">href</a>
+    </section>
 
     <br><br>
 
-    <a href="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">href</a>
+    <section>
+        <a href="" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">applink</a>
+    </section>
 
     <br><br>
 
-    <a href="" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">applink</a>
-
-    <br><br>
     <button onclick="handleClick()">열기</button>
     <button onclick="handleClick2()">열기</button>
 
@@ -32,6 +36,13 @@
 
     let isIOS = /iPhone/i.test(navigator.userAgent);
     console.log('isIOS', isIOS);
+    
+    function handleClick(){
+        window.location.href = "lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist";
+    }
+    function handleClick2(){
+        window.open("lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist")
+    }
 
     /*function gotoAppStore(){
         try{
@@ -50,14 +61,6 @@
         }
     }
 */
-   
-    
-    function handleClick(){
-        window.location.href = "lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist";
-    }
-    function handleClick2(){
-        window.open("lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist")
-    }
 
     $(document).ready(function () {
 
