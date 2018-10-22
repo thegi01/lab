@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>app bridge 4</title>
+    <meta name="viewport"  content="width=device-width">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="jquery.applink.js"></script>
+</head>
+<body>
+
+    <h1>app bridge test v1</h1>
+
+    <section>
+        <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">href, applink</a>    
+    </section>
+    
+    <br><br>
+
+    <section>
+        <a href="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">href</a>
+    </section>
+
+    <br><br>
+
+    <section>
+        <a href="" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">applink</a>
+    </section>
+
+    <br><br>
+
+    <button onclick="handleClick()">열기</button>
+    <button onclick="handleClick2()">열기</button>
+
+<script>
+
+    let isIOS = /iPhone/i.test(navigator.userAgent);
+    console.log('isIOS', isIOS);
+    
+    function handleClick(){
+        window.location.href = "lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist";
+    }
+    function handleClick2(){
+        window.open("lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist")
+    }
+
+    /*function gotoAppStore(){
+        try{
+            if(isIOS){
+                var update_url = 'https://itunes.apple.com/app/id987435592';
+                update_url = update_url.split("&").join("|@|");     //IOS의 &는 |@|로 변환한다.
+                location.href = "lmscp://main.popup_open?url=" + update_url+"&title=";
+            }
+            else {
+                window.base.authPopup_open("market://details?id=com.lottemart.lmscp");
+                window.base.quit();
+            }
+        }
+        catch(e){
+            console.debug('gotoAppStore : ', e);
+        }
+    }
+*/
+
+    $(document).ready(function () {
+
+        // let url = "?_route=/eventlist";
+//        document.body.innerHTML='<a data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-8</a>'
+        //document.body.innerHTML='<a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">app-bridge-8</a>'
+
+       //  $('a[data-applink]').applink();
+
+       $('a[data-applink]').applink({
+            popup: 'auto', // disable/enable share popup created by plugin. If auto, only will be enabled to popupDomains domains
+            popupDomains: 'facebook', // If "popup" option is auto, it will check this domains to open a domain or redirect to page
+            desktop: false, // disable/enable native app check for no mobile devices
+            //data: 'applink', // load native links from data-XXXXXX attribute,
+            timeout: 1500 // time in ms to detect app before launch HTTP link (only when is mobile and desktop is false)
+        });
+    });
+</script>
+
+</body>
+</html>
