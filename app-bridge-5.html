@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <h1>App Bridge test v5</h1>
+    <h1>App Bridge test v6</h1>
     
     <h2>IOS</h2>
 
@@ -19,8 +19,9 @@
     <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist"> Go Store</a>
 
     <h3>Go App</h3>
-    <button type="button" id="buttonGoApp">Go App</button>
-    <!-- <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist"id="buttonGoApp"> Go App</a> -->
+    <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist"id="buttonGoApp"> Go App</a>
+    <!-- <button type="button" id="buttonGoApp">Go App</button> -->
+    
     
 
 <script>
@@ -29,22 +30,20 @@
     // console.log('isIOS', isIOS);
 
 
-
-    document.getElementById('buttonGoApp').addEventListener('click', function(event){
-        // console.log(this);
-        window.location.href = 'lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist';  
-    }, false);
-
-    /*var goApp = function(el, event){
+    var goApp = function(el, event){
         event.preventDefault();
         let applink = el.dataset.applink;
         console.log('applink', applink);
         window.location.href = applink;  
     };
-
     buttonGoApp.addEventListener('click', function(event){
         goApp(this, event);
+    }, false);
+    /*document.getElementById('buttonGoApp').addEventListener('click', function(event){
+        window.location.href = 'lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist';  
     }, false);*/
+
+    
 
 </script>
 
