@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>app bridge 5</title>
+    <meta name="viewport"  content="width=device-width">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="jquery.applink.js"></script>
+</head>
+<body>
+
+    <h1>app bridge test v1</h1>
+
+    <section>
+        <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">href, applink</a>  
+        <h2>사파리 브라우저(IOS8)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>ok</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>주소가 유효하지 않다. 스토어 이동 ok</dd>
+        </dl>
+        <h2>페이스북앱(iphone se)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>스토어로 이동(오류)</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>스토어로 이동 ok</dd>
+        </dl>
+    </section>
+    
+    <br><br>
+
+    <section>
+        <a href="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">href</a>
+        <h2>사파리 브라우저(IOS8)</h2>        
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>ok</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>주소가 유효하지 않다. 이동 x</dd>
+        </dl>
+        <h2>페이스북앱(iphone se)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>x</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>x</dd>
+        </dl>
+    </section>
+
+    <br><br>
+
+    <section>
+        <a href="" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">applink</a>
+        <h2>사파리 브라우저(IOS8)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>ok</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>주소가 유효하지 않다. 이동 x</dd>
+        </dl>
+        <h2>페이스북앱(iphone se)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>앱이동 확인 후 스토어로 이동</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>x</dd>
+        </dl>
+    </section>
+
+    <br><br>
+
+    <section>
+        <a href="https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">https href</a>
+        <h2>사파리 브라우저(IOS8)</h2>        
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd></dd>
+            <dt>앱이 없는 경우</dt>
+            <dd></dd>
+        </dl>
+        <h2>페이스북앱(iphone se)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>무한 alert</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd></dd>
+        </dl>
+    </section>
+
+    <br><br>
+    
+    <section>
+        <button onclick="handleClick()">열기</button>    
+        <h2>사파리 브라우저(IOS8)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>ok</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>주소가 유효하지 않다. 이동 x</dd>
+        </dl>
+        <h2>페이스북앱(iphone se)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>x</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>x</dd>
+        </dl>
+    </section>
+    
+    <section>
+        <button onclick="handleClick2()">열기</button>    
+        <h2>사파리 브라우저(IOS8)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>ok</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>새창 열고 이동 x</dd>
+        </dl>
+        <h2>페이스북앱(iphone se)</h2>
+        <dl>
+            <dt>앱이 있는 경우</dt>
+            <dd>x</dd>
+            <dt>앱이 없는 경우</dt>
+            <dd>x</dd>
+        </dl>
+    </section>
+    
+
+<script>
+
+    let isIOS = /iPhone/i.test(navigator.userAgent);
+    console.log('isIOS', isIOS);
+    
+    function handleClick(){
+        window.location.href = "lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist";
+    }
+    function handleClick2(){
+        window.open("lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist")
+    }
+
+    /*function gotoAppStore(){
+        try{
+            if(isIOS){
+                var update_url = 'https://itunes.apple.com/app/id987435592';
+                update_url = update_url.split("&").join("|@|");     //IOS의 &는 |@|로 변환한다.
+                location.href = "lmscp://main.popup_open?url=" + update_url+"&title=";
+            }
+            else {
+                window.base.authPopup_open("market://details?id=com.lottemart.lmscp");
+                window.base.quit();
+            }
+        }
+        catch(e){
+            console.debug('gotoAppStore : ', e);
+        }
+    }
+*/
+
+/* UTIL
+static isApp() {
+    if (process.env.TOKEN)
+        return true;
+
+    return /_mcoupon/i.test(navigator.userAgent);
+}
+
+static isIOS () {
+    return /iPhone/i.test(navigator.userAgent);
+}
+
+static isAndroid () {
+    return /Android/i.test(navigator.userAgent);
+}*/
+
+    $(document).ready(function () {
+
+        // let url = "?_route=/eventlist";
+//        document.body.innerHTML='<a data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">app-bridge-8</a>'
+        //document.body.innerHTML='<a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">app-bridge-8</a>'
+
+       //  $('a[data-applink]').applink();
+
+       $('a[data-applink]').applink({
+            popup: 'auto', // disable/enable share popup created by plugin. If auto, only will be enabled to popupDomains domains
+            popupDomains: 'facebook', // If "popup" option is auto, it will check this domains to open a domain or redirect to page
+            desktop: false, // disable/enable native app check for no mobile devices
+            //data: 'applink', // load native links from data-XXXXXX attribute,
+            timeout: 1500 // time in ms to detect app before launch HTTP link (only when is mobile and desktop is false)
+        });
+    });
+</script>
+
+</body>
+</html>
