@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <h1>App Bridge test v16</h1>
+    <h1>App Bridge test v17</h1>
     
     <h2>IOS</h2>
 
@@ -51,7 +51,8 @@
     var goApp1 = function(el, event){
         event.preventDefault();
         let applink = el.dataset.applink;
-        window.location.href = applink;  
+        // window.location.href = applink;  
+        window.open(applink);
     };
     buttonGoApp1.addEventListener('click', function(event){
         goApp1(this, event);
