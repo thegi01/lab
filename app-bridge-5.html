@@ -11,20 +11,15 @@
 </head>
 <body>
 
-    <h1>app bridge test v2</h1>
+    <h1>App Bridge test v3</h1>
     
     <h2>IOS</h2>
 
     <h3>Go Store</h3>
-    <a href="http://itunes.apple.com/app/id987435592" 
-        data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist">
-        Go Store</a>
+    <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html#/v2/cpbooklist"> Go Store</a>
 
     <h3>Go App</h3>
-    <a href="http://itunes.apple.com/app/id987435592" 
-        data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist" 
-        id="buttonGoApp">
-        Go App</a>
+    <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist"id="buttonGoApp"> Go App</a>
     
 
 <script>
@@ -35,6 +30,7 @@
     var goApp = function(el, event){
         event.preventDefault();
         let applink = el.dataset.applink;
+        console.log('applink', applink);
         window.location.href = applink;  
     };
 
