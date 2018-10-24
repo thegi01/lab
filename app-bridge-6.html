@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>app bridge 5(app link)</title>
+    <meta name="viewport"  content="width=device-width">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="jquery.applink.js"></script>
+    <style>
+        h3{
+            display: block;
+            margin-top: 3rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>App Bridge test v1</h1>
+    
+    <h2>IOS</h2>
+
+    <h3>Safari</h3>
+    <h4>Go Store</h4>
+    <!-- 운영기  -->
+    <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">Go Store</a>
+    <h4>Go App</h4>
+    <!-- 개발기 -->
+    <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=http://m.coupond.lottemart.com/application/main/main.html?_route=/eventlist" id="buttonGoApp1">Go App</a>
+
+
+    <h3>Facebook</h3>
+    <h4>Go Store</h4>
+    <!-- 운영기  -->
+    <a href="http://itunes.apple.com/app/id987435592" data-applink="lottemart-mcoupon-iphone://?url=https://m.coupon.lottemart.com/application/main/main.html?_route=/eventlist">Go Store</a>
+    <h4>Go App</h4>
+    <!-- 개발기 -->
+    <a href="" data-applink="lottemart-mcoupon-iphone://?url=http://m.coupond.lottemart.com/application/main/main.html?_route=/eventlist?utm_source=owned_amp_utm_medium=face_amp_utm_campaign=share">Go App</a>
+
+
+<script>
+
+    // let isIOS = /iPhone/i.test(navigator.userAgent);
+    // console.log('isIOS', isIOS);
+
+    $(document).ready(function () {
+
+        $('a[data-applink]').applink();
+
+       /*$('a[data-applink]').applink({
+            popup: 'auto', // disable/enable share popup created by plugin. If auto, only will be enabled to popupDomains domains
+            popupDomains: 'facebook', // If "popup" option is auto, it will check this domains to open a domain or redirect to page
+            desktop: false, // disable/enable native app check for no mobile devices
+            //data: 'applink', // load native links from data-XXXXXX attribute,
+            timeout: 1500 // time in ms to detect app before launch HTTP link (only when is mobile and desktop is false)
+        });*/
+    });
+
+</script>
+
+</body>
+</html>
