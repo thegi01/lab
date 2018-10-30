@@ -53,7 +53,7 @@
             padding-left: 50px; padding-right: 50px;
             background-color: #fff;
             box-sizing: border-box;
-        }   
+        } 
         .nav .swiper-container{
             position: static;
         }
@@ -92,6 +92,9 @@
         .panel .swiper-container {
             height: 100%;
         }
+        .swiper-slide-active{
+            font-weight: bold; color: green;
+        }
       </style>
 </head>
 <body>
@@ -111,6 +114,12 @@
                     <div class="swiper-slide"><a href="#href">Nav 7</a></div>
                     <div class="swiper-slide"><a href="#href">Nav 8</a></div>
                     <div class="swiper-slide"><a href="#href">Nav 9</a></div>
+                    <!-- <div class="swiper-slide"><a href="#href">Nav 10</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 11</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 12</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 13</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 14</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav 15</a></div> -->
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -128,6 +137,12 @@
                     <div class="swiper-slide"><a href="#href">Panel 7</a></div>
                     <div class="swiper-slide"><a href="#href">Panel 8</a></div>
                     <div class="swiper-slide"><a href="#href">Panel 9</a></div>
+                    <!-- <div class="swiper-slide"><a href="#href">Panel 10</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 11</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 12</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 13</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 14</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel 15</a></div>-->
                 </div>
             </div>
         </div>
@@ -136,32 +151,72 @@
     <script src="https://idangero.us/swiper/dist/js/swiper.min.js"></script>
     <script>
         let activeIndex = 0;
+        let navPerView = 5;
         let swiperPanel = new Swiper('.panel .swiper-container', {
         });
         let swiperNav = new Swiper('.nav .swiper-container', {
-            slidesPerView: 5,
-            slidesPerGroup: 5,
+            slidesPerView: navPerView,
+            slidesPerGroup: navPerView,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             }
         });
 
+        let handleNav = function(slide){
+            let classNameActive = 'swiper-slide-active';
+            // console.log('activeIndex', activeIndex);
+            swiperNav.slides[activeIndex].classList.remove(classNameActive);
+            slide.classList.add(classNameActive);
+        };
+        let setActiveIndex = function(index){
+            console.log('setActiveIndex: activeIndex', activeIndex);
+            console.log('setActiveIndex: index', index);
+            // console.log(activeIndex === index);
+            // if(activeIndex === index) return;
+            activeIndex = index;
+        };
+
         swiperNav.on('tap', function() {
-            if(!this.clickedIndex) return;
-            // console.log(this.clickedSlide);
+
+            // if(!this.clickedIndex) return;
             swiperPanel.slideTo(this.clickedIndex);
+
+            handleNav( this.clickedSlide );
+            // this.slides[activeIndex].classList.remove(classNameActive);
+            // this.clickedSlide.classList.add(classNameActive);
+
+            // setActiveIndex(this.clickedIndex);
+            // activeIndex = this.clickedIndex;
+            // console.log('nav tap : activeIndex', activeIndex);
+
+            /*this.classNames
+            this.slides
+            this.wrapperEl
+            this.el*/
+
         });
         swiperNav.on('slideChange', function() {
-            // console.log(this.activeIndex);
-            activeIndex = this.activeIndex;
-            swiperPanel.slideTo(activeIndex);
+            // handleNav( this.activeIndex );
+            swiperPanel.slideTo(this.activeIndex);
+            // console.log('nav slideChange : activeIndex', activeIndex);
         });
 
         swiperPanel.on('slideChange', function(){
-            activeIndex = this.activeIndex;
+            // console.log('panel this.activeIndex', this.activeIndex);
+            // console.log('swiperNav.slides[this.activeIndex]', swiperNav.slides[this.activeIndex]);
+            handleNav( swiperNav.slides[this.activeIndex] );
+            
             // swiperNav.slideTo(this.activeIndex);
-            console.log(activeIndex);
+
+            if(this.activeIndex>activeIndex && this.activeIndex%navPerView === 0){
+                swiperNav.slideTo(this.activeIndex);
+            }
+
+            setActiveIndex(this.activeIndex);
+            // activeIndex = this.activeIndex;
+            // console.log('activeIndex', activeIndex);
+
         });
 
 
