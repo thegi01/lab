@@ -105,21 +105,21 @@
         <nav class="nav">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><a href="#href">Nav 1</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 2</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 3</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 4</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 5</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 6</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 7</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 8</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 9</a></div>
-                    <!-- <div class="swiper-slide"><a href="#href">Nav 10</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 11</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 12</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 13</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 14</a></div>
-                    <div class="swiper-slide"><a href="#href">Nav 15</a></div> -->
+                    <div class="swiper-slide"><a href="#href">Nav1</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav2</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav3</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav4</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav5</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav6</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav7</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav8</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav9</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav10</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav11</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav12</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav13</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav14</a></div>
+                    <div class="swiper-slide"><a href="#href">Nav15</a></div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -128,21 +128,21 @@
         <div class="panel">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><a href="#href">Panel 1</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 2</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 3</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 4</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 5</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 6</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 7</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 8</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 9</a></div>
-                    <!-- <div class="swiper-slide"><a href="#href">Panel 10</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 11</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 12</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 13</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 14</a></div>
-                    <div class="swiper-slide"><a href="#href">Panel 15</a></div>-->
+                    <div class="swiper-slide"><a href="#href">Panel1</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel2</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel3</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel4</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel5</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel6</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel7</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel8</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel9</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel10</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel11</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel12</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel13</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel14</a></div>
+                    <div class="swiper-slide"><a href="#href">Panel15</a></div>
                 </div>
             </div>
         </div>
@@ -164,29 +164,31 @@
         });
 
         let handleNav = function(slide){
+            console.log('handleNav', swiperNav.slides[activeIndex], slide);
             let classNameActive = 'swiper-slide-active';
             // console.log('activeIndex', activeIndex);
             swiperNav.slides[activeIndex].classList.remove(classNameActive);
             slide.classList.add(classNameActive);
         };
         let setActiveIndex = function(index){
-            console.log('setActiveIndex: activeIndex', activeIndex);
-            console.log('setActiveIndex: index', index);
+            // console.log('setActiveIndex');
+            // console.log('setActiveIndex: activeIndex', activeIndex);
+            // console.log('setActiveIndex: index', index);
             // console.log(activeIndex === index);
             // if(activeIndex === index) return;
             activeIndex = index;
         };
 
         swiperNav.on('tap', function() {
-
+            console.log('tap');
             // if(!this.clickedIndex) return;
             swiperPanel.slideTo(this.clickedIndex);
 
-            handleNav( this.clickedSlide );
+            if(this.clickedSlide) handleNav( this.clickedSlide );
             // this.slides[activeIndex].classList.remove(classNameActive);
             // this.clickedSlide.classList.add(classNameActive);
 
-            // setActiveIndex(this.clickedIndex);
+            setActiveIndex(this.clickedIndex);
             // activeIndex = this.clickedIndex;
             // console.log('nav tap : activeIndex', activeIndex);
 
@@ -197,24 +199,26 @@
 
         });
         swiperNav.on('slideChange', function() {
+            console.log('swiperNav slideChange');
             // handleNav( this.activeIndex );
             swiperPanel.slideTo(this.activeIndex);
             // console.log('nav slideChange : activeIndex', activeIndex);
+            setActiveIndex(this.activeIndex);
         });
 
         swiperPanel.on('slideChange', function(){
+            // console.log('swiperPanel slideChange');
             // console.log('panel this.activeIndex', this.activeIndex);
             // console.log('swiperNav.slides[this.activeIndex]', swiperNav.slides[this.activeIndex]);
-            handleNav( swiperNav.slides[this.activeIndex] );
+            // handleNav( swiperNav.slides[this.activeIndex] );
             
             // swiperNav.slideTo(this.activeIndex);
 
-            if(this.activeIndex>activeIndex && this.activeIndex%navPerView === 0){
+            /*if(this.activeIndex>activeIndex && this.activeIndex%navPerView === 0){
                 swiperNav.slideTo(this.activeIndex);
             }
-
-            setActiveIndex(this.activeIndex);
-            // activeIndex = this.activeIndex;
+*/
+            // setActiveIndex(this.activeIndex);
             // console.log('activeIndex', activeIndex);
 
         });
