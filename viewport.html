@@ -2,27 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=0.1 maximum-scale=3.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=0.1 maximum-scale=3.0"> -->
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
     <title>viewport</title>
+    <link rel="stylesheet" type="text/css" href="https://imagecoupon.lottemart.com/lmscp/app/resources/v4/css/reset.css">
+    <style>
+        html, body{
+            height: 100%;
+        }
+        .wrap{
+            height: 100%;
+        }
+        .header{
+            position:fixed; top:0; right:0; left:0; z-index:10;
+            font-size:1rem; font-weight:bold;
+        }
+        .div-image img{
+            border: 1px solid #ddd;
+        }
+
+    </style>
 </head>
 <body>
-    <div style="position:absolute; left:0; top:0; width:100%;">
-        <img src="https://postfiles.pstatic.net/data5/2005/5/2/83/tv%C0%E5_%B5%B5%B8%E9%28%BC%F6%C1%A4%29_1-leksky.jpg?type=w3" style="width:1000px;height:1000px;" >
+    <div class="wrap">
+        <header class="header">
+            <a href="#a01">a01</a>
+            <a href="#a02">a02</a>
+        </header>
+        <div class="div-image">
+            <img src="https://postfiles.pstatic.net/data5/2005/5/2/83/tv%C0%E5_%B5%B5%B8%E9%28%BC%F6%C1%A4%29_1-leksky.jpg?type=w3" style="width:600px;" >
+        </div>
+        
+        <div style="position:absolute; left:30rem; top:30rem; font-size:2rem; font-weight:bold;" id="a01">
+            <div>a01 a01</div>
+            <p>dogodgodg</p>
+        </div>
+        <div style="position:absolute; left:40rem; top:50rem; font-size:2rem; font-weight:bold;" id="a02">
+            <div>a02 a02</div>
+            <p>dogodgodg</p>
+        </div>
     </div>
-    <nav style="position:absolute; left:0; top:0; font-size:2rem; font-weight:bold;">
-        <a href="#a01">a01</a>
-        <a href="#a02">a02</a>
-    </nav>
-    <div style="position:absolute; left:30rem; top:30rem; font-size:2rem; font-weight:bold;" id="a01">
-        <div>a01 a01</div>
-        <p>dogodgodg</p>
-    </div>
-    <div style="position:absolute; left:40rem; top:50rem; font-size:2rem; font-weight:bold;" id="a02">
-        <div>a02 a02</div>
-        <p>dogodgodg</p>
-    </div>
+    
 </body>
 
 
