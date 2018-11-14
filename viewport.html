@@ -47,6 +47,15 @@
                 position: absolute; top: 10rem; left: 10rem;
             }
 
+            .div-guide{
+                position: absolute; top: 30rem; left: 5rem;
+                width: 10rem; height: 10rem;
+                background-color: rgba(0, 0, 0, 0.5);
+                line-height: 10rem;
+                text-align: center;
+                vertical-align: middle;
+            }
+
         </style>
 
 </head>
@@ -110,9 +119,16 @@
         문구2 문구2 문구2 문구2 문구2 문구2 문구2 
     </div>
 
+    <div class="div-guide" id="guide">
+        확대 안내 문구
+    </div>
 
 </div>
 <script>
+    guide.addEventListener('touchstart', function(){
+        this.style.display = 'none';
+    }, false);
+
 </script>
 </body>
 </html>
