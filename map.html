@@ -8,13 +8,7 @@
     <meta name="googlebot" content="noindex,nofollow">
     <title>MAP</title>
     <link rel="stylesheet" type="text/css" href="reset.css"> 
-    <style>
-        .map {
-            position: relative;
-        }
-        .area{
-            position: absolute; z-index: 1;
-        }
+    <style>       
 
         .cls-1 {
           filter: url(#color-overlay-1);
@@ -147,6 +141,17 @@
         .cls-34 {
           fill: #000;
         }
+
+        .map {
+            position: relative;
+        }
+        .map img{
+            -webkit-user-select: none; cursor: zoom-out;
+        }
+        .area{
+            position: absolute; z-index: 1;
+        }
+
     
         svg[data-active=true] .cls-10{
             fill: #4e6875;
@@ -155,8 +160,7 @@
             /*fill: #000;*/
         }
 
-        .text{
-        }
+        
     </style>
 </head>
 <body>
@@ -168,8 +172,8 @@
         </div>
         
         <!-- <h1>MAP</h1> -->
-        <div class="map">
-            <img src="./images/map.gif" alt="도면" style="-webkit-user-select: none; cursor: zoom-out; ">
+        <div class="map" style="transform: scale(1.15); transform-origin: 0 0;">
+            <img src="./images/map.gif" alt="도면">
 
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="412" height="234" viewBox="0 0 412 234" id="a01" class="area" style="top: 1296px; left: 408px;">
                 <path xmlns="http://www.w3.org/2000/svg" d="M40.000,-0.000 L152.000,-0.000 L152.000,234.000 L40.000,234.000 C17.909,234.000 0.000,216.091 0.000,194.000 L0.000,40.000 C0.000,17.909 17.909,-0.000 40.000,-0.000 Z" class="cls-10"/>
