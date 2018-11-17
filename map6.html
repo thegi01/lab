@@ -143,25 +143,26 @@
         }
 
         .wrap{
+            padding-top: 1rem;
             transform-origin: 0 0;
         }
 
         .map {
-            position: relative;
+            position: absolute;
             transform-origin: 0 0;
         }
         .map img{
             /*-webkit-user-select: none; cursor: zoom-out;*/
-            width: 2780px; 
+            /*width: 2780px; */
         }
 
         .area{
             position: absolute; z-index: 1;
         }
 
-        .text{
+        .text1{
+            margin-bottom: 1rem;
             font-size: 3rem;
-            /*white-space: nowrap;*/
             text-align: center;
         }
 
@@ -169,13 +170,8 @@
             position: absolute; 
             width: 100%;
             font-size: 3rem;
-            /*white-space: nowrap;*/
             text-align: center;
         }
-
-        svg{
-        }
-
     
         svg[data-active=true] .cls-10{
             fill: #4e6875;
@@ -191,7 +187,8 @@
 
 <div class="wrap" id="wrap">
 
-    <div class="text">
+    <div class="text1">
+        version 1 <br>
         문구1 문구1 문구1 문구1 문구1 문구1 문구1 <br>
         문구1 문구1 문구1 문구1 문구1 문구1 문구1 
     </div>
@@ -212,27 +209,25 @@
         </svg> 
     </div>
 
-    
-
-    <div class="text2">
+    <div id="text2" class="text2" style="display:none;">
         문구2 문구2 문구2 문구2 문구2 문구2 문구2 
     </div>
-
     
 
 </div> 
 
 <script>
     var mapEl = document.getElementById('map');
-    var imgEl = document.getElementsByTagName('img')[0];
-    var imgRateW = 278;
+    var imgWidth = 2780;
     var documentW = document.body.clientWidth/10;
-    var rate = documentW/imgRateW;
+    var rate = documentW/(imgWidth*0.1);
     mapEl.style.webkitTransform = 'scale(' + rate + ')';
 
-    console.log(mapEl.offsetTop + mapEl.offsetHeight*rate);
-
-    document.getElementsByClassName('text2')[0].style.top = mapEl.offsetTop + mapEl.offsetHeight*rate+'px';
+    window.onload = function(){
+        var text2El = document.getElementById('text2');
+        text2El.style.top = mapEl.offsetTop + mapEl.offsetHeight*rate + 15 +'px';
+        text2El.style.display = 'block';
+    };
 
 </script>
           
