@@ -142,6 +142,11 @@
           fill: #000;
         }
 
+        .wrap{
+            transform-origin: 0 0;
+            
+        }
+
         .map {
             position: relative;
             transform-origin: 0 0;
@@ -167,7 +172,7 @@
 </head>
 <body>
 
-<div class="wrap">
+<div class="wrap" id="wrap">
 
     <div class="text">
         문구1 문구1 문구1 문구1 문구1 문구1 문구1 
@@ -200,10 +205,10 @@
 </div> 
 
 <script>
-    // var imgRateW = 278;
-    // var documentW = document.body.clientWidth/10;
-    // var rate = documentW/imgRateW;
-    // document.getElementById('map').style.webkitTransform = 'scale(' + rate + ')';
+    var imgRateW = 278;
+    var documentW = document.body.clientWidth/10;
+    var rate = documentW/imgRateW;
+    document.getElementById('wrap').style.webkitTransform = 'scale(' + rate + ')';
 
 </script>
           
