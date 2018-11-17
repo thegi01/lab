@@ -1,213 +1,135 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, minimum-scale=0.1"> -->
-    <!-- <meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=0.1, minimum-scale=0.1, maximum-scale=3.0"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=0.1 maximum-scale=7.0, user-scalable=yes"> -->
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
-    <title>MAP</title>
+    <title>map img base64</title>
     <link rel="stylesheet" type="text/css" href="reset.css"> 
-    <style>       
+    <style>
+            html, body{
+                height: 100%;
+            }
+            .wrap{
+                height: 100%;
+            }
+            .header{
+                position:fixed; top:0; right:0; left:0; z-index:10;
+                font-size:1rem; font-weight:bold;
+            }
+            .div-image img{
+                border: 1px solid #ddd;
+            }
+            #a01, #a02{
+                position: absolute; z-index: 1;  
+                font-weight: bold; font-size: 2rem; color: #fff;
+                width: 50px;
+                background-color: green; border: 1px solid #ddd;
+            }
+            #a01{
+                top: 10rem; left: 10rem;   
+            }
+            #a02{
+                top: 20rem; left: 30rem; 
+            }
 
-        .cls-1 {
-          filter: url(#color-overlay-1);
-        }
+            .text1,
+            .text2{
+                display: block;
+                margin: 1rem;
+                text-align: center;
+                font-size: 2rem;
+            }
 
-        .cls-2, .cls-4 {
-          fill: #f6e3b8;
-        }
+            svg{
+                position: absolute; top: 10rem; left: 10rem;
+            }
 
-        .cls-10, .cls-15, .cls-16, .cls-18, .cls-2, .cls-25, .cls-26, .cls-27, .cls-28, .cls-29, .cls-3, .cls-31, .cls-32, .cls-33, .cls-34, .cls-5, .cls-7, .cls-9 {
-          fill-rule: evenodd;
-        }
+            .div-guide{
+                position: absolute; top: 20%; left: 50%;
+                width: 20rem; height: 20rem;
+                margin-left: -10rem; 
+                background-color: rgba(0, 0, 0, 0.5);
+                line-height: 10rem;
+                font-size: 2rem; text-align: center;
+                vertical-align: middle;
+            }
 
-        .cls-3 {
-          fill: #c9c9c9;
-        }
+        </style>
 
-        .cls-5 {
-          fill: #e7e8d8;
-        }
-
-        .cls-6, .cls-7 {
-          fill: #b5e5b9;
-        }
-
-        .cls-8, .cls-9 {
-          fill: #ffe4de;
-        }
-
-        .cls-10, .cls-11 {
-          fill: #b4d9ec;
-        }
-
-        .cls-12, .cls-13, .cls-19, .cls-23 {
-          font-size: 41.6667px;
-        }
-
-        .cls-13, .cls-16, .cls-23, .cls-30 {
-          fill: #fff;
-        }
-
-        .cls-13, .cls-19, .cls-22, .cls-23 {
-          text-anchor: middle;
-        }
-
-        .cls-13 {
-          font-family: "NotoSansCJKkr-Medium";
-        }
-
-        .cls-14 {
-          filter: url(#color-overlay-2);
-          opacity: 0.7;
-        }
-
-        .cls-15 {
-          fill: #e78d79;
-        }
-
-        .cls-17 {
-          stroke: #fff;
-        }
-
-        .cls-17, .cls-20 {
-          stroke-linejoin: round;
-          stroke-width: 6px;
-        }
-
-        .cls-18, .cls-19, .cls-22 {
-          fill: #666;
-        }
-
-        .cls-19, .cls-23 {
-          font-family: "NotoSansCJKkr-Bold";
-          font-weight: bold;
-        }
-
-        .cls-20 {
-          stroke: #666;
-        }
-
-        .cls-21, .cls-22 {
-          font-size: 58.3333px;
-        }
-
-        .cls-22 {
-          font-family: "12LotteMartHLight";
-        }
-
-        .cls-24, .cls-25 {
-          fill: #f3f3f4;
-        }
-
-        .cls-26 {
-          stroke: #222;
-          stroke-width: 10px;
-        }
-
-        .cls-26, .cls-27, .cls-31 {
-          fill: none;
-        }
-
-        .cls-27, .cls-31 {
-          stroke: #484343;
-        }
-
-        .cls-27 {
-          stroke-width: 4px;
-        }
-
-        .cls-28, .cls-36 {
-          fill: #b42727;
-        }
-
-        .cls-29, .cls-35 {
-          fill: #2755b4;
-        }
-
-        .cls-31 {
-          stroke-width: 5px;
-        }
-
-        .cls-32 {
-          fill: #484343;
-        }
-
-        .cls-33 {
-          fill: #345fb8;
-        }
-
-        .cls-34 {
-          fill: #000;
-        }
-
-        .map {
-            position: relative;
-            transform-origin: 0 0;
-        }
-        .map img{
-            -webkit-user-select: none; cursor: zoom-out;
-            width: 1000px;
-        }
-        .area{
-            position: absolute; z-index: 1;
-        }
-
-    
-        svg[data-active=true] .cls-10{
-            fill: #4e6875;
-        }
-        svg[data-active=true] .cls-13{
-            /*fill: #000;*/
-        }
-
-        
-    </style>
 </head>
 <body>
-
 <div class="wrap">
-
-    <div class="text">
+    <!-- <header class="header">
+       <a href="#a01">a01</a>
+       <a href="#a02">a02</a>
+    </header> -->
+    <div class="text1">
         문구1 문구1 문구1 문구1 문구1 문구1 문구1 
     </div>
-    
-    <!-- <h1>MAP</h1> -->
     <div id="map" class="map">
-        <img src="./images/map.gif" alt="도면">
+        <img src="./images/map.gif" alt="도면" style="width:1000px">
+    </div>
+    <!-- <div id="a01">
+        a01a01a01a01
+    </div>
+    <div id="a02">
+        a02a02a02a02
+    </div> -->
+    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <rect x="200" y="10" width="300" height="100" style="stroke: black; fill: orange;"></rect>
+        <text x="250" y="60">Hello World!, text-anchor</text>
+    <!-- </svg>
 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="412" height="234" viewBox="0 0 412 234" id="a01" class="area" style="top: 1296px; left: 408px;">
-            <path xmlns="http://www.w3.org/2000/svg" d="M40.000,-0.000 L152.000,-0.000 L152.000,234.000 L40.000,234.000 C17.909,234.000 0.000,216.091 0.000,194.000 L0.000,40.000 C0.000,17.909 17.909,-0.000 40.000,-0.000 Z" class="cls-10"/>
-            <text xmlns="http://www.w3.org/2000/svg" x="77" y="128" class="cls-12"><tspan x="77" class="cls-13">문구</tspan></text>
+    <svg version="1.1" 
+        width="200" height="250" 
+        xmlns="http://www.w3.org/2000/svg"> -->
+        
+        <!-- Reactangles 사각형 -->
+        <rect x="10" y="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5" />
 
-            <path xmlns="http://www.w3.org/2000/svg" d="M156.000,-0.000 L372.000,-0.000 C394.091,-0.000 412.000,17.909 412.000,40.000 L412.000,194.000 C412.000,216.091 394.091,234.000 372.000,234.000 L156.000,234.000 L156.000,-0.000 Z" class="cls-10"/>
-            <text xmlns="http://www.w3.org/2000/svg" x="282" y="104" class="cls-12"><tspan x="282" class="cls-13">애완</tspan><tspan dy="1.2em" x="282" class="cls-13">자동차</tspan></text>
-        </svg>
+        <!-- r : radius -->
+        <rect x="60" y="10" rx="10" ry="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5" /> 
 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="242" height="666" viewBox="0 0 242 666" id="a02" class="area" style="top: 1176px; left: 50px;" data-active="true">
-            <path xmlns="http://www.w3.org/2000/svg" d="M1.000,-1.000 L242.000,-1.000 L242.000,626.000 C242.000,648.091 224.091,666.000 202.000,666.000 L1.000,666.000 L1.000,-1.000 Z" class="cls-10"/>
-            <text x="122" y="346" class="cls-12"><tspan x="122" class="cls-13">토이박스</tspan></text>
-        </svg> 
+        <!-- Circle 원 -->
+        <!-- c: center, r: radius -->
+        <circle cx="25" cy="75" r="20" stroke="red" fill="transparent" stroke-width="5" /> <!-- c : center fof the circle -->
+
+        <!-- Ellipse 타원 -->
+        <!-- r : radius, c: center -->
+        <ellipse cx="75" cy="75" rx="20" ry="5" stroke="red" fill="transparent" stroke-width="5" /> 
+        
+        <!-- Line 선 -->
+        <line x1="10" x2="50" y1="110" y2="150" stroke="orange" stroke-width="5" />
+
+        <!-- Polyline : 연결된 직선들의 그룹, x y 좌표 -->
+        <polyline points="60 110, 65 120, 70 115, 75 130, 80 125, 85 140, 90 135, 95 150, 100 145" stroke="orange" fill="transparent" stroke-width=5 />
+        
+        <!-- Ploygon 다각형 -->
+        <polygon points="50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180" stroke="green" fill="transparent" stroke-width="5" />
+        
+        <!-- Path : 선과 곡선, 호 등 다양한 형태 -->
+        <!-- M : Move to -->
+        <path d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5" />
+        
+    </svg>
+
+    <div class="text2">
+        문구2 문구2 문구2 문구2 문구2 문구2 문구2 
     </div>
 
-    <div class="text">
-        문구1 문구1 문구1 문구1 문구1 문구1 문구1 
+    <div class="div-guide" id="guide">
+        확대 안내 문구<br>(touchmove)
     </div>
 
-    
-
-</div> 
-
+</div>
 <script>
-    // var imgRateW = 278;
-    // var documentW = document.body.clientWidth/10;
-    // var rate = documentW/imgRateW;
-    // document.getElementById('map').style.webkitTransform = 'scale(' + rate + ')';
+    guide.addEventListener('touchmove', function(){
+        this.style.display = 'none';
+    }, false);
 
 </script>
-          
-
-
 </body>
 </html>
