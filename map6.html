@@ -185,7 +185,7 @@
 </head>
 <body>
 
-<div class="wrap" id="wrap">
+<div id="wrap" class="wrap">
 
     <div class="text1">
         version 1 <br>
@@ -202,7 +202,6 @@
             <path xmlns="http://www.w3.org/2000/svg" d="M156.000,-0.000 L372.000,-0.000 C394.091,-0.000 412.000,17.909 412.000,40.000 L412.000,194.000 C412.000,216.091 394.091,234.000 372.000,234.000 L156.000,234.000 L156.000,-0.000 Z" class="cls-10"/>
             <text xmlns="http://www.w3.org/2000/svg" x="282" y="104" class="cls-12"><tspan x="282" class="cls-13">애완</tspan><tspan dy="1.2em" x="282" class="cls-13">자동차</tspan></text>
         </svg>
-
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="242" height="666" viewBox="0 0 242 666" id="a02" class="area" style="top: 1176px; left: 50px;" data-active="true">
             <path xmlns="http://www.w3.org/2000/svg" d="M1.000,-1.000 L242.000,-1.000 L242.000,626.000 C242.000,648.091 224.091,666.000 202.000,666.000 L1.000,666.000 L1.000,-1.000 Z" class="cls-10"/>
             <text x="122" y="346" class="cls-12"><tspan x="122" class="cls-13">토이박스</tspan></text>
@@ -212,15 +211,14 @@
     <div id="text2" class="text2" style="display:none;">
         문구2 문구2 문구2 문구2 문구2 문구2 문구2 
     </div>
-    
 
 </div> 
 
 <script>
     var mapEl = document.getElementById('map');
     var imgWidth = 2780;
-    var documentW = document.body.clientWidth/10;
-    var rate = documentW/(imgWidth*0.1);
+    var docWidth = document.body.clientWidth/10;
+    var rate = docWidth/(imgWidth*0.1);
     mapEl.style.webkitTransform = 'scale(' + rate + ')';
 
     window.onload = function(){
