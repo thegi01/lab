@@ -201,10 +201,9 @@
     
     <div class="div-title">
         <h1>금천점 상품 위치 안내</h1>
-        
     </div>
     <div style="text-align: center; font-size: 3rem;">
-        <p>version 2</p>
+        <p>version 3</p>
     </div>
     
     <div id="map" class="div-map">
@@ -224,7 +223,6 @@
 
         </svg>
 
-
         <!-- m02 -->
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
             preserveAspectRatio="xMidYMid" width="242" height="666" viewBox="0 0 242 666" 
@@ -242,7 +240,7 @@
         과일 코너(18번) 위치에 있습니다.
     </div>
 
-    <div class="div-guide" id="guide">
+    <div id="guide" class="div-guide">
         확대 안내<br>(touchmove)
     </div>
 
@@ -253,8 +251,8 @@
     /* MAP Design */
     var mapEl = document.getElementById('map');
     var imgWidth = 2780;
-    var docWidth = document.body.clientWidth/10;
-    var rate = docWidth/(imgWidth*0.1);
+    // var docWidth = document.body.clientWidth/10;
+    var rate = 98/(imgWidth*0.1);
 
     var getStyleProp = function(prop) {
         for (var i = 0; i < prop.length; i++) {
