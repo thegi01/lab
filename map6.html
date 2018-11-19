@@ -203,7 +203,7 @@
         <h1>금천점 상품 위치 안내</h1>
     </div>
     <div style="text-align: center; font-size: 3rem;">
-        <p>version 3</p>
+        <p>version 4</p>
     </div>
     
     <div id="map" class="div-map">
@@ -249,7 +249,7 @@
 <script>
     
     /* MAP Design */
-    var mapEl = document.getElementById('map');
+    // var mapEl = document.getElementById('map');
     var imgWidth = 2780;
     // var docWidth = document.body.clientWidth/10;
     var rate = 98/(imgWidth*0.1);
@@ -266,11 +266,11 @@
     var transformProp = getStyleProp(transform);
     
     if(transformProp)
-        mapEl.style[transformProp] = 'scale(' + rate + ')';    
+        map.style[transformProp] = 'scale(' + rate + ')';    
 
     window.onload = function(){
         var text2El = document.getElementById('description');
-        text2El.style.top = mapEl.offsetTop + mapEl.offsetHeight*rate +'px';
+        text2El.style.top = map.offsetTop + map.offsetHeight*rate +'px';
         text2El.style.display = 'block';
     };
 
