@@ -142,16 +142,26 @@
           fill: #000;
         }
 
-        .wrap{
-            padding-top: 1rem;
-            transform-origin: 0 0;
+        svg[data-active=true] .cls-10{
+            fill: #4e6875;
+        }
+        svg[data-active=true] .cls-13{
+            /*fill: #000;*/
         }
 
-        .map {
+        .wrap{
+            padding-top: 1rem;
+        }
+
+        .div-map {
             position: absolute;
+            -webkit-transform-origin: 0 0;
+            -moz-transform-origin: 0 0;
+            -ms-transform-origin: 0 0;
+            -o-transform-origin: 0 0;
             transform-origin: 0 0;
         }
-        .map img{
+        .div-map img{
             /*-webkit-user-select: none; cursor: zoom-out;*/
             /*width: 2780px; */
         }
@@ -160,72 +170,117 @@
             position: absolute; z-index: 1;
         }
 
-        .text1{
+        .div-title {
             margin-bottom: 1rem;
-            font-size: 3rem;
+            font-size: 2rem;
             text-align: center;
         }
 
-        .text2{
+        .div-description{
             position: absolute; 
             width: 100%;
-            font-size: 3rem;
+            margin-top: 2rem;
+            font-size: 3rem; line-height: 1.4;
             text-align: center;
         }
-    
-        svg[data-active=true] .cls-10{
-            fill: #4e6875;
-        }
-        svg[data-active=true] .cls-13{
-            /*fill: #000;*/
-        }
 
-        
+        .div-guide{
+            position: absolute; top: 30%; left: 50%;
+            width: 20rem; height: 20rem;
+            margin-left: -10rem; 
+            background-color: rgba(0, 0, 0, 0.5);
+            line-height: 10rem;
+            font-size: 2rem; text-align: center;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
 
 <div id="wrap" class="wrap">
-
-    <div class="text1">
-        version 1 <br>
-        문구1 문구1 문구1 문구1 문구1 문구1 문구1 <br>
-        문구1 문구1 문구1 문구1 문구1 문구1 문구1 
+    
+    <div class="div-title">
+        <h1>금천점 상품 위치 안내</h1>
+        
+    </div>
+    <div style="text-align: center; font-size: 3rem;">
+        <p>version 2</p>
     </div>
     
-    <div id="map" class="map">
+    <div id="map" class="div-map">
+
         <img src="./images/map.gif" alt="도면">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="412" height="234" viewBox="0 0 412 234" id="a01" class="area" style="top: 1296px; left: 408px;">
+        
+        <!-- m01 -->
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+            preserveAspectRatio="xMidYMid" width="412" height="234" viewBox="0 0 412 234" 
+            id="m01" class="area" style="top: 1296px; left: 408px;">
+
             <path xmlns="http://www.w3.org/2000/svg" d="M40.000,-0.000 L152.000,-0.000 L152.000,234.000 L40.000,234.000 C17.909,234.000 0.000,216.091 0.000,194.000 L0.000,40.000 C0.000,17.909 17.909,-0.000 40.000,-0.000 Z" class="cls-10"/>
             <text xmlns="http://www.w3.org/2000/svg" x="77" y="128" class="cls-12"><tspan x="77" class="cls-13">문구</tspan></text>
 
             <path xmlns="http://www.w3.org/2000/svg" d="M156.000,-0.000 L372.000,-0.000 C394.091,-0.000 412.000,17.909 412.000,40.000 L412.000,194.000 C412.000,216.091 394.091,234.000 372.000,234.000 L156.000,234.000 L156.000,-0.000 Z" class="cls-10"/>
             <text xmlns="http://www.w3.org/2000/svg" x="282" y="104" class="cls-12"><tspan x="282" class="cls-13">애완</tspan><tspan dy="1.2em" x="282" class="cls-13">자동차</tspan></text>
+
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="242" height="666" viewBox="0 0 242 666" id="a02" class="area" style="top: 1176px; left: 50px;" data-active="true">
+
+
+        <!-- m02 -->
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+            preserveAspectRatio="xMidYMid" width="242" height="666" viewBox="0 0 242 666" 
+            id="m02" class="area" style="top: 1176px; left: 50px;" data-active="true">
+
             <path xmlns="http://www.w3.org/2000/svg" d="M1.000,-1.000 L242.000,-1.000 L242.000,626.000 C242.000,648.091 224.091,666.000 202.000,666.000 L1.000,666.000 L1.000,-1.000 Z" class="cls-10"/>
             <text x="122" y="346" class="cls-12"><tspan x="122" class="cls-13">토이박스</tspan></text>
+
         </svg> 
+
     </div>
 
-    <div id="text2" class="text2" style="display:none;">
-        문구2 문구2 문구2 문구2 문구2 문구2 문구2 
+    <div id="description" class="div-description" style="display:none;">
+        황금 사과(1BOX) <br>
+        과일 코너(18번) 위치에 있습니다.
+    </div>
+
+    <div class="div-guide" id="guide">
+        확대 안내<br>(touchmove)
     </div>
 
 </div> 
 
 <script>
+    
+    /* MAP Design */
     var mapEl = document.getElementById('map');
     var imgWidth = 2780;
     var docWidth = document.body.clientWidth/10;
     var rate = docWidth/(imgWidth*0.1);
-    mapEl.style.webkitTransform = 'scale(' + rate + ')';
+
+    var getStyleProp = function(prop) {
+        for (var i = 0; i < prop.length; i++) {
+            if (typeof document.body.style[prop[i]] != "undefined") {
+                return prop[i];
+            }
+        }
+        return null;
+    }
+    var transform = ["transform", "msTransform", "webkitTransform", "mozTransform", "oTransform"];
+    var transformProp = getStyleProp(transform);
+    
+    if(transformProp)
+        mapEl.style[transformProp] = 'scale(' + rate + ')';    
 
     window.onload = function(){
-        var text2El = document.getElementById('text2');
-        text2El.style.top = mapEl.offsetTop + mapEl.offsetHeight*rate + 15 +'px';
+        var text2El = document.getElementById('description');
+        text2El.style.top = mapEl.offsetTop + mapEl.offsetHeight*rate +'px';
         text2El.style.display = 'block';
     };
+
+    /* 확대 안내 */
+    guide.addEventListener('touchmove', function(){
+        this.style.display = 'none';
+    }, false);
+
 
 </script>
           
