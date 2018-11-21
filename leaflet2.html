@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Swiper demo</title>
+<title>Leaflet demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
 <link rel="stylesheet" href="https://idangero.us/swiper/dist/css/swiper.min.css">
@@ -26,31 +26,50 @@
       margin-right: auto;
     }
     .swiper-slide {
-      background-size: cover;
-      background-position: center;
+    }
+
+    .leaflet{
+        height: 100%;
     }
 
     .leaflet-nav {
         position: fixed; top: 0; z-index: 100;
         height: 50px;
         box-sizing: border-box;
+        border-bottom: 1px solid #ccc;
         background: #fff;
-        border-bottom: 1px solid gray;
     }
     .leaflet-nav .swiper-slide {
-      width: 25%;
-      box-sizing: border-box;
+        position: relative;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .leaflet-nav .swiper-slide .__text{
+        line-height: 50px;
+    }
+    .leaflet-nav .swiper-slide .__deco{
+        display: none;
+        position: absolute; left: 5px; right: 5px; bottom: 0;
+        height: 5px;
+        background-color: orange;
     }
     .leaflet-nav .swiper-slide:not(:first-child){
-        border-left: solid 1px gray;
+        border-left: solid 1px #ccc;
     }
-    .leaflet-nav .swiper-slide-thumb-active {
-      opacity: 1;
+    .leaflet-nav .swiper-slide-thumb-active .__deco{
+        display: block;
     }
 
     .leaflet-panel {
-        position: relative; top: 50px;
-        width: 100%;
+        /*position: relative; top: 50px;*/
+        box-sizing: border-box;
+        width: 100%; min-height: 100%;
+        padding-top: 50px;
+        background-color: #f8f8f8;
+    }
+
+    .panel-content{
+        padding: 1rem;
     }
 
   </style>
@@ -62,16 +81,16 @@
     <!-- navigation -->
     <nav class="swiper-container leaflet-nav">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">nav 1</div>
-            <div class="swiper-slide">nav 2</div>
-            <div class="swiper-slide">nav 3</div>
-            <div class="swiper-slide">nav 4</div>
-            <div class="swiper-slide">nav 5</div>
-            <div class="swiper-slide">nav 6</div>
-            <div class="swiper-slide">nav 7</div>
-            <div class="swiper-slide">nav 8</div>
-            <div class="swiper-slide">nav 9</div>
-            <div class="swiper-slide">nav 10</div>
+            <div class="swiper-slide"><span class="__text">nav 1</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 2</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 3</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 4</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 5</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 6</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 7</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 8</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 9</span><span class="__deco"></span></div>
+            <div class="swiper-slide"><span class="__text">nav 10</span><span class="__deco"></span></div>
         </div>
     </nav>
     
@@ -79,17 +98,35 @@
     <div class="swiper-container leaflet-panel">
         <div class="swiper-wrapper">
             <div class="swiper-slide" data-hash="slide1">
-                <div style="height:2000px;">slide 1</div>
+                <div class="panel-content" style="height: 1000px;">slide 1</div>
             </div>
-            <div class="swiper-slide" data-hash="slide2">slide 2</div>
-            <div class="swiper-slide" data-hash="slide3">slide 3</div>
-            <div class="swiper-slide" data-hash="slide4">slide 4</div>
-            <div class="swiper-slide" data-hash="slide5">slide 5</div>
-            <div class="swiper-slide" data-hash="slide6">slide 6</div>
-            <div class="swiper-slide" data-hash="slide7">slide 7</div>
-            <div class="swiper-slide" data-hash="slide8">slide 8</div>
-            <div class="swiper-slide" data-hash="slide9">slide 9</div>
-            <div class="swiper-slide" data-hash="slide10">slide 10</div>
+            <div class="swiper-slide" data-hash="slide2">
+                <div class="panel-content">slide 2</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide3">
+                <div class="panel-content">slide 3</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide4">
+                <div class="panel-content">slide 4</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide5">
+                <div class="panel-content">slide 5</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide6">
+                <div class="panel-content">slide 6</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide7">
+                <div class="panel-content">slide 7</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide8">
+                <div class="panel-content">slide 8</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide9">
+                <div class="panel-content">slide 9</div>
+            </div>
+            <div class="swiper-slide" data-hash="slide10">
+                <div class="panel-content">slide 10</div>
+            </div>
         </div>
         <!-- <div class="swiper-button-next swiper-button-white"></div>
         <div class="swiper-button-prev swiper-button-white"></div> -->
@@ -101,8 +138,7 @@
 
 <script>
     var galleryThumbs = new Swiper('.leaflet-nav', {
-        spaceBetween: 10,
-        slidesPerView: 4,
+        slidesPerView: 5,
         freeMode: true,
         watchSlidesVisibility: true,
         watchSlidesProgress: true,
