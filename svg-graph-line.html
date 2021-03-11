@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>Line Graph</title>
+    <style>
+      body {
+        margin: 8px;
+        padding: 0;
+        background-color: #fff;
+      }
+      .wrap {
+        margin: 20px;
+      }
+      .div-graph {
+        /* display: block; */
+        visibility: visible;
+        position: relative;
+        height: 200px;
+      }
+      .div-graph[data-hidden="true"] {
+        /* display: none; */
+        visibility: hidden;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        table-layout: fixed;
+      }
+      tbody {
+        height: 180px;
+      }
+      tbody td {
+        position: relative;
+        height: 180px;
+        padding: 0;
+        text-align: center;
+        vertical-align: bottom;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+      tbody em {
+        position: absolute;
+        z-index: 1;
+        width: 30px;
+        font-size: 12px;
+        margin-left: -15px;
+        margin-bottom: 2px;
+      }
+      .__dot {
+        position: absolute;
+        z-index: 1;
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #000;
+        margin-left: -2.5px;
+        margin-bottom: -2.5px;
+      }
+      tfoot {
+        width: 100%;
+        font-style: normal;
+        font-size: 12px;
+        color: #000;
+      }
+
+      tfoot th {
+        white-space: nowrap;
+      }
+
+      .div-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 180px;
+      }
+      .__line {
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        border-top: 1px dashed #ddd;
+      }
+      .__line:first-child {
+        bottom: 0;
+      }
+      .__line:nth-child(2) {
+        bottom: 20%;
+      }
+      .__line:nth-child(3) {
+        bottom: 40%;
+      }
+      .__line:nth-child(4) {
+        bottom: 60%;
+      }
+      .__line:nth-child(5) {
+        bottom: 80%;
+      }
+      .__line:nth-child(6) {
+        bottom: 100%;
+      }
+
+      svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 180px;
+      }
+      .graph-area polyline {
+        stroke: #ccc;
+        stroke-width: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="div-graph" id="graphEl">
+        <table>
+          <tbody>
+            <tr></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="col">a</th>
+              <th scope="col">b</th>
+              <th scope="col">c</th>
+              <th scope="col">d</th>
+              <th scope="col">e</th>
+              <!-- <th scope="col">f</th> -->
+            </tr>
+          </tfoot>
+        </table>
+
+        <div class="div-line">
+          <span class="__line"></span>
+          <span class="__line"></span>
+          <span class="__line"></span>
+          <span class="__line"></span>
+          <span class="__line"></span>
+          <span class="__line"></span>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+          <g class="graph-area" id="graphArea" data-hidden="false"></g>
+        </svg>
+      </div>
+    </div>
+
+    <script>
+      const data = [2, 1.5, 4.3, 3.7, 5],
+        len = data.length,
+        ylen = 6 - 1;
+
+      const tbodyEl = graphEl.getElementsByTagName("tbody")[0],
+        trEl = graphEl.getElementsByTagName("tr")[0];
+
+      // draw tds and points
+      function drawTds() {
+        let tds = data.map(p => {
+          let v = p * (100 / ylen);
+          let tp = `<td>
+                <em style="bottom:${v}%">${p}</em>
+            <span class="__dot" style="bottom:${v}%"></span>
+            </td>`;
+          return tp;
+        });
+        trEl.innerHTML = tds.join(" ");
+      }
+
+      // draw graph
+      function drawGraph() {
+        let graphW = graphEl.offsetWidth,
+          svgHeight = tbodyEl.offsetHeight,
+          cellW = graphW / len,
+          cellH = svgHeight / ylen;
+        let arr = data.map((p, i) => {
+          let x = cellW * i + cellW / 2,
+            y = svgHeight - cellH * p;
+          return `${x} ${y}`;
+        });
+        let points = arr.join(" ");
+        let tp = `<polyline points="${points}" stroke-linecap="round" fill="none" stroke-linejoin="round"/>`;
+        graphArea.innerHTML = tp;
+      }
+
+      drawTds();
+      drawGraph();
+
+      window.onresize = function() {
+        drawGraph();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Layout thumb contents</title>
+    <style>
+        .list{
+            display: flex;
+            margin-bottom: 10px
+        }
+        .thumb{
+            flex: none;
+            overflow: hidden;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: gray;
+        }
+        .thumb img{
+            width: 100%;
+            height: 100%;
+        }
+        .contents{
+            flex: 1;
+            margin-left: 10px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+        .row{}
+        .title-area{
+            display: flex;
+            white-space: nowrap;
+        }
+        .title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .badge{
+            font-size: 11px;
+            margin-left: 5px;
+            padding: 3px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="list">
+        <div class="thumb">
+            <img src="https://search1.kakaocdn.net/argon/0x200_85_hr/1OvhKfPYkiO" alt="">
+        </div>
+        <div class="contents">
+            <div class="row title-area">
+                <span class="title">리스트 타이틀 리스트 타이틀</span>
+                <span class="badge">쿠폰</span>
+                <span class="badge">포장</span>
+                <span class="badge">매장</span>
+            </div>
+            <div class="row">
+                <span class="item">item 1</span>
+                <span class="item">item 2</span>
+                <span class="item">item 3</span>
+            </div>
+            <div class="row">
+                <span class="item">item 1</span>
+                <span class="item">item 2</span>
+                <span class="item">item 3</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="list">
+        <div class="thumb">
+            <img src="https://search1.kakaocdn.net/argon/0x200_85_hr/1OvhKfPYkiO" alt="">
+        </div>
+        <div class="contents">
+            <div class="row title-area">
+                <span class="title">리스트 타이틀 리스트 타이틀 리스트 타이틀 리스트 타이틀 리스트 타이틀 리스트 타이틀</span>
+                <span class="badge">쿠폰</span>
+                <span class="badge">포장</span>
+            </div>
+            <div class="row">
+                <span class="item">item 1</span>
+                <span class="item">item 2</span>
+                <span class="item">item 3</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="list">
+        <div class="thumb">
+            <img src="https://search1.kakaocdn.net/argon/0x200_85_hr/1OvhKfPYkiO" alt="">
+        </div>
+        <div class="contents">
+            <div class="row title-area">
+                <span class="title">리스트 타이틀 리스트 타이틀</span>
+                <span class="badge">쿠폰</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

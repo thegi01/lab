@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex4</title>
+</head>
+<body>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /*justify-content: space-around;*/
+
+            height: 70px;
+            margin-bottom: 50px;
+            padding: 10px;
+            border: 1px solid #aaa;
+        }
+        .item {
+            
+        }
+        .item:only-child{
+                color: red;
+        }
+    </style>
+
+
+    <div class="container">
+        <div class="item">content1</div>
+    </div>
+
+    <div class="container">
+        <div class="item">content1</div>
+        <div class="item">content2</div>
+    </div>
+
+    <div class="container">
+        <div class="item">content1</div>
+        <div class="item">content2</div>
+        <div class="item">content3</div>
+    </div>
+
+    
+    
+</body>
+</html>

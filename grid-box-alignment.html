@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Box alignment in CSS Grid Layout</title>
+    <style>
+        .wrapper{
+            background: #f8f8f8;
+        }
+        .wrapper > *{
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+        .wrapper .nested{
+            border: 1px solid #f1ebc2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Box alignment in CSS Grid Layout</h1>
+
+    <h2>Aligning items on the Block Axis</h2>
+
+    align-items
+    <ul>
+        <li>auto</li>
+        <li>normal</li>
+        <li>start</li>
+        <li>end</li>
+        <li>center</li>
+        <li>stretch</li>
+        <li>baseline</li>
+        <li>first baseline</li>
+        <li>last baseline</li>
+    </ul>
+
+    <div class="ex1 wrapper">
+      <div class="item1">Item 1</div>
+      <div class="item2">Item 2</div>
+      <div class="item3">Item 3</div>
+      <div class="item4">Item 4</div>
+    </div>
+
+    <style>
+        .ex1.wrapper {
+          display: grid;
+          grid-template-columns: repeat(8, 1fr);
+          gap: 10px;
+          grid-auto-rows: 100px;
+          grid-template-areas: 
+            "a a a a b b b b"
+            "a a a a b b b b"
+            "c c c c d d d d"
+            "c c c c d d d d";
+        }
+        .ex1 .item1 {
+          grid-area: a;
+        }
+        .ex1 .item2 {
+          grid-area: b;
+          align-self: start;
+        }
+        .ex1 .item3 {
+          grid-area: c;
+          align-self: end;
+        }
+        .ex1 .item4 {
+          grid-area: d;
+          align-self: center;
+        }
+    </style>
+
+    <br>
+
+    <h2>Justifying Items on the Inline Axis</h2>
+    justify-items
+    <ul>
+        <li>auto</li>
+        <li>normal</li>
+        <li>start</li>
+        <li>end</li>
+        <li>center</li>
+        <li>stretch</li>
+        <li>baseline</li>
+        <li>first baseline</li>
+        <li>last baseline</li>
+    </ul>
+    <div class="ex2 wrapper">
+      <div class="item1">Item 1</div>
+      <div class="item2">Item 2</div>
+      <div class="item3">Item 3</div>
+      <div class="item4">Item 4</div>
+    </div>
+    <style>
+        .ex2.wrapper {
+          display: grid;
+          grid-template-columns: repeat(8, 1fr);
+          gap: 10px;
+          grid-auto-rows: 100px;
+          grid-template-areas: 
+            "a a a a b b b b"
+            "a a a a b b b b"
+            "c c c c d d d d"
+            "c c c c d d d d";
+        }
+        .ex2 .item1 {
+          grid-area: a;
+        }
+        .ex2 .item2 {
+          grid-area: b;
+          justify-self: start;
+        }
+        .ex2 .item3 {
+          grid-area: c;
+          justify-self: end;
+        }
+        .ex2 .item4 {
+          grid-area: d;
+          justify-self: center;
+        }
+    </style>
+
+    <br>
+
+    <h2>Center an item in the area</h2>
+    <div class="ex3 wrapper">
+     <div class="item1">Item 1</div>
+    </div>
+    <style>
+        .ex3.wrapper {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          grid-auto-rows: 200px;
+          grid-template-areas: 
+            ". a a ."
+            ". a a .";
+        }
+        .ex3 .item1 {
+          grid-area: a;
+          align-self: center;
+          justify-self: center;
+        }
+    </style>
+
+    <br>
+
+    <h2>Aligning the grid tracks on the block axis</h2>
+    align-content
+    <ul>
+        <li>normal</li>
+        <li>start</li>
+        <li>end</li>
+        <li>center</li>
+        <li>stretch</li>
+        <li>space-around</li>
+        <li>space-between</li>
+        <li>space-evenly</li>
+        <li>baseline</li>
+        <li>first baseline</li>
+        <li>last baseline</li>
+    </ul>
+
+    <div class="ex4 wrapper">
+      <div class="item1">Item 1</div>
+      <div class="item2">Item 2</div>
+      <div class="item3">Item 3</div>
+      <div class="item4">Item 4</div>
+    </div>
+    <style>
+        .ex4.wrapper {
+          display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            height: 500px;
+            width: 500px;
+            gap: 10px;
+            grid-template-areas: 
+              "a a b"
+              "a a b"
+              "c d d";
+            align-content: end;
+        }
+        .ex4 .item1 {
+          grid-area: a;
+        }
+        .ex4 .item2 {
+          grid-area: b;
+        }
+        .ex4 .item3 {
+          grid-area: c;
+        }
+        .ex4 .item4 {
+          grid-area: d;
+        }
+    </style>
+
+    <br>
+
+    <div class="ex4-2 wrapper">
+      <div class="item1">Item 1</div>
+      <div class="item2">Item 2</div>
+      <div class="item3">Item 3</div>
+      <div class="item4">Item 4</div>
+    </div>
+    <style>
+        .ex4-2.wrapper {
+          display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            height: 500px;
+            width: 500px;
+            gap: 10px;
+            grid-template-areas: 
+              "a a b"
+              "a a b"
+              "c d d";
+            align-content: space-between;
+        }
+        .ex4-2 .item1 {
+          grid-area: a;
+        }
+        .ex4-2 .item2 {
+          grid-area: b;
+        }
+        .ex4-2 .item3 {
+          grid-area: c;
+        }
+        .ex4-2 .item4 {
+          grid-area: d;
+        }
+    </style>
+
+    <br>
+
+
+    <h2>Justifying the grid tracks on the inline axis</h2>
+    <div class="ex5 wrapper">
+      <div class="item1">Item 1</div>
+      <div class="item2">Item 2</div>
+      <div class="item3">Item 3</div>
+      <div class="item4">Item 4</div>
+    </div>
+    <style>
+        .ex5.wrapper {
+          display: grid;
+          grid-template-columns: repeat(3, 100px);
+          grid-template-rows: repeat(3, 100px);
+          height: 500px;
+          width: 500px;
+          gap: 10px;
+          grid-template-areas: 
+            "a a b"
+            "a a b"
+            "c d d";
+          align-content: space-between;
+          justify-content: space-around;
+        }
+        .ex5 .item1 {
+          grid-area: a;
+        }
+        .ex5 .item2 {
+          grid-area: b;
+        }
+        .ex5 .item3 {
+          grid-area: c;
+        }
+        .ex5 .item4 {
+          grid-area: d;
+        }
+    </style>
+
+    <br>
+
+    <h2>Alignment and auto margins</h2>
+    <div class="ex6 wrapper">
+      <div class="item1">Item 1</div>
+      <div class="item2">Item 2</div>
+      <div class="item3">Item 3</div>
+      <div class="item4">Item 4</div>
+    </div>
+    <style>
+        .ex6.wrapper {
+          display: grid;
+          grid-template-columns: repeat(3, 100px);
+          grid-template-rows: repeat(3, 100px);
+          height: 500px;
+          width: 500px;
+          gap: 10px;
+          grid-template-areas: 
+            "a a b"
+            "a a b"
+            "c d d";
+        }
+        .ex6 .item1 {
+          grid-area: a;
+          margin-left: auto;
+        }
+        .ex6 .item2 {
+          grid-area: b;
+        }
+        .ex6 .item3 {
+          grid-area: c;
+        }
+        .ex6 .item4 {
+          grid-area: d;
+        }
+    </style>
+
+    <br>
+
+
+</body>
+</html>

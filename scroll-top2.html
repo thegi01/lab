@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>scroll top2</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .warp {
+        height: 3000px;
+        background: linear-gradient(45deg, #3f8f78, #5aa5ce);
+      }
+      .button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 100px;
+        padding: 10px;
+        margin-left: -50px;
+        background-color: #3b3b3b;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="warp">
+      <button type="button" class="button" onclick="scrollToTop()">
+        Scroll to top
+      </button>
+    </div>
+
+    <script>
+      function scrollToTop() {
+        let scrollDuration = 300;
+        let scrollUnit = 15;
+        let scrollStep = -window.scrollY / (scrollDuration / scrollUnit),
+          scrollInterval = setInterval(function() {
+            if (window.scrollY != 0) {
+              window.scrollBy(0, scrollStep);
+            } else clearInterval(scrollInterval);
+          }, scrollUnit);
+      }
+    </script>
+  </body>
+</html>

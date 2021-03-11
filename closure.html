@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Closure</title>
+    
+</head>
+<body>
+
+    <p id="help">Helpful notes will appear here</p>
+    <p>E-mail: <input type="text" id="email" name="email"></p>
+    <p>Name: <input type="text" id="name" name="name"></p>
+    <p>Age: <input type="text" id="age" name="age"></p>
+
+    <script>
+        function showHelp(help) {
+          document.getElementById('help').innerHTML = help;
+        }
+
+        function setupHelp() {
+          var helpText = [
+              {'id': 'email', 'help': 'Your e-mail address'},
+              {'id': 'name', 'help': 'Your full name'},
+              {'id': 'age', 'help': 'Your age (you must be over 16)'}
+            ];
+
+          for (var i = 0; i < helpText.length; i++) {
+            var item = helpText[i];
+            console.log(item);
+            document.getElementById(item.id).onfocus = function() {
+                // console.log(item.id);
+              showHelp(item.help);
+            }
+          }
+        }
+
+        setupHelp();
+    </script>
+       
+
+        <!-- <p>Some paragraph text</p>
+       <h1>some heading 1 text</h1>
+       <h2>some heading 2 text</h2>
+
+       <a href="#" id="size-12">12</a>
+       <a href="#" id="size-14">14</a>
+       <a href="#" id="size-16">16</a>
+
+       <style>
+           body {
+             font-family: Helvetica, Arial, sans-serif;
+             font-size: 12px;
+           }
+
+           h1 {
+             font-size: 1.5em;
+           }
+
+           h2 {
+             font-size: 1.2em;
+           }
+       </style>
+
+       <script>
+        function makeSizer(size_px){
+            console.log(size_px);
+            return function(){
+                document.body.style.fontSize = size_px + 'px';
+            }
+        }
+        document.getElementById('size-12').onclick = makeSizer(12);
+        document.getElementById('size-14').onclick = makeSizer(14);
+        document.getElementById('size-16').onclick = makeSizer(16);
+       </script> -->
+
+    <script>
+       
+
+        /*function makeSizer(size_px){
+            console.log(size_px);
+            document.body.style.fontSize = size_px + 'px';
+        }
+        document.getElementById('size-12').onclick = function(){
+            makeSizer(12);
+        };
+        document.getElementById('size-14').onclick = function(){
+            makeSizer(14);
+        };
+        document.getElementById('size-16').onclick = function(){
+            makeSizer(16);
+        };*/
+
+
+
+        /*var submit = function(){
+            console.log('submit');
+        }
+
+        var submit2 = (function(){
+            console.log('submit2');
+            var submitted = false;
+            return function(){
+                console.log('submitted');
+                submitted = true;
+            }
+        }());
+        
+        console.log(submit());
+        console.log(submit2();*/
+    </script>
+
+</body>
+</html>

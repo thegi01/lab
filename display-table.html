@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Check - display table scroll</title>
+	<style>
+		html{
+			height: 100%;
+		}
+		body{
+			height: 100%;
+			margin: 0;
+		}
+		.root{
+			height: 100%;
+		}
+		.root-wrap{
+			display: table;
+			table-layout: fixed;
+            border-collapse: collapse;
+            width: 100%;
+			height: 100%;
+		}
+		.header{
+			display: table-row;
+            width: 100%;
+            height: 50px;
+            background: #ddd;
+		}
+		.container{
+			display: table-row;
+            width: 100%;
+		}
+		.table{
+			display: table;
+			table-layout: fixed;
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+		}
+		.row{
+			display: table-row;
+			width: 100%;
+		}
+		.lnb{
+			display: table-cell;
+			width: 15%;
+			background: #f8f8f8;
+		}
+		.main{
+			overflow: hidden;
+			display: table-cell;
+		}
+		.main-inner{
+			position: relative;
+			height: 100%;
+		}
+		.main-content{
+			overflow-y: scroll;
+			position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+		}
+		.rnb{
+			display: table-cell;
+			width: 15%;
+			vertical-align: top;
+			background: #f8f8f8;
+		}
+		.footer{
+			display: table-row;
+            width: 100%;
+            height: 30px;
+            background: #ddd;
+		}
+
+		h2{
+			margin: 0;
+			font-size: 1rem;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="root">
+		<div class="root-wrap">
+			<header class="header">
+				<h2>Header</h2>
+			</header>
+			<div class="container">
+				<div class="table">
+					<div class="row">
+						<div class="lnb">
+							<h2>Lnb</h2>
+						</div>
+						<div class="main">
+							<div class="main-inner">
+								<div class="main-content">
+									<h2>Main</h2>
+									<div style="height: 1000px"></div>
+								</div>
+							</div>
+						</div>
+						<div class="rnb">
+							<h2>Rnb</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="footer">
+				<h2>Footer</h2>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>

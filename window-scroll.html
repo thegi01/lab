@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>window-scroll</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .warp {
+        height: 2000px;
+        background: linear-gradient(45deg, #3f8f78, #000);
+      }
+      .button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 100px;
+        padding: 10px;
+        margin-left: -50px;
+        background-color: green;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="warp">
+      <button type="button" class="button" onclick="goTop()">Go Top</button>
+    </div>
+
+    <script>
+      window.onload = function() {
+        window.scroll({
+          top: 1000,
+          left: 0,
+          behavior: "smooth"
+        });
+      };
+
+      function goTop() {
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Grid</title>
+    <style>
+        .wrapper{
+            background: #f8f8f8;
+        }
+        .wrapper > div{
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Grid</h1>
+
+    <div class="ex1 wrapper">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+    <style>
+        .ex1{
+            display: grid;
+        }
+    </style>
+
+    <br>
+    
+    <div class="ex2 wrapper">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+    <style>
+        .ex2 {
+          display: grid;
+          grid-template-columns: 100px 100px 100px;
+        }
+    </style>
+
+    <br>
+
+    <div class="ex3 wrapper">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+    <style>
+        .ex3 {
+          display: grid;
+          /*grid-template-columns: 50px 1fr 2fr;*/
+          grid-template-columns: repeat(3, 1fr); /* 1fr, 1fr, 1fr */
+        }
+    </style>
+
+    <br>
+
+    <div class="ex4 wrapper">
+        <div>item1</div>
+        <div>item2</div>
+        <div>item3</div>
+        <div>item4</div>
+        <div>item5</div>
+        <div>item6</div>
+        <div>item6</div>
+        <div>item7</div>
+    </div>
+    <style>
+        .ex4 {
+          display: grid;
+          grid-template-columns: 50px repeat(3, 1fr) 50px; 
+        }
+    </style>
+
+    <br>
+
+    <div class="ex5 wrapper">
+        <div>item1</div>
+        <div>item2</div>
+        <div>item3</div>
+        <div>item4</div>
+        <div>item5</div>
+        <div>item6</div>
+        <div>item6</div>
+        <div>item7</div>
+    </div>
+    <style>
+        .ex5 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr 2fr);
+        }
+    </style>
+
+    <br>
+
+    <div class="ex6 wrapper">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+    <style>
+        .ex6 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-auto-rows: 30px;
+        }
+    </style>
+
+    <br>
+
+    <div class="ex7 wrapper">
+      <div>One</div>
+      <div>Two
+        <p>I have some more content in.</p>
+        <p>This makes me taller than 100 pixels.</p>
+      </div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+    <style>
+        .ex7 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-auto-rows: minmax(30px, auto);
+        }
+    </style>
+
+    <h2>그리드 라인</h2>
+
+    <div class="ex8 wrapper">
+      <div class="box1">One</div>
+      <div class="box2">Two</div>
+      <div class="box3">Three</div>
+      <div class="box4">Four</div>
+      <div class="box5">Five</div>
+    </div>
+    <style>
+        .ex8 { 
+          display: grid; 
+          grid-template-columns: repeat(3, 1fr); 
+          grid-auto-rows: 30px; 
+        } 
+        .ex8 .box1 { 
+          grid-column-start: 1; 
+          grid-column-end: 4; 
+          grid-row-start: 1; 
+          grid-row-end: 3; 
+        }
+        .ex8 .box2 { 
+          grid-column-start: 1; 
+          grid-row-start: 3; 
+          grid-row-end: 5; 
+        }
+    </style>
+
+    <h2>경계 여백</h2>
+    <div class="ex9 wrapper">
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+      <div>Five</div>
+    </div>
+    <style>
+        .ex9 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-column-gap: 10px;
+          grid-row-gap: 1em;
+        }
+    </style>
+
+    <h2>중첩그리드</h2>
+    <div class="ex10 wrapper">
+      <div class="box box1">
+        <div class="nested">a</div>
+        <div class="nested">b</div>
+        <div class="nested">c</div>
+      </div>
+      <div class="box box2">Two</div>
+      <div class="box box3">Three</div>
+      <div class="box box4">Four</div>
+      <div class="box box5">Five</div>
+    </div>
+    <style>
+        .ex10{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 30px; 
+        }
+        .ex10 .box1 { 
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 3;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            padding: 10px;
+
+        }
+        .ex10 .nested { 
+            border: 1px solid #accaac;
+        }
+        .ex10 .box2 { 
+            grid-column-start: 1; 
+            grid-row-start: 3; 
+            grid-row-end: 5; 
+        }
+    </style>
+
+    <h2>z-index를 이용한 아이템 중첩도 조정</h2>
+    <div class="ex11 wrapper">
+      <div class="box box1">One</div>
+      <div class="box box2">Two</div>
+      <div class="box box3">Three</div>
+      <div class="box box4">Four</div>
+      <div class="box box5">Five</div>
+    </div>
+    <style>
+        .ex11 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-auto-rows: 100px;
+        }
+
+        .ex11 .box1 {
+          grid-column-start: 1;
+          grid-column-end: 4;
+          grid-row-start: 1;
+          grid-row-end: 3;
+          z-index: 2;
+        }
+
+        .ex11 .box2 {
+          grid-column-start: 1;
+          grid-row-start: 2;
+          grid-row-end: 4;
+          z-index: 1;
+        }
+    </style>
+    
+
+    <script>
+    </script>
+
+</body>
+</html>

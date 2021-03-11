@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>scroll top3</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .wrap {
+        height: 5000px;
+        background: linear-gradient(45deg, #3f8f78, #5aa5ce);
+      }
+      section {
+        border: 1px solid #aaa;
+        height: 20%;
+      }
+      .button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 100px;
+        padding: 10px;
+        margin-left: -50px;
+        background-color: #3b3b3b;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section>1</section>
+      <section>2</section>
+      <section>3</section>
+      <section>4</section>
+      <section>5</section>
+      <button type="button" class="button" onclick="scrollToDown()">
+        Scroll to down
+      </button>
+    </div>
+
+    <script>
+      const scrollTarget = 2500;
+
+      const scrollDuration = 300,
+        scrollUnit = 15,
+        scrollStep = Math.PI / (scrollDuration / scrollUnit);
+
+      let scrollCount = 0,
+        scrollInterval;
+
+      function timgFn(value, step, count) {
+        let cosParameter = scrollTarget / 2;
+        let result =
+          cosParameter - cosParameter * Math.cos(scrollCount * scrollStep);
+        return result;
+      }
+
+      function animateScroll() {
+        let thisScrollY = window.scrollY;
+        if (thisScrollY != scrollTarget) {
+          let cp = scrollTarget / 2,
+            value = cp - cp * Math.cos(scrollCount++ * scrollStep),
+            scrollTop = thisScrollY + Math.ceil(value);
+          if (scrollTop >= scrollTarget) {
+            scrollTop = scrollTarget;
+            clearInterval(scrollInterval);
+          }
+          window.scrollTo(0, scrollTop);
+        } else clearInterval(scrollInterval);
+      }
+
+      function scrollToDown() {
+        scrollInterval = setInterval(animateScroll, scrollUnit);
+      }
+    </script>
+  </body>
+</html>

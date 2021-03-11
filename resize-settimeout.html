@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>resize - settimeout</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("resize", resizeThrottler, false);
+
+      let resizeTimeout;
+
+      function resizeThrottler() {
+        // ignore resize events as long as an actualResizeHandler execution is in the queue
+        if (!resizeTimeout) {
+          resizeTimeout = setTimeout(function() {
+            resizeTimeout = null;
+            actualResizeHandler();
+            // The actualResizeHandler will execute at a rate of 15fps
+          }, 66);
+        }
+      }
+
+      function actualResizeHandler() {
+        console.log("actualResizeHandler");
+      }
+    </script>
+  </body>
+</html>

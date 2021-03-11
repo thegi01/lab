@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Check - Flex : auto vs 1</title>
+	<style>
+		.root{
+			display: flex;
+		}
+		.item{
+			box-sizing: border-box;
+			border: 1px solid #000;
+		}
+		.main{
+			flex: 1;
+		}
+		.lnb-a{
+			flex: none;
+			width: 50px;
+		}
+		.lnb-b{
+			flex-shrink: 0;
+			flex-basis: 50px;
+		}
+		.lnb-c{
+			flex: 0 0 50px;
+		}
+
+
+
+		h4{
+			margin-top: 3rem;
+			margin-bottom: 0.5rem;
+		}
+		.text{
+			margin-top: 0.5rem;
+			font-size: 14px;
+			color: green;
+		}
+	</style>
+</head>
+<body>
+	<h3>Change properties item 1</h3>
+	<h4>flex: none(0 0 auto); width: 50px</h4>
+	<div class="root">
+		<div class="item lnb-a">item1 change properties change properties</div>
+		<div class="item main">item 2</div>
+	</div>
+	<div class="text">> Item1's width not changed.</div>
+
+	<h4>flex-shrink: 0; flex-basis: 50px</h4>
+	<div class="root">
+		<div class="item lnb-b">item1 change properties change properties</div>
+		<div class="item main">item 2</div>
+	</div>
+	<div class="text">> Item1's width changed.</div>
+
+
+	<h4>flex : 0 0 50px</h4>
+	<div class="root">
+		<div class="item lnb-c">item1 change properties change properties</div>
+		<div class="item main">item 2</div>
+	</div>
+	<div class="text">> Item1's width changed.</div>
+	
+</body>
+</html>

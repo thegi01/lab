@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Check - Flex : auto vs 1</title>
+	<style>
+		.root{
+			display: flex;
+			width: 300px;
+		}
+		.item-a{
+			flex: auto;
+
+			border: 1px solid #000;
+			margin-bottom: 1rem;
+		}
+		.item-b{
+			flex: 1;
+
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<h4>item { flex: auto = 1 1 auto } </h4>
+	<div class="root">
+		<div class="item-a">item test test test 1</div>
+		<div class="item-a">item 2</div>
+		<div class="item-a">item test test test 3</div>
+	</div>
+
+	<h4>item { flex: 1 = 1 1 0 }</h4>
+	<div class="root">
+		<div class="item-b">item test test test 1</div>
+		<div class="item-b">item 2</div>
+		<div class="item-b">item test test test 3</div>
+	</div>
+	
+</body>
+</html>

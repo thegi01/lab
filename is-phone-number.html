@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>isPhoneNumber</title>
+  </head>
+  <body>
+    <script>
+      function isPhoneNumber(v) {
+        const regx = /^01\d{8,9}$/;
+        let str = v.toString();
+        return regx.test(str);
+      }
+
+      console.log(isPhoneNumber("01012345678"));
+      console.log(isPhoneNumber("0101234567"));
+      console.log(isPhoneNumber("1234567"));
+      console.log(isPhoneNumber("010"));
+    </script>
+  </body>
+</html>

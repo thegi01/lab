@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>layout uwc</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <style>
+      html {
+        height: 100%;
+      }
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      .app {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .gnb {
+        flex-basis: 50px;
+        flex-shrink: 0;
+        border-bottom: solid 1px #ddd;
+        background: #f8f8f8;
+        box-sizing: border-box;
+      }
+      .container {
+        overflow: hidden;
+        flex: 1;
+        display: flex;
+        height: 100%;
+      }
+      .side {
+        flex-basis: 50px;
+        flex-shrink: 0;
+        background: gray;
+      }
+      .body {
+        flex-grow: 1;
+        display: flex;
+        position: relative;
+      }
+
+      .lnb {
+        overflow-y: auto;
+        width: 100px;
+        border-right: solid 1px #ddd;
+        box-sizing: border-box;
+        transition: width 0.5s;
+        background: rgba(255, 255, 255, 0.5);
+      }
+      .lnb[data-open="false"] {
+        /*transform: translateX(100px); */
+        width: 0;
+      }
+      .lnb[data-absolute="true"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+      }
+
+      .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .header {
+        flex-basis: 50px;
+        padding: 20px;
+        background: #f8f8f8;
+        box-sizing: border-box;
+        text-align: center;
+      }
+      .main {
+        flex: 1;
+        display: flex;
+        position: relative;
+        z-index: 1;
+      }
+      .mainDiv {
+        overflow-y: auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .rnb {
+        overflow-y: auto;
+        width: 100px;
+        border-left: solid 1px #ddd;
+        box-sizing: border-box;
+        transition: width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        background: rgba(255, 255, 255, 0.5);
+      }
+      .rnb[data-open="false"] {
+        /*transform: translateX(100px); */
+        width: 0;
+      }
+      .rnb[data-absolute="true"] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .mainNav {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .message {
+        flex: 1;
+        overflow: auto;
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .footer {
+        flex-shrink: 0;
+        flex-basis: 50px;
+        background: #f8f8f8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="gnb">
+        gnb
+      </header>
+      <div class="container">
+        <div class="side">
+          side
+        </div>
+        <div class="body">
+          <div class="lnb" data-open="true">
+            <p style="height: 1000px">lnb</p>
+          </div>
+          <div class="content">
+            <header class="header">
+              <button onclick="handleLnb()">Toggle Lnb</button>
+              <button onclick="handleRnb()">Toggle Rnb</button>
+              <button onclick="toggleAbsolute()">Set position absolute</button>
+            </header>
+            <div class="main">
+              <div class="mainDiv">
+                <div class="message">
+                  <div style="height:1000px">message</div>
+                </div>
+                <div class="footer">footer</div>
+              </div>
+              <div class="rnb" data-open="true">
+                <p style="height: 1000px">rnb</p>
+              </div>
+              <div class="mainNav">
+                <button>nav1</button>
+                <button>nav2</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // selector
+      let nodeRnb = document.querySelector(".rnb");
+      let nodeLnb = document.querySelector(".lnb");
+
+      // init
+      let isRnbOpen = true;
+      let isLnbOpen = true;
+      let isAbsolute = false;
+      nodeRnb.dataset.open = isRnbOpen;
+      nodeLnb.dataset.open = isLnbOpen;
+      nodeRnb.dataset.absolute = isAbsolute;
+      nodeLnb.dataset.absolute = isAbsolute;
+
+      function handleRnb() {
+        isRnbOpen = nodeRnb.dataset.open == "true" ? false : true;
+        nodeRnb.dataset.open = isRnbOpen;
+      }
+
+      function handleLnb() {
+        isLnbOpen = nodeLnb.dataset.open == "true" ? false : true;
+        nodeLnb.dataset.open = isLnbOpen;
+      }
+
+      function toggleAbsolute() {
+        isAbsolute = nodeLnb.dataset.absolute == "true" ? false : true;
+        nodeLnb.dataset.absolute = isAbsolute;
+        nodeRnb.dataset.absolute = isAbsolute;
+      }
+    </script>
+  </body>
+</html>

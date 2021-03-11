@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>scroll top4 - requestAnimationFrame</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .warp {
+        height: 3000px;
+        background: linear-gradient(45deg, #3f8f78, #5aa5ce);
+      }
+      .button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 100px;
+        padding: 10px;
+        margin-left: -50px;
+        background-color: #3b3b3b;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="warp">
+      <button type="button" class="button" onclick="scrollToTop()">
+        Scroll to top
+      </button>
+    </div>
+
+    <script>
+      function scrollToTop() {
+        const scrollDuration = 300;
+        var cosParameter = window.scrollY / 2,
+          scrollCount = 0,
+          oldTimestamp = performance.now();
+        function step(newTimestamp) {
+          scrollCount +=
+            Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+          if (scrollCount >= Math.PI) window.scrollTo(0, 0);
+          if (window.scrollY === 0) return;
+          window.scrollTo(
+            0,
+            Math.round(cosParameter + cosParameter * Math.cos(scrollCount))
+          );
+          oldTimestamp = newTimestamp;
+          window.requestAnimationFrame(step);
+        }
+        window.requestAnimationFrame(step);
+      }
+    </script>
+  </body>
+</html>

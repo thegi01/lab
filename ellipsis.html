@@ -38,11 +38,37 @@
             line-height: 0;
             text-indent: -9999rem;
         }
+
+        .withBadge{
+            display: flex;
+            width: 200px;
+            box-sizing: border-box;
+            background: #f8f8f8;
+            white-space: nowrap;
+        }
+        .withBadge .title{
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .withBadge .badge{
+            margin: 0 5px;
+            font-size: 11px;
+            background: #ddd;
+        }
     </style>
 </head>
 <body>
 
     <h1>Ellipsis</h1>
+
+    <div class="withBadge">
+        <span class="title">리스트 타이틀 말줄임 테스트</span>
+        <span class="badge">쿠폰</span>
+        <span class="badge">포장</span>
+        <span class="badge">매장</span>
+    </div>
+    
+    <br>
     
     <div class="div--a">
         <dl>
@@ -51,6 +77,8 @@
             class="blind">별명</dt><dd>abcdefghijeoepog pdgodgd**님</dd>
         </dl>
     </div>
+
+
 
 
 

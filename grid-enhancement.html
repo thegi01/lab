@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>CSS Grid Layout and Progressive Enhancement</title>
+    <style>
+        .wrapper{
+            background: #f8f8f8;
+        }
+        .wrapper > *{
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+        .wrapper li {
+            border: 2px solid #ffa94d;
+                border-radius: 5px;
+                background-color: #ffd8a8;
+                padding: 1em;
+                color: #d9480f;
+        }
+        .wrapper .nested{
+            border: 1px solid #f1ebc2;
+        }
+        code{
+            display: block;
+            padding: 0.5em;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CSS Grid Layout and Progressive Enhancement</h1>
+
+    <h2>Autoprefixer grid layout support</h2>
+
+    <code>
+        autoprefixer({ grid: 'autoplace' })
+    </code>
+
+    <br>
+
+    <h2>Starting to use Grid in production</h2>
+
+    <h3>Floats</h3>
+    <div class="ex1 media">
+        <div class="image"><img src="http://placehold.it/150x150" alt="placeholder"></div>
+        <div class="text">This is a media object example. I am using floats for older browsers and grid for new ones.</div>
+    </div>
+    <style>
+        * {box-sizing: border-box;}
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .ex1.media {
+            border: 2px solid #f76707;
+            border-radius: 5px;
+            background-color: #fff4e6;
+            max-width: 400px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-template-areas: "img content";
+            margin-bottom: 1em;
+        }
+        .ex1.media::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .ex1.media .image {
+            float: left;
+            width: 150px;
+            margin-right: 20px; 
+        }
+        .ex1.media .text {  
+            padding: 10px;
+            align-self: end;   
+        }
+    </style>
+
+
+    <h3>Using feature queries</h3>
+    <div class="ex2 wrapper">
+        <ul>
+            <li class="card"><h2>One</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card"><h2>Two</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card"><h2>Three</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card"><h2>Four</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card"><h2>Five</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card"><h2>Six</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+        </ul>
+    </div>
+    <style>
+        .ex2.wrapper ul {   
+            overflow: hidden;
+            margin: 0 -10px;
+            padding: 0;
+            list-style: none;
+        }
+        .ex2.wrapper li {
+            float: left;
+            width: calc(33.333333% - 20px);
+            margin: 0 10px 20px 10px;
+        }
+        @supports (display: grid) {
+            .ex2.wrapper ul {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin: 0;
+            }
+            .ex2.wrapper li {
+                width: auto;
+                min-height: auto;
+                margin: 0;
+            }
+        }
+    </style>
+
+    <br>
+
+    <h2>Overwriting other values of display</h2>
+    <div class="ex3 wrapper">
+        <ul>
+            <li class="card">
+                <h2>One</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card">
+                <h2>Two</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card">
+                <h2>Three</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card">
+                <h2>Four</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card">
+                <h2>Five</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+            <li class="card">
+                <h2>Six</h2>
+                <p>We can use CSS Grid to overwrite older methods.</p>
+            </li>
+        </ul>
+    </div>
+    <style>
+        .ex3.wrapper ul {   
+            margin: 0 -10px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .ex3.wrapper li {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(33.333333% - 20px);
+            margin: 0 10px 20px 10px;
+        }
+        @supports (display: grid) {
+            .ex3.wrapper ul {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin: 0;
+            }
+            .ex3.wrapper li {
+                width: auto;
+                margin: 0;
+            }
+        }
+    </style>
+
+
+</body>
+</html>

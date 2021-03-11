@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Table wide</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <style>
+  .tableRoot {
+    position: relative;
+    width: 500px;
+  }
+  .tableWrapper {
+    overflow-x: auto;
+    height: 100%;
+
+    position: relative;
+  }
+  table {
+    display: flex;
+    flex-direction: column;
+    table-layout: fixed;
+    min-width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+  }
+
+  table tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  table td {
+    border-collapse: collapse;
+    border-left: none;
+  }
+  table thead {
+    flex-shrink: 0;
+    display: table;
+    width: 100%;
+  }
+  table thead tr {
+    height: 45;
+  }
+  table thead th {
+    padding: 0 10px;
+    font-size: 13;
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    &:first-child {
+      padding-left: 20;
+    }
+  }
+  table tbody {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+    width: 100%;
+    max-height: 100%;
+    padding-top: 5;
+  }
+  table tbody tr {
+    height: 56px;
+    border-radius: 8px;
+    &:hover {
+      background-color: #f8f8f8 !important;
+    }
+    & td {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+  table tbody th, table tbody td {
+    height: 40px;
+    padding: 0 10px;
+    border-bottom: none;
+    font-size: 13;
+    color: #000;
+    &:first-child {
+      padding-left: 20,
+    }
+  }
+
+  th, td{
+    text-align: center;
+    border:1px solid #ccc;
+  }
+
+
+  .action{
+    position: absolute;
+    right:0;
+    /*height: 40px;*/
+  }
+  .action span{
+    display: none;
+    position: absolute;
+    right: 0;
+    height: 40px;
+    padding: 0 10px;
+    background: #f8f8f8;
+  }
+  tbody tr:hover {
+    background: #f8f8f8
+  }
+  tbody tr:hover > .action span{
+      display:block;
+  }
+
+   /*.action2{
+    position: absolute;
+    right:-100%;
+    height: 40px;
+  }
+  .action2 span{
+    display: none;
+    position: absolute;
+    right: 0;
+    height: 40px;
+    padding: 0 10px;
+    background: #f8f8f8;
+  }
+  
+  tbody tr:hover > .action2 span{
+    display:block;
+  } */ 
+
+    </style>
+  </head>
+ 
+  <body>
+
+<div class="tableRoot">
+<div class="tableWrapper" id="wrap">
+  <table id="table">  
+    <thead> 
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+        <th>Header 4</th>
+        <th>Header 5</th>
+        <th>Header 6</th>
+        
+      </tr> 
+    </thead>
+    <tbody>
+      <tr onMouseEnter="handleTrEnter(event)">
+        <td>Data1</td>
+        <td>Data2</td>
+        <td>Data3</td>
+        <td>Data4</td>
+        <td>Data5</td>
+        <td>Data6</td>
+        <td class="action"><span>action1</span></td>
+      </tr>
+      <tr onMouseEnter="handleTrEnter(event)">
+        <td>Data</td>
+        <td>Data2</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td class="action"><span>action1</span></td>
+      </tr>
+      <tr onMouseEnter="handleTrEnter(event)">
+        <td>Data3</td>
+        <td>Data</td>
+        <td>Data3</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td class="action"><span>action1</span></td>
+      </tr>
+      <tr onMouseEnter="handleTrEnter(event)">
+        <td>Data4</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td class="action"><span>action1</span></td>
+      </tr>
+      <tr onMouseEnter="handleTrEnter(event)">
+        <td>Data5</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td class="action"><span>action1</span></td>
+      </tr>
+      <tr onMouseEnter="handleTrEnter(event)">
+        <td>Data6</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td>Data</td>
+        <td class="action"><span>action1</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<script>
+
+  let wrapWidth = wrap.offsetWidth;
+  let thLen = table.querySelector('thead').querySelectorAll('th').length;
+  let isWide = thLen > 3;
+
+  if(isWide) wrapWidth = wrapWidth*2;
+  document.querySelector('table').style.width = wrapWidth + 'px';
+
+
+ var handleTrEnter = function(event){
+    let scrollLeft = wrap.scrollLeft
+    event.currentTarget.querySelector('.action').style.right=`-${scrollLeft}px`;
+  }
+</script>
+  </body>
+</html>

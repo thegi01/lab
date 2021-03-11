@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="googlebot" content="noindex,nofollow" />
+    <title>scroll down</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .wrap {
+        height: 5000px;
+        background: linear-gradient(45deg, #3f8f78, #5aa5ce);
+      }
+      section {
+        border: 1px solid #aaa;
+        height: 20%;
+      }
+      .button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+
+        width: 100px;
+        padding: 10px;
+        margin-left: -50px;
+        background-color: #3b3b3b;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section>1</section>
+      <section>2</section>
+      <section>3</section>
+      <section>4</section>
+      <section>5</section>
+      <button type="button" class="button" onclick="scrollToDown()">
+        Scroll to
+      </button>
+    </div>
+
+    <script>
+      const scrollTarget = 3000;
+
+      let intervalScroll = 0,
+        pageYOffset = window.pageYOffset,
+        scrollTime = 300,
+        scrollStep = 50,
+        scrollStepCount = scrollTarget / scrollStep,
+        intervalScrollTime = scrollTime / scrollStepCount;
+
+      function animateScroll() {
+        let thisPageOffset = window.pageYOffset;
+        if (thisPageOffset >= scrollTarget) {
+          clearInterval(intervalScroll);
+        }
+        let value = thisPageOffset + scrollStep;
+        scrollTop = value >= scrollTarget ? scrollTarget : value;
+        window.scroll(0, scrollTop);
+      }
+      function scrollToDown() {
+        intervalScroll = setInterval(animateScroll, intervalScrollTime);
+      }
+    </script>
+  </body>
+</html>

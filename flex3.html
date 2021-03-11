@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex3</title>
+</head>
+<body>
+
+    <style>
+        .container {
+            display: flex;
+
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #aaa;
+        }
+        .title {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            margin-left: 10px;
+            color: #aaa;
+
+        }
+        .point1{
+            white-space: nowrap;
+            margin-left: 5px;
+        }
+        .point2{
+            white-space: nowrap;
+            margin-left: 5px;
+
+        }
+    </style>
+
+
+    
+
+    <div class="container">
+        <span class="point1">별점1</span>
+        <span class="point2">(100)</span>
+        <div class="title">타이틀 길이에 따른 확인, 길이가 길면 말줄임 나와야 합니다.</div>
+    </div>
+    
+</body>
+</html>

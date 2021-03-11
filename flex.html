@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Flex</title>
+    <style>
+        body{
+            padding: 1rem 2rem;
+        }
+        h1{
+            margin: 0 -1rem;
+        }
+        h2{
+            margin: 5rem -1rem 2rem ;
+            padding: 1rem;
+            border-left: 5px solid #ddd;
+            background: #f8f8f8;
+        }
+        h3{
+        }
+        .link-rel{ 
+            display: block;
+            margin-top: 1rem;
+            
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Flex</h1>
+
+    <h2>1개 가운데 중앙 정렬</h2>
+    <div class="ex1">
+        <style>
+            .ex1{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+            .ex1-box{
+                width: 80px; height: 80px;
+                background: #a2d4c1;
+            }
+        </style>
+        <div class="ex1-box"></div>
+    </div>
+
+    <h2>정렬 제어용 속성 목록</h2>
+    <dl>
+        <dt>justify-content</dt>
+        <dd>주축에 대해 flex 항목들을 정렬하는 방식을 제어. flex 컨테이너에 지정하는 속성.</dd>
+        <dt>align-items</dt>
+        <dd>교차축에 대해 flex 항목들을 정렬하는 방식을 제어. flex 컨터이너에 지정하는 속성.</dd>
+        <dt>align-self</dt>
+        <dd>개별 flex 항목을 교차 축에 대해 정렬 하는 방식을 제어. flex 항목에 지정하는 속성.</dd>
+        <dt>align-content</dt>
+        <dd>dscribed in th sepc as for "packing flex lines"; controls space between flex lines on the cross axis.</dd>
+    </dl>
+
+
+
+    <h2>The Cross Axis</h2>
+
+    <style>
+        .ex2-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+        }
+    </style>
+
+    <h3>align-items: flex-start</h3>
+    <div class="ex2a">
+        <style>
+            .ex2a{
+                display: flex;
+                align-items: flex-start;
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+        </style>
+        <div class="ex2-item">item1</div>
+        <div class="ex2-item">item2</div>
+        <div class="ex2-item">item3</div>
+    </div>
+
+    <h3>align-items: flex-end</h3>
+    <div class="ex2b">
+        <style>
+            .ex2b{
+                display: flex;
+                align-items:flex-end;
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+        </style>
+        <div class="ex2-item">item1</div>
+        <div class="ex2-item">item2</div>
+        <div class="ex2-item">item3</div>
+    </div>
+
+    <h3>align-items: center</h3>
+    <div class="ex2c">
+        <style>
+            .ex2c{
+                display: flex;
+                align-items:center;
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+        </style>
+        <div class="ex2-item">item1</div>
+        <div class="ex2-item">item2</div>
+        <div class="ex2-item">item3</div>
+    </div>
+
+    <h3>align-items: stretch(default)</h3>
+    <div class="ex2d">
+        <style>
+            .ex2d{
+                display: flex;
+                /*align-items:stretch;*/ 
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+        </style>
+        <div class="ex2-item">item1</div>
+        <div class="ex2-item">item2</div>
+        <div class="ex2-item">item3</div>
+    </div>
+
+    <h3>align-items: baseline</h3>
+    <div class="ex2e">
+        <style>
+            .ex2e{
+                display: flex;
+                align-items:baseline;
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+        </style>
+        <div class="ex2-item">item1</div>
+        <div class="ex2-item">item2</div>
+        <div class="ex2-item">item3</div>
+    </div>
+
+
+
+    <h2>Aligning one item with align-self</h2>
+    <p>You can explicitly declare the align-self property to target a single item.</p>
+    <style>
+            .ex3{
+                display: flex;
+                /*align-items: stretch;*/
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+            .ex3-item{
+                outline: 1px solid #54957e;
+                background: #a2d4c1;
+            }
+            .ex3-item:nth-child(2){
+                align-self: flex-start;
+            }
+            .ex3-item:nth-child(3){
+                align-self: flex-end;
+            }
+            .ex3-item:nth-child(4){
+                align-self: center;
+            }
+            .ex3-item:nth-child(5){
+               align-self: baseline; 
+            }
+        </style>
+    <div class="ex3">
+        <div class="ex3-item">default</div>
+        <div class="ex3-item">align-self:flex-start</div>
+        <div class="ex3-item">align-self: flex-end</div>
+        <div class="ex3-item">align-self: center</div>
+        <div class="ex3-item">align-self: baseline</div>
+    </div>
+
+    <h3>Changing the main axis</h3>
+    <style>
+            .ex4{
+                display: flex;
+                /*align-items: stretch;*/
+                flex-direction: column;
+                height: 100px;
+                border: 1px solid #ddd;
+            }
+            .ex4-item{
+                outline: 1px solid #54957e;
+                background: #a2d4c1;
+            }
+            .ex4-item:nth-child(2){
+                align-self: flex-start;
+            }
+            .ex4-item:nth-child(3){
+                align-self: flex-end;
+            }
+            .ex4-item:nth-child(4){
+                align-self: center;
+            }
+            .ex4-item:nth-child(5){
+               align-self: baseline; 
+            }
+        </style>
+    <div class="ex4">
+        <div class="ex4-item">default</div>
+        <div class="ex4-item">align-self: flex-start</div>
+        <div class="ex4-item">align-self: flex-end</div>
+        <div class="ex4-item">align-self: center</div>
+        <div class="ex4-item">align-self: baseline</div>
+    </div>
+
+    <h2>Aligning content on the cross axis - the align-content property</h2>
+    <ul>
+        <li>align-content: flex-start</li>
+        <li>align-content: flex-end</li>
+        <li>align-content: center</li>
+        <li>align-content: space-between</li>
+        <li>align-content: space-around</li>
+        <li>align-content: stretch</li>
+        <li>align-content: space-evenly (not defiend in the Flexbox specification)</li>
+    </ul>
+
+    <style>
+        .ex5{
+            display: flex;
+            flex-wrap: wrap;
+            width: 400px; height: 100px;
+            border: 1px solid #ddd;
+        }
+        .ex5-item{
+            outline: 1px solid #54957e;
+            width: 150px;
+            background: #a2d4c1;
+        }
+    </style>
+
+    <h3>default</h3>
+    <div class="ex5">
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h3>align-content: flex-start</h3>
+    <div class="ex5 ex5a">
+        <style>
+            .ex5a{
+                align-content: flex-start;
+            }
+        </style>
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h3>align-content: flex-end</h3>
+    <div class="ex5 ex5b">
+        <style>
+            .ex5b{
+                align-content: flex-end;
+            }
+        </style>
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h3>align-content: center</h3>
+    <div class="ex5 ex5c">
+        <style>
+            .ex5c{
+                align-content: center;
+            }
+        </style>
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h3>align-content: space-between</h3>
+    <div class="ex5 ex5d">
+        <style>
+            .ex5d{
+                align-content: space-between;
+            }
+        </style>
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h3>align-content: space-around</h3>
+    <div class="ex5 ex5e">
+        <style>
+            .ex5e{
+                align-content: space-around;
+            }
+        </style>
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h3>align-content: stretch ( === default?)</h3>
+    <div class="ex5 ex5f">
+        <style>
+            .ex5f{
+                align-content: stretch;
+            }
+        </style>
+        <div class="ex5-item">one</div>
+        <div class="ex5-item">two</div>
+        <div class="ex5-item">three</div>
+        <div class="ex5-item">four</div>
+        <div class="ex5-item">five</div>
+        <div class="ex5-item">six</div>
+    </div>
+
+    <h2>the align-content property: flex-direction column</h2>
+    <style>
+        .ex6{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-content: space-between;
+            width: 400px; height: 100px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex6-item{
+            outline: 1px solid #54957e;
+            height: 40px;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>align-content: space-between</h3>
+    <div class="ex6">
+        <div class="ex6-item">one</div>
+        <div class="ex6-item">two</div>
+        <div class="ex6-item">three</div>
+        <div class="ex6-item">four</div>
+        <div class="ex6-item">five</div>
+        <div class="ex6-item">six</div>
+    </div>
+
+
+    <h2>justify content : Aligning content on the main axis</h2>
+    <ul>
+        <li>justify-content: flex-start</li>
+        <li>justify-content: flex-end</li>
+        <li>justify-content: center</li>
+        <li>justify-content: space-between</li>
+        <li>justify-content: space-around</li>
+        <li>justify-content: stretch</li>
+        <li>justify-content: space-evenly (not defined in the Flexbox specification)</li>
+    </ul>
+    <style>
+        .ex7{
+            display: flex;
+            height: 50px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex7-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>justify-content: flex-start</h3>
+    <div class="ex7 ex7a">
+        <style>
+            .ex7a{
+                justify-content: flex-start;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+    <h3>justify-content: flex-end</h3>
+    <div class="ex7 ex7b">
+        <style>
+            .ex7b{
+                justify-content: flex-end;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+    <h3>justify-content: center</h3>
+    <div class="ex7 ex7c">
+        <style>
+            .ex7c{
+                justify-content: center;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+    <h3>justify-content: space-between</h3>
+    <div class="ex7 ex7d">
+        <style>
+            .ex7d{
+                justify-content: space-between;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+    <h3>justify-content: space-around</h3>
+    <div class="ex7 ex7e">
+        <style>
+            .ex7e{
+                justify-content: space-around;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+    <h3>justify-content: stretch </h3>
+    <div class="ex7 ex7f">
+        <style>
+            .ex7f{
+                justify-content: stretch;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+    <h3>justify-content: space-evenly</h3>
+    <div class="ex7 ex7g">
+        <style>
+            .ex7g{
+                justify-content: space-evenly;
+            }
+        </style>
+        <div class="ex7-item">one</div>
+        <div class="ex7-item">two</div>
+        <div class="ex7-item">three</div>
+        <div class="ex7-item">four</div>
+        <div class="ex7-item">five</div>
+        <div class="ex7-item">six</div>
+    </div>
+
+
+
+    <h2>justify content : direction-column</h2>
+    <style>
+        .ex8{
+            display: flex;
+            flex-direction: column;
+            height: 200px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex8-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>justify-content: flex-start</h3>
+    <div class="ex8 ex8a">
+        <style>
+            .ex8a{
+                justify-content: flex-start;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+    <h3>justify-content: flex-end</h3>
+    <div class="ex8 ex8b">
+        <style>
+            .ex8b{
+                justify-content: flex-end;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+    <h3>justify-content: center</h3>
+    <div class="ex8 ex8c">
+        <style>
+            .ex8c{
+                justify-content: center;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+    <h3>justify-content: space-between</h3>
+    <div class="ex8 ex8d">
+        <style>
+            .ex8d{
+                justify-content: space-between;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+    <h3>justify-content: space-around</h3>
+    <div class="ex8 ex8e">
+        <style>
+            .ex8e{
+                justify-content: space-around;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+    <h3>justify-content: stretch </h3>
+    <div class="ex8 ex8f">
+        <style>
+            .ex8f{
+                justify-content: stretch;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+    <h3>justify-content: space-evenly</h3>
+    <div class="ex8 ex8g">
+        <style>
+            .ex8g{
+                justify-content: space-evenly;
+            }
+        </style>
+        <div class="ex8-item">one</div>
+        <div class="ex8-item">two</div>
+        <div class="ex8-item">three</div>
+        <div class="ex8-item">four</div>
+        <div class="ex8-item">five</div>
+        <div class="ex8-item">six</div>
+    </div>
+
+    <h2>row-revserse: Alignment and flex-direction</h2>
+    <style>
+        .ex9{
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            height: 50px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex9-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex9">
+        <div class="ex9-item">one</div>
+        <div class="ex9-item">two</div>
+        <div class="ex9-item">three</div>
+        <div class="ex9-item">four</div>
+        <div class="ex9-item">five</div>
+        <div class="ex9-item">six</div>
+    </div>
+
+    <h2>Using auto margins for main axis alignment</h2>
+    <style>
+        .ex10{
+            display: flex;
+            height: 50px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex10-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+        .ex10-item:nth-child(4){
+            margin-left: auto;
+        }
+    </style>
+    <div class="ex10">
+        <div class="ex10-item">one</div>
+        <div class="ex10-item">two</div>
+        <div class="ex10-item">three</div>
+        <div class="ex10-item">four</div>
+        <div class="ex10-item">five</div>
+        <div class="ex10-item">six</div>
+    </div>
+    
+
+    <h2>The flex-flow shorthand</h2>
+    <p>flex-direction(row, row-reverse, column, column-reverse) flex-flow(wrap,nowrap)</p>
+    <style>
+        .ex11{
+            display: flex;
+            flex-flow: row wrap;
+            width: 150px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex11-item{
+            outline: 1px solid #54957e;
+            width: 50px;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex11">
+        <div class="ex11-item">one</div>
+        <div class="ex11-item">two</div>
+        <div class="ex11-item">three</div>
+    </div>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox#The_flex-flow_shorthand">참조</a>
+
+    <h2>Properties applied to flex items</h2>
+    <ul>
+        <li>flex-grow: How much of the positive free space does this item get?</li>
+        <li>flex-shrink: How much negative free space can be removed from this item?</li>
+        <li>flex-basis: Waht is the size of the item before growing and shrinking happens?</li>
+    </ul>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox#Properties_applied_to_flex_items">참조</a>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax">more</a>
+
+    <h2>Shorthand values for the  flex properties</h2>
+    <p>flex-grow, flex-shrink, flex-basis</p>
+    <ul>
+        <li>flex: initial ( 0 1 auto )</li>
+        <li>flex: auto ( 1 1 auto )</li>
+        <li>flex: none ( 0 0 auto )</li>
+        <li>flex: {positive-number}</li>
+    </ul>
+    <style>
+        .ex12{
+            display: flex;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex12-item{
+            flex: 1;/*flex: 1 1 auto;*/
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex12">
+        <div class="ex12-item">one</div>
+        <div class="ex12-item">two</div>
+        <div class="ex12-item">three</div>
+    </div>
+    
+    <br>
+    
+    <h3>Flex : auto vs 1</h3>
+    <style>
+        .ex12-2-root{
+            display: flex;
+            width: 300px;
+        }
+        .ex12-2-item-a{
+            flex: auto;
+
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+        }
+        .ex12-2-item-b{
+            flex: 1;
+
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex12-2">
+        <h4>item { flex: auto = 1 1 auto } </h4>
+        <div class="ex12-2-root">
+            <div class="ex12-2-item-a">item test test test 1</div>
+            <div class="ex12-2-item-a">item 2</div>
+            <div class="ex12-2-item-a">item test test test 3</div>
+        </div>
+
+        <h4>item { flex: 1 = 1 1 0 }</h4>
+        <div class="ex12-2-root">
+            <div class="ex12-2-item-b">item test test test 1</div>
+            <div class="ex12-2-item-b">item 2</div>
+            <div class="ex12-2-item-b">item test test test 3</div>
+        </div>
+    </div>
+
+
+    <h2>The flex-basis property</h2>
+    <style>
+        .ex13{
+            display: flex;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex13-item{
+            flex: 0 0 auto;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+        .ex13-item:first-child{
+            width: 150px;
+        }
+    </style>
+    <div class="ex13">
+        <div class="ex13-item">one</div>
+        <div class="ex13-item">two</div>
+        <div class="ex13-item">three</div>
+    </div>
+    <p> In this example I have created a series of inflexible boxes, with both flex-grow and flex-shrink set to 0. <br>
+        Takes a flex-basis of 150px, <br>
+        The other two items have no width and so are sized according to their content width
+    </p>
+
+    <h2>Combing flex-grow and flex-basis</h2>
+    <style>
+        .ex14{
+            display: flex;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex14-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>flex: 1 1 0</h3>
+    <div class="ex14 ex14a">
+        <style>
+            .ex14a .ex14-item{
+                flex: 1 1 0;
+            }
+        </style>
+        <div class="ex14-item">one</div>
+        <div class="ex14-item">two</div>
+        <div class="ex14-item">three</div>
+    </div>
+    <p>The size of the item for the purposes of our space distribution calculation is 0 <br>
+        All of the items have the same flex-grow factor <br>
+        They each get an equal amount of space distributed <br>
+        The end result is three equal width, flexible items.
+    </p>
+    <h3>flex: 0 1 0</h3>
+    <div class="ex14 ex14b">
+        <style>
+            .ex14b .ex14-item{
+                flex: 0 1 0;
+            }
+        </style>
+        <div class="ex14-item">one</div>
+        <div class="ex14-item">two</div>
+        <div class="ex14-item">three</div>
+    </div>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax#Combining_flex-grow_and_flex-basis">참조</a>
+
+
+     <h2>Giving items different flex-grow factors</h2>
+    <style>
+        .ex15{
+            display: flex;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex15-item{
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+        .ex15-item:first-child,
+        .ex15-item:nth-child(2){
+            flex: 1 1 0;
+        }
+        .ex15-item:nth-child(3){
+            flex: 2 1 0;
+        }
+    </style>
+    <div class="ex15">
+        <div class="ex15-item">one</div>
+        <div class="ex15-item">two</div>
+        <div class="ex15-item">three</div>
+    </div>
+    <p>Working from a flex-basis of 0 this means that the available space is distributed as follows. <br>
+        We need to add up the flex grow factors, then divide the total amount of positive free space in the flex container by that number, which in this case is 4. <br>
+        We then share out the space according to the individual values — the first item gets one part, the second one part, the third two parts. This means that the third item is twice the size of the first and second items.</p>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax#Giving_items_different_flex-grow_factors">참조</a>
+
+
+    <h2>The flex-shrink property</h2>
+    <style>
+        .ex16{
+            display: flex;
+            width: 500px; height: 80px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex16-item{
+            width: 200px; height: 50px;
+            opacity: 0.5;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>flex: 0 0 auto;</h3>
+    <div class="ex16 ex16a">
+        <style>
+            .ex16a .ex16-item{
+                flex: 0 0 auto;
+            }
+        </style>
+        <div class="ex16-item">one</div>
+        <div class="ex16-item">two</div>
+        <div class="ex16-item">three</div>
+    </div>
+    <h3>flex: 0 1 auto;</h3>
+    <div class="ex16 ex16b">
+        <style>
+            .ex16b .ex16-item{
+                flex: 0 1 auto;
+            }
+        </style>
+        <div class="ex16-item">one</div>
+        <div class="ex16-item">two</div>
+        <div class="ex16-item">three</div>
+    </div>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax#The_flex-shrink_property">참조</a>
+
+    <h2>Combining flex-shrink and flex-basis</h2>
+    <style>
+        .ex17{
+            display: flex;
+            width: 400px; height: 70px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex17-item{
+            opacity: 0.5;
+            height: 50px;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>flex: 1 0 auto</h3>
+    <div class="ex17 ex17a">
+        <style>
+            .ex17a .ex17-item{
+                flex: 1 0 auto;
+            }
+        </style>
+        <div class="ex17-item">Item One</div>
+        <div class="ex17-item">Item Two</div>
+        <div class="ex17-item">Item Three has more content and so has a larger size</div>
+    </div>
+    <h3>flex: 1 1 auto</h3>
+    <div class="ex17 ex17b">
+        <style>
+            .ex17b .ex17-item{
+                flex: 1 1 auto;
+            }
+        </style>
+        <div class="ex17-item">Item One</div>
+        <div class="ex17-item">Item Two</div>
+        <div class="ex17-item">Item Three has more content and so has a larger size</div>
+    </div>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax#Combining_flex-shrink_and_flex-basis">참조</a>
+
+
+    <h2>Giving items different flex-shrink factors</h2>
+    <style>
+        .ex18{
+            display: flex;
+            width: 500px; height: 70px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex18-item{
+            opacity: 0.5;
+            height: 50px;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex18 ex18a">
+        <style>
+            .ex18a .ex18-item:first-child{
+                flex: 1 1 auto;
+            }
+            .ex18a .ex18-item:nth-child(2){
+                flex: 1 0 auto;
+            }
+            .ex18a .ex18-item:nth-child(3){
+                flex: 2 4 auto;
+            }
+        </style>
+        <div class="ex18-item">One</div>
+        <div class="ex18-item">Two</div>
+        <div class="ex18-item">Three</div>
+    </div>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax#Giving_items_different_flex-shrink_factors">참조</a>
+
+
+    <h2>Mastering sizing of flex items</h2>
+    <h3>What sets the base size of the item?</h3>
+    <ol>
+        <li>Is flex-basis set to auto, and does the item have a width set? If so, the size will be based on that width.</li>
+        <li>Is flex-basis set to auto or content (in a supporting browser)? If so, the size is based on the item size.</li>
+        <li>Is flex-basis a length unit, but not zero? If so this is the size of the item.</li>
+        <li>Is flex-basis set to 0? if so then the item size is not taken into consideration for the space-sharing calculation.</li>
+    </ol>
+    <h3>Do we have available space?</h3>
+    <p>Items can’t grow with no positive free space, and they won’t shrink unless there is negative free space.</p>
+    <ul>
+        <li>If we took all of the items and added up their widths (or heights if working in a column), is that total less than the total width (or height) of the container? If so, then you have positive free space and flex-grow comes into play.</li>
+        <li>If we took all of the items and added up their widths (or heights if working in a column), is that total more than the total width (or height) of the container? If so, you have negative free space and flex-shrink comes into play.</li>
+    </ul>
+    <h3>Other ways to distribute space</h3>
+    <p>If you do not want space added to the items, remember that you can deal with free space between or around items using the alignment properties described in the guide to aligning items in a flex container. The justify-content property will enable the distribution of free space between or around items. You can also use auto margins on flex items to absorb space and create gaps between items.</p>
+    <a class="link-rel" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax#Mastering_sizing_of_flex_items">참조</a>
+
+
+    <h2>Making things wrap</h2>
+    <style>
+        .ex19{
+            display: flex;
+            flex-wrap: wrap;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex19-item{
+            
+            opacity: 0.5;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <h3>direction: row</h3>
+    <div class="ex19 ex19a">
+        <style>
+            .ex19a{
+            }
+            .ex19a .ex19-item{
+                flex: 1 1 160px;
+            }
+        </style>
+        <div class="ex19-item">One</div>
+        <div class="ex19-item">Two</div>
+        <div class="ex19-item">Three</div>
+        <div class="ex19-item">Four</div>
+        <div class="ex19-item">Five</div>
+        <div class="ex19-item">Six</div>
+        <div class="ex19-item">Seven</div>
+        <div class="ex19-item">Eight</div>
+        <div class="ex19-item">Nine</div>
+        <div class="ex19-item">Ten</div>
+    </div>
+    <h3>direction: column</h3>
+    <div class="ex19 ex19b">
+        <style>
+            .ex19b{
+                flex-direction: column;
+                height: 300px;
+            }
+            .ex19b .ex19-item{
+                flex: 1 1 80px;
+            }
+        </style>
+        <div class="ex19-item">One</div>
+        <div class="ex19-item">Two</div>
+        <div class="ex19-item">Three</div>
+        <div class="ex19-item">Four</div>
+        <div class="ex19-item">Five</div>
+        <div class="ex19-item">Six</div>
+        <div class="ex19-item">Seven</div>
+        <div class="ex19-item">Eight</div>
+        <div class="ex19-item">Nine</div>
+        <div class="ex19-item">Ten</div>
+    </div>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Mastering_Wrapping_of_Flex_Items#Making_things_wrap" class="link-rel">참</a>
+    
+
+    <h2>Wrapping and flex-direction</h2>
+    <style>
+        .ex20{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row-reverse;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex20-item{
+            flex: 1 1 160px;
+            opacity: 0.5;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex20">
+        <div class="ex20-item">One</div>
+        <div class="ex20-item">Two</div>
+        <div class="ex20-item">Three</div>
+        <div class="ex20-item">Four</div>
+        <div class="ex20-item">Five</div>
+        <div class="ex20-item">Six</div>
+        <div class="ex20-item">Seven</div>
+        <div class="ex20-item">Eight</div>
+        <div class="ex20-item">Nine</div>
+        <div class="ex20-item">Ten</div>
+    </div>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Mastering_Wrapping_of_Flex_Items#Wrapping_and_flex-direction" class="link-rel">참조</a>
+
+    <h2>How do flexbox-based grid systems work?</h2>
+    <style>
+        .ex21{
+            display: flex;
+            flex-wrap: wrap;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex21-item{
+            flex: 1 1 33.3333%;
+            opacity: 0.5;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex21">
+        <div class="ex21-item">One</div>
+        <div class="ex21-item">Two</div>
+        <div class="ex21-item">Three</div>
+        <div class="ex21-item">Four</div>
+        <div class="ex21-item">Five</div>
+        <div class="ex21-item">Six</div>
+        <div class="ex21-item">Seven</div>
+        <div class="ex21-item">Eight</div>
+        <div class="ex21-item">Nine</div>
+        <div class="ex21-item">Ten</div>
+    </div>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Mastering_Wrapping_of_Flex_Items#How_do_flexbox-based_grid_systems_work" class="link-rel">참조</a>
+
+    <h2>Creating gutters between items</h2>
+    <style>
+        .ex22{
+            border: dashed 2px rgb(96, 139, 168);
+            width: 500px;
+        }
+        .ex22-div{
+            display: flex;
+            flex-wrap: wrap;
+            margin: -10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex22-item{
+            flex: 1 1 160px;
+            margin: 10px;
+            opacity: 0.5;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+    </style>
+    <div class="ex22">
+        <div class="ex22-div">
+            <div class="ex22-item">One</div>
+            <div class="ex22-item">Two</div>
+            <div class="ex22-item">Three</div>
+            <div class="ex22-item">Four</div>
+            <div class="ex22-item">Five</div>
+            <div class="ex22-item">Six</div>
+            <div class="ex22-item">Seven</div>
+            <div class="ex22-item">Eight</div>
+            <div class="ex22-item">Nine</div>
+            <div class="ex22-item">Ten</div>
+        </div>
+    </div>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Mastering_Wrapping_of_Flex_Items#Creating_gutters_between_items" class="link-rel">참조</a>
+
+    <h2>Collapsed items</h2>
+    <style>
+        .ex23{
+            display: flex;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .ex23-item{
+            flex: 1 1 200px;
+            opacity: 0.5;
+            outline: 1px solid #54957e;
+            background: #a2d4c1;
+            box-sizing: border-box;
+        }
+        .ex23-hide{
+            visibility: collapse;
+        }
+    </style>
+    <div class="ex23">
+        <div class="ex23-item">One</div>
+        <div class="ex23-item">Two</div>
+        <div class="ex23-item">
+            <div class="ex23-hide">Three
+              <br>has
+              <br>extra
+              <br>text
+          </div>
+      </div>
+    </div>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Mastering_Wrapping_of_Flex_Items#Collapsed_items" class="link-rel">참조</a>
+
+
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Ordering_Flex_Items">next ing</a>
+
+
+    <script>
+    </script>
+
+</body>
+</html>
