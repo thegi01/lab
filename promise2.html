@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Promise example 2</title>
+</head>
+<body>
+
+    <p>출처 : https://github.com/mdn/js-examples/tree/master/promises-test</p>
+
+<script>
+
+    function imgLoad(url){
+        return new Promise(function(resolve, reject){
+            var request = new XMLHttpRequest();
+            request.open('GET', url)
+            request.responseType = 'blob'
+            request.onload = function(){
+                if(request.status === 200){
+                    console.log('onload: ', request.response)
+                    resolve(request.response)
+                } else{
+                    reject(Error(`Image didn\'t load successfully; error code: ${request.statusText}`))
+                }
+            }
+            request.onerror = function(){
+                reject(Error(`There was a network error.`))
+            }
+            request.send()
+        })
+    }
+
+    const body = document.querySelector('body')
+    const myImage = new Image()
+    const url = 'https://raw.githubusercontent.com/mdn/js-examples/master/promises-test/myLittleVader.jpg';
+    imgLoad(url).then(function(response){
+        console.log('imgLoad() response', response)
+        myImage.src = window.URL.createObjectURL(response)
+        body.appendChild(myImage)
+    }, function(Error){
+        console.log(Error)
+    })
+
+</script>
+</body>
+</html>
