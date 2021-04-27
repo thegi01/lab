@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>input</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <style>
+        p{
+            border-bottom: 1px solid #ddd
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <input type="text" name="text" title="입력">
+        <!-- <button type="button">완료</button> -->
+
+        <div id="result">
+            
+        </div>
+
+        <template>
+            <p></p>
+        </template>
+    </form>
+
+    <script>
+        
+        document.querySelector('form').addEventListener('submit', function(e){
+            e.preventDefault()
+
+            const textInput = this.querySelector('input[name=text]')
+            const resultEl = this.querySelector('#result')
+            const template = this.querySelector('template')
+
+            const el = template.content.firstElementChild.cloneNode(true)
+
+            el.textContent = textInput.value
+            textInput.value = ''
+            textInput.focus()
+            resultEl.appendChild(el)
+            // return false;
+        })
+
+    </script>
+</body>
+</html>
