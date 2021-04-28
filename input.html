@@ -12,29 +12,54 @@
     </style>
 </head>
 <body>
-    <form>
+    <h1>Input > Enter key event text</h1>
+
+    <h2>Causes : 한글 입력 시 이벤트가 두번 발생</h2>
+    <div id="causes">
         <input type="text" name="text" title="입력">
-        <!-- <button type="button">완료</button> -->
+        <div id="result"></div>
+    </div>
 
-        <div id="result">
-            
-        </div>
 
-        <template>
-            <p></p>
-        </template>
+    <h2>방법 1 : Form Submit</h2>
+    <form id="example1">
+        <input type="text" name="text" title="입력">
+        <div id="result"></div>
     </form>
 
+
+    <h2>방법 2 : Keypress event</h2>
+    <div id="example2">
+        <input type="text" name="text" title="입력">
+        <div id="result"></div>
+    </div>
+
     <script>
-        
+
+    const causes = function(){
+        const component = document.querySelector('#causes')
+        const textInput = component.querySelector('input[name=text]')
+        const resultEl = component.querySelector('#result')
+
+        // textInput.addEventListener('keydown', function(e){
+        textInput.addEventListener('keyup', function(e){
+            if (e.key == 'Enter'){
+                const el = document.createElement('p')
+                el.textContent = this.value
+                resultEl.appendChild(el)
+                this.value = ''
+                this.focus()
+            }
+        })
+    }  
+
+    const example1 = function(){
         document.querySelector('form').addEventListener('submit', function(e){
             e.preventDefault()
 
             const textInput = this.querySelector('input[name=text]')
             const resultEl = this.querySelector('#result')
-            const template = this.querySelector('template')
-
-            const el = template.content.firstElementChild.cloneNode(true)
+            const el = document.createElement('p')
 
             el.textContent = textInput.value
             textInput.value = ''
@@ -42,6 +67,28 @@
             resultEl.appendChild(el)
             // return false;
         })
+    }   
+
+    const example2 = function(){
+        const component = document.querySelector('#example2')
+        const textInput = component.querySelector('input[name=text]')
+        const resultEl = component.querySelector('#result')
+
+        textInput.addEventListener('keypress', function(e){
+            if (e.key == 'Enter'){
+                const el = document.createElement('p')
+                el.textContent = this.value
+                resultEl.appendChild(el)
+                this.value = ''
+                this.focus()
+            }
+        })
+    }     
+        
+    causes()
+    
+    example1()
+    example2()
 
     </script>
 </body>
