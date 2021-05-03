@@ -52,15 +52,15 @@
         `item10`
     ];
 
-    const cpnt = document.querySelector('#wrapper')
+    const createNode = function( template ){
+        return template
+            .content
+            .firstElementChild
+            .cloneNode(true)
+    }
 
     const render = function(){
-        const createNode = function( template ){
-            return template
-                .content
-                .firstElementChild
-                .cloneNode(true)
-        }
+        const cpnt = document.querySelector('#wrapper')
         const template = document.querySelector('#item')
         ITEMS.forEach( text => {
             const itemEl = createNode(template)
@@ -68,12 +68,8 @@
             cpnt.appendChild(itemEl)
         })
     }
-
     
     render()
-
-
-
 
 </script>
     

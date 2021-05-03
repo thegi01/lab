@@ -58,6 +58,13 @@
         `item10`
     ];
 
+    const createNode = function( template ){
+        return template
+            .content
+            .firstElementChild
+            .cloneNode(true)
+    }
+
     const handleScroll = function(el, cpnt){
         const half = cpnt.offsetWidth/2
         const elPos = el.offsetLeft + el.offsetWidth/2
@@ -66,17 +73,11 @@
 
     const render = function(){
         const cpnt = document.querySelector('#wrapper')
-        const createNode = function( template ){
-            return template
-                .content
-                .firstElementChild
-                .cloneNode(true)
-        }
         const template = document.querySelector('#item')
         ITEMS.forEach( text => {
             const itemEl = createNode(template)
             itemEl.textContent = text
-            itemEl.addEventListener('click', function(e){
+            itemEl.addEventListener('click', function(){
                 handleScroll(this, cpnt)
             })
             cpnt.appendChild(itemEl)

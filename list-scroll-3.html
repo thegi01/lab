@@ -62,14 +62,15 @@
         `item10`
     ];
 
+    const createNode = function( template ){
+        return template
+            .content
+            .firstElementChild
+            .cloneNode(true)
+    }
+
     const render = function(){
         const cpnt = document.querySelector('#wrapper')
-        const createNode = function( template ){
-            return template
-                .content
-                .firstElementChild
-                .cloneNode(true)
-        }
         const template = document.querySelector('#item')
         ITEMS.forEach( text => {
             const itemEl = createNode(template)
