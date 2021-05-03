@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>List Scroll 2</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .wrapper {
+          overflow-x: auto;
+          display: flex;
+          flex-flow: row nowrap;
+          padding: 1rem 0;
+        }
+        .wrapper:after {
+            content: '';
+            flex: none;
+            display: block;
+            width: 5px;
+        }
+        .item {
+            margin-left: 5px;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            border: 1px solid green;
+            background: #fff;
+            font-size: 1rem;
+        }
+        .item:active{
+            background: rgba(0, 128, 0, 0.3);
+        }
+      </style>
+</head>
+<body>
+
+    <template id="item">
+        <button type="button" class="item"></button>
+    </template>
+
+    <div class="wrapper" id="wrapper"></div>
+    
+<script>
+    const ITEMS = [
+        `item1`,
+        `item2`,
+        `item3`,
+        `item4`,
+        `item5`,
+        `item6`,
+        `item7`,
+        `item8`,
+        `item9`,
+        `item10`
+    ];
+
+    const handleScroll = function(el, cpnt){
+        const half = cpnt.offsetWidth/2
+        const elPos = el.offsetLeft + el.offsetWidth/2
+        cpnt.scroll(elPos - half, 0)
+    }
+
+    const render = function(){
+        const cpnt = document.querySelector('#wrapper')
+        const createNode = function( template ){
+            return template
+                .content
+                .firstElementChild
+                .cloneNode(true)
+        }
+        const template = document.querySelector('#item')
+        ITEMS.forEach( text => {
+            const itemEl = createNode(template)
+            itemEl.textContent = text
+            itemEl.addEventListener('click', function(e){
+                handleScroll(this, cpnt)
+            })
+            cpnt.appendChild(itemEl)
+        })
+    }
+
+    render()
+
+    
+
+</script>
+    
+</body>
+</html>

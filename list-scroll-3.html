@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
-    <title>목록 스크롤</title>
+    <title>List Scroll 3</title>
     <style>
         body {
             margin: 0;
         }
         .wrapper {
           overflow-x: auto;
+          scroll-snap-type: x mandatory;
           display: flex;
           flex-flow: row nowrap;
           padding: 1rem 0;
@@ -23,26 +24,32 @@
             width: 5px;
         }
         .item {
-            flex: 1 1 0;
+            scroll-snap-align: center;
+            flex: none;
+            width: 90%;
             margin-left: 5px;
-            padding: 10px 20px;
+            padding: 10px 0;
+            box-sizing: border-box;
             border-radius: 20px;
             border: 1px solid green;
-            text-align: center;
+            background: #fff;
+            font-size: 1rem;
+        }
+        .item:active{
+            background: rgba(0, 128, 0, 0.3);
         }
       </style>
 </head>
 <body>
 
     <template id="item">
-        <div class="item"></div>
+        <button type="button" class="item"></button>
     </template>
 
     <div class="wrapper" id="wrapper"></div>
     
 <script>
-
-    const items = [
+    const ITEMS = [
         `item1`,
         `item2`,
         `item3`,
@@ -55,19 +62,23 @@
         `item10`
     ];
 
-    const createNode = function( template ){
-        return template
-            .content
-            .firstElementChild
-            .cloneNode(true)
+    const render = function(){
+        const cpnt = document.querySelector('#wrapper')
+        const createNode = function( template ){
+            return template
+                .content
+                .firstElementChild
+                .cloneNode(true)
+        }
+        const template = document.querySelector('#item')
+        ITEMS.forEach( text => {
+            const itemEl = createNode(template)
+            itemEl.textContent = text
+            cpnt.appendChild(itemEl)
+        })
     }
-    const cpnt = document.querySelector('#wrapper')
-    const template = document.querySelector('#item')
-    items.forEach( text => {
-        const itemEl = createNode(template)
-        itemEl.textContent = text
-        cpnt.appendChild(itemEl)
-    })
+
+    render()
 
 </script>
     
