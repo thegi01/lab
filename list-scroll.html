@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>목록 스크롤</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .root{
+          overflow-x: auto;
+          padding: 1rem 0;
+        }
+        .wrapper {
+          display: flex;
+        }
+        .wrapper:after {
+            content: '';
+            flex: none;
+            display: block;
+            width: 10px;
+        }
+        .item {
+          margin-left: 10px;
+          padding: 10px 20px;
+          border: 1px solid green;
+          border-radius: 20px;
+          white-space: nowrap;
+        }
+      </style>
+</head>
+<body>
+
+    <template id="item">
+        <div class="item">
+        </div>
+    </template>
+    
+    <div class="root">
+        <div class="wrapper" id="list">
+        </div>
+    </div>
+    
+<script>
+
+    const items = [
+        `item1`,
+        `item2`,
+        `item3`,
+        `item4`,
+        `item5`,
+        `item6`,
+        `item7`,
+        `item8`,
+        `item9`,
+        `item10`
+    ];
+
+    const createNode = function( template ){
+        return template
+            .content
+            .firstElementChild
+            .cloneNode(true)
+    }
+    const cpnt = document.querySelector('#list')
+    const template = document.querySelector('#item')
+    items.forEach( text => {
+        const itemEl = createNode(template)
+        itemEl.textContent = text
+        cpnt.appendChild(itemEl)
+    })
+
+</script>
+    
+</body>
+</html>
