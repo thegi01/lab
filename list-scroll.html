@@ -35,13 +35,11 @@
 <body>
 
     <template id="item">
-        <div class="item">
-        </div>
+        <div class="item"></div>
     </template>
-    
+
     <div class="root">
-        <div class="wrapper" id="list">
-        </div>
+        <div class="wrapper" id="wrapper"></div>
     </div>
     
 <script>
@@ -65,7 +63,7 @@
             .firstElementChild
             .cloneNode(true)
     }
-    const cpnt = document.querySelector('#list')
+    const cpnt = document.querySelector('#wrapper')
     const template = document.querySelector('#item')
     items.forEach( text => {
         const itemEl = createNode(template)
