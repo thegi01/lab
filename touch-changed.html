@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0 maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+    <title>Changed touches</title>
+    <style>
+        body{
+            margin: 1rem;
+        }
+        h2{
+            display: flex;
+            align-items: center;
+            margin: 2rem 0 10px;
+        }
+        h2:before{
+            content: '';
+            width: 7px; 
+            height: 7px;
+            margin: -3px 7px 0 0;
+            background: rgba(125, 0, 255, 1);
+        }
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        thead{
+            background: rgba(125, 0, 255, 0.05);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid rgba(125, 0, 255, 0.1);
+        }
+        p{
+            line-height: 1.7;
+        }
+        .box{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            border: 1px solid rgba(125, 0, 255, 0.1);
+            background: rgba(125, 0, 255, 0.05);
+        }
+        .log{
+            font-weight: 500;
+            color: rgba(125, 0, 255, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Touch Event</h1>
+
+    <h2>Syntax</h2>
+    <table>
+        <thead>
+            <th>속성</th>
+            <th>내용</th>
+            <th>타입</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>event.changedTouches</td>
+                <td>터치 정보(Touch 객체) 배열</td> 
+                <td>배열</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+            <th>속성</th>
+            <th>내용</th>
+            <th>타입</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>터치정보.clientX</td>
+                <td>브라우저 좌측 상단 기준 X 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.clientY</td>
+                <td>브라우저 좌측 상단 기준 Y 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.offesetX</td>
+                <td>요소 좌측 상단 기준 X 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.offesetY</td>
+                <td>요소 좌측 상단 기준 Y 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.pageX</td>
+                <td>페이지 좌측 상단 기준 X 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.pageY</td>
+                <td>페이지 좌측 상단 기준 Y 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.screenX</td>
+                <td>디바이스 좌측 상단 기준 X 좌표</td> 
+                <td>숫자</td>
+            </tr>
+            <tr>
+                <td>터치정보.screenY</td>
+                <td>디바이스 좌측 상단 기준 Y 좌표</td> 
+                <td>숫자</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <p>마우스와 달리 터치는 멀티 터치가 가능하다. 멀티 터치는 이벤트가 동시에 발생하기 때문에 터치 이벤트가 동시에 작동하게 되며, event.changedTouches를 사용하여 각각의 터치 정보에 액세스할 수 있다.</p>
+        <p>event.changedTouches는 터치 정보(Touch 객체)를 배열로 가지며, 인덱스 0부터 정보가 순서대로 들어있다. <br>
+            pageX, pageY 속성으로 터치 위치의 확인이 가능하다. </p>
+    </div>
+
+    <h2>Example</h2>
+    <div class="box">
+        <p>Changed Touches</p>
+        <p class="log"></p>
+    </div>
+
+<script>
+
+    const targetBox = document.querySelector('.box');
+    const log = document.querySelector('.log');
+
+    targetBox.addEventListener('touchstart', () => {
+        // 터치 정보 리스트
+        console.log(event.changedTouches);
+    });
+
+    // 화면의 터치 위치 변경 시 로그 표시
+    targetBox.addEventListener('touchmove', () => {
+        const touch = event.changedTouches;
+
+        log.innerHTML = `
+            ${touch[0].pageX.toFixed(2)} <br>
+            ${touch[0].pageY.toFixed(2)}
+        `;
+    });
+
+</script>
+
+
+</body>
+</html>
