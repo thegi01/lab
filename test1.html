@@ -8,29 +8,18 @@
 <body>
 	
 	<script>
-	function Gadget(){
-		var name = 'iPod';
-		this.getName = function(){
-			return name;
-		};
+	function foo(x){
+		x.push(4);
+		console.log('x', x);
+
+		x = [4, 5, 6];
+		x.push(7);
+		console.log(x);
 	}
-	Gadget.prototype = (function(){
-		var browser = 'Mobile Webkit';
-		return{
-			getBrowser : function(){
-				return browser;
-			}
-		};
-	}());
 
-	var toy = new Gadget();
-	// console.log(toy.getName());
-	// console.log(typeof Gadget.prototype)
-
-	var a = (function(){
-		return 's';
-	}());
-	console.log(typeof a)
+	var a = [1, 2, 3];
+	foo(a);
+	console.log('a', a);
 	</script>
 </body>
 </html>

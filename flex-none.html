@@ -26,6 +26,7 @@
 		.lnb-c{
 			flex: 0 0 50px;
 		}
+		
 
 
 
@@ -63,6 +64,25 @@
 		<div class="item main">item 2</div>
 	</div>
 	<div class="text">> Item1's width changed.</div>
+
+	<h4>flex : 0 0 50px</h4>
+	<div class="root root3">
+		<div class="item item1">item1changepropertieschangepropertiesitem1changepropertieschangeproperties</div>
+		<div class="item item2">item2</div>
+
+	</div>
+
+	<style>
+		.root3 {
+		}
+		.root3 .item1 {
+			word-break: break-all;
+		}
+		.root3 .item2 {
+			flex: none;
+			min-width: 1%;
+		}
+	</style>
 	
 </body>
 </html>
