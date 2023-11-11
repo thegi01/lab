@@ -1,82 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>flex 7</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>flex 7</title>
+    </head>
+    <body>
+        <style>
+            .container {
+                display: flex;
+                min-height: 60px;
+            }
 
-    <style>
-        .container {
-            display: flex;
-            min-height: 60px;
-            
-        }
-       
-        .item {
-            /*flex-basis: 0;
+            .item {
+                /*flex-basis: 0;
             flex-shrink: 0;*/
-            border: 1px solid #aaa;
-            box-sizing: border-box;
-        }
+                border: 1px solid #aaa;
+                box-sizing: border-box;
+            }
 
-        .wrap {
-            flex: 1;
+            .wrap {
+                flex: 1;
 
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .item2 {
-            flex: auto;
-            border: 1px solid green;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .item2 {
+                flex: auto;
+                border: 1px solid green;
+            }
 
-        }
+            .date {
+                margin: 10px;
+            }
+        </style>
 
-        .date {
-            margin: 10px;
-        }
-        
-    </style>
-
-    <div class="container">
-        <div class="item">
-            <p class="date">12.16</p>
+        <div class="container">
+            <div class="item">
+                <p class="date">12.16</p>
+            </div>
+            <div class="item wrap">
+                <div class="item2">타이틀</div>
+                <div class="item2">상세 설명</div>
+            </div>
         </div>
-        <div class="item wrap">
-            <div class="item2">타이틀</div>
-            <div class="item2">상세 설명</div>
+
+        <br /><br />
+
+        <div class="container">
+            <div class="item">
+                <p class="date">12.16</p>
+            </div>
+            <div class="item wrap">
+                <div class="item2">타이틀</div>
+                <div class="item2">
+                    상세 설명 상세 설명상세 설명상세 설명상세 설명상세 설명상세
+                    설명상세 설명상세 설명상세 설명상세 설명
+                </div>
+            </div>
         </div>
-        
-    </div>
 
-    <br><br>
+        <br /><br />
 
-    <div class="container">
-        <div class="item">
-            <p class="date">12.16</p>
+        <div class="container">
+            <div class="item">
+                <p class="date">12.16</p>
+            </div>
+            <div class="item wrap">
+                <div class="item2">
+                    타이틀 타이틀
+                    타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀
+                </div>
+                <div class="item2">상세 설명 상세</div>
+            </div>
         </div>
-        <div class="item wrap">
-            <div class="item2">타이틀</div>
-            <div class="item2">상세 설명 상세 설명상세 설명상세 설명상세 설명상세 설명상세 설명상세 설명상세 설명상세 설명상세 설명</div>
-        </div>
-        
-    </div>
-
-    <br><br>
-
-
-    <div class="container">
-        <div class="item">
-            <p class="date">12.16</p>
-        </div>
-        <div class="item wrap">
-            <div class="item2">타이틀 타이틀 타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀타이틀</div>
-            <div class="item2">상세 설명 상세 </div>
-        </div>
-        
-    </div>
-    
-
-</body>
+    </body>
 </html>
